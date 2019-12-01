@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.userVo.UserVo" table="usertable">
+		<id name="id" type="java.lang.Integer">
+			<column name="id"></column>
+			<!--generator 生成该持久化类实例的唯一标识符 -->
+			<generator class="native"></generator>
+		</id>
+		<property name="userNo" type="java.lang.String">
+			<column name="userNo"></column>
+		</property>
+		<property name="pwd" type="java.lang.String">
+			<column name="pwd"></column>
+		</property>
+		<property name="age" type="java.lang.Integer">
+			<column name="age"></column>
+		</property>
+		<property name="userName" type="java.lang.String">
+			<column name="userName"></column>
+		</property>
+		<!-- 不懒加载，不级联更新(级联更新当前对象，关联对象同时会更新)，默认none -->
+		<many-to-one name="av" lazy="false" column="AuthorityID" cascade="none" class="vo.userVo.AuthorityVo"/>
+		<set name="fileVo" lazy="false" inverse="true"><!--控制反转，交由文件表管理外键-->
+			<key column="user_id"></key>
+			<one-to-many class="vo.fileVo.FileManageVo"/>
+		</set>
+		<many-to-one name="dept" lazy="false" column="dept_id" class="vo.deptVo.DeptVo"/>
+	</class>
+</hibernate-mapping>

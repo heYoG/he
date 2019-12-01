@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+#menuID {
+	text-align: left;
+	margin: 3px;
+	padding: 3px;
+}
+
+ul, li {
+	list-style-type: none;
+	cursor:pointer;/*手状光标*/
+}
+
+#dvTaskBar{
+	border:0px solid;
+	text-align:center
+}
+
+#loginID{
+	text-align:left
+}
+
+table{
+	border:0px solid;
+}

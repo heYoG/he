@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.deptVo.DeptVo" table="dept">
+		<id name="deptID">
+			<column name="deptID"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="deptName" type="java.lang.String">
+			<column name="deptName"></column>
+		</property>
+		<property name="flag" type="java.lang.Integer">
+			<column name="flag"></column>
+		</property>
+		<set name="user" lazy="false" inverse="true"><!-- 双向时必须设置控制反转,否则两个表都更新外键 -->
+			<key column="dept_id"></key>
+			<one-to-many class="vo.userVo.UserVo"/><!-- 部门表1对多——>用户表 -->
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.fileVo.FileManageVo" table="filetable">
+		<id name="id" type="int">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="myFile" type="java.lang.String">
+			<column name="myFile"></column>
+		</property>
+		<property name="fileData" type="java.sql.Blob">
+			<column name="fileData"></column>
+		</property>
+		<property name="uploadTime" type="java.sql.Timestamp">
+			<column name="uploadTime"></column>
+		</property>
+		<property name="operator" type="java.lang.String">
+			<column name="operator"></column>
+		</property>
+		<property name="status" type="int">
+			<column name="status"></column>
+		</property>
+		<property name="originalFileName" type="java.lang.String">
+			<column name="originalFileName"></column>
+		</property>
+		<many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"></many-to-one>
+	</class>
+</hibernate-mapping>

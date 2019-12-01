@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<!-- 配置i18n -->
+<!-- <constant name="struts.custom.i18n.resources" value="resource"></constant>-->
+<package name="struts5 test" extends="struts-default">
+	<!--用户信息action  -->
+	<action name="login" class="action.userAction.LoginAction">
+		<result name="success">/jsp/mainPage.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
+		<result name="userInfo">/jsp/userInfo/userInfo.jsp</result>
+		<result name="update">/jsp/userInfo/updateUser.jsp</result>
+		<result name="succ">index.jsp</result>
+		<result name="beforeAddUser">/jsp/userInfo/addUser.jsp</result>
+	<!-- 	<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		<!-- <interceptor-ref name="token"></interceptor-ref>
+		<result name="invalid.token" type="redirect">/jsp/token/invalidRequest.jsp</result>
+		< param name="includeMethods">execute</param>-->
+	</action>
+	<!-- 用户权限action -->
+	<action name="auth_*" class="action.userAction.AuthorityAction" method="{1}">
+		<result name="authList">/jsp/auth/authList.jsp</result>
+	</action>
+	<!-- 文件管理action -->
+	<action name="fileManage" class="action.fileAction.FileManagerAction">
+	<!-- 限制文件类型和大小 -->
+		<interceptor-ref name="defaultStack"/>
+		<interceptor-ref name="fileUpload">
+			<!-- <param name="allowedTypes">application/x-pkcs12,application/pdf,text/plain,image/bmp,image/png</param> -->
+			<!-- <param name="maximumSize">10240000</param>最大10M -->
+		</interceptor-ref>
+		
+		<result name="fileInfo">/jsp/backup/fileManager.jsp</result>
+		<result name='uploadFileSuccess'>/jsp/backup/fileBackup.jsp</result>
+		<result name="recoveryFile">/jsp/backup/fileRecovery.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
+		<result name="recoveryFileList">/jsp/backup/recoveryFileList.jsp</result>
+	</action>
+	<action name="*_*" class="action.deptAction.{1}" method="{2}">
+		<result name="deptList">/jsp/dept/deptList.jsp</result>
+	</action>
+</package>
+<constant name="struts.multipart.maxSize" value="10240000"/>
+</struts>
