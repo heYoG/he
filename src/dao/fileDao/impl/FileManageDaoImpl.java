@@ -17,12 +17,13 @@ import org.hibernate.Transaction;
 import dao.fileDao.api.IFileManageDao;
 import hibernate.utils.SessionClass;
 import util.BaseDao;
+import util.CommenClass;
 import util.TableManager;
 import vo.CommenVo;
 import vo.fileVo.FileManageVo;
 import vo.userVo.UserVo;
 
-public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo>{
+public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo,CommenClass>{
 
 	private SessionClass sessionCls;
 	private static HttpServletRequest request = ServletActionContext.getRequest();
@@ -113,7 +114,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	}
 
 	@Override
-	public List<FileManageVo> getFileInfo(String type,int authValue,FileManageVo vo) {
+	public List<FileManageVo> getFileInfo(String type,int authValue,FileManageVo vo,CommenClass cc) {
 		String sql=null;
 		List<FileManageVo> list=new ArrayList<FileManageVo>();
 		ResultSet rs=null;
@@ -169,6 +170,20 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 			close();
 		}
 		return list;
+	}
+
+
+	@Override
+	public int getCount() {
+		String sql = "select count(id) from " + TableManager.FILETABLE;
+		ResultSet rs = executeQuery(sql, 0);
+		int val=0;
+		try {
+			val = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return val;
 	}
 
 }

@@ -40,6 +40,16 @@ td, th {
 	color: #4f6b72;
 	height: 22px;
 }
+
+#pageDiv{
+	margin-top:10px;
+	border:solid 0px;
+	text-align:right
+}
+
+.currentPage{
+	font:red 12pt;
+}
 </style>
 <script type="text/javascript">
 	function del(obj){
@@ -112,6 +122,42 @@ td, th {
 				</c:forEach>
 			</table>
 		</c:if>
+		<!-- 页码列表 -->
+		<div id="pageDiv">
+			<!-- 上一页 -->
+			<c:choose>
+				<c:when test="${currentPage!=1}">
+					<a href=""><input type="button" name="previousPage" value="上一页"></a>
+				</c:when>
+				<c:otherwise>
+					<input type="button" disabled="true" name="previousPage"
+						value="上一页">
+				</c:otherwise>
+			</c:choose>
+			<!-- 循环列出所有页数 -->
+			<c:forEach items="${pageList}" var="item">
+				<c:choose>
+					<c:when test="${item==currentPage}">
+						<!-- 是当前页突出修饰 -->
+						<a href="" class="currentPage">${item }</a>
+					</c:when>
+					<c:otherwise>
+						<a href="">${item}</a>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<!-- 下一页 -->
+			<c:choose>
+				<c:when test="${currentPage!=totalPage }">
+					<!-- 即不为最后一页 -->
+					<a href=""><input type="button" name="nextPage" value="下一页"></a>
+				</c:when>
+				<c:otherwise>
+					<input type="button" disabled="true" value="下一页">
+				</c:otherwise>
+			</c:choose>
+			_共${totalPage }页&nbsp;&nbsp;第<input type="text" size="10" name="jumpPage">页&nbsp;&nbsp;<input type="button" id="jumpBT" value="跳转">
+		</div>
 	</center>
 </body>
 </html>

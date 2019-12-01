@@ -2,10 +2,9 @@ package dao.fileDao.api;
 
 import java.util.List;
 
-import vo.CommenVo;
 import vo.fileVo.FileManageVo;
 
-public interface IFileManageDao<T> {
+public interface IFileManageDao<T,G> {
 	
 	/**
 	 * 查询单条记录
@@ -15,13 +14,13 @@ public interface IFileManageDao<T> {
 	public FileManageVo getFileInfo(int id);
 	
 	/**
-	 * 根据条件查询所有文件信息
+	 * 根据条件分页查询所有文件信息
 	 * @param type		查询类型，0：查询已删除文件，1：查询正常文件
 	 * @param authValue 权限值，用于区分管理员和普通用户查询
 	 * @param t			实例对象
 	 * @return
 	 */
-	public List<T> getFileInfo(String type,int authValue,T t);
+	public List<T> getFileInfo(String type,int authValue,T t,G g);
 	
 	/**
 	 * 删除单个文件
@@ -71,4 +70,10 @@ public interface IFileManageDao<T> {
 	 * @return
 	 */
 	public int updateFileStatus(int id);
+	
+	/**
+	 * 获取总记录数
+	 * @return 记录总数
+	 */
+	public int getCount();
 }

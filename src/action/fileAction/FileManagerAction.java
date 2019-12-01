@@ -19,6 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import dao.fileDao.impl.FileManageDaoImpl;
+import util.CommenClass;
 import util.UploadAndDownloadUtil;
 import vo.CommenVo;
 import vo.fileVo.FileManageVo;
@@ -29,8 +30,10 @@ public class FileManagerAction extends ActionSupport{
 	private HttpServletResponse response=ServletActionContext.getResponse();
 	FileManageVo fm=new FileManageVo();
 	FileManageDaoImpl fdi=new FileManageDaoImpl();
+	CommenClass cc=new CommenClass();
 	private File myFile;//上传文件(tmp临时文件)
 	private String myFileFileName;//文件名称
+	
 	public String execute(){
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
@@ -40,7 +43,24 @@ public class FileManagerAction extends ActionSupport{
 			return ERROR;
 		}
 		String type = request.getParameter("type");
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm);
+		String currentPage = request.getParameter("currentPage");
+		String jumpPage = request.getParameter("jumpPage");
+		currentPage=currentPage==null?"1":currentPage;
+		String pageSize = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount();
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(Integer.parseInt(currentPage));
+		cc.setPageSize(Integer.parseInt(pageSize));
+		cc.setTotalCount(totalCount);
+		int []item=new int[totalCount];
+		int j=1;
+		for(int i=0;i<totalCount;i++) {//填充页码
+			item[i]=i+j;
+		}
+		cc.setItem(item);
+		
+		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
 		request.setAttribute("fileList", list);
 		return "fileInfo";
 	}
@@ -94,9 +114,25 @@ public class FileManagerAction extends ActionSupport{
 			return ERROR;
 		}
 		int id=Integer.parseInt(request.getParameter("id"));
-		int i = fdi.deleteFile(id);
+		fdi.deleteFile(id);
 		String type=request.getParameter("type");
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm);
+		String currentPage = request.getParameter("currentPage");
+		String jumpPage = request.getParameter("jumpPage");
+		currentPage=currentPage==null?"1":currentPage;
+		String pageSize = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount();
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(Integer.parseInt(currentPage));
+		cc.setPageSize(Integer.parseInt(pageSize));
+		cc.setTotalCount(totalCount);
+		int []item=new int[totalCount];
+		int j=1;
+		for(int i=0;i<totalCount;i++) {//填充页码
+			item[i]=i+j;
+		}
+		cc.setItem(item);
+		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
 		request.setAttribute("fileList", list);
 		return "fileInfo";
 	}
@@ -116,7 +152,23 @@ public class FileManagerAction extends ActionSupport{
 //		String date1 = request.getParameter("date");
 //		Timestamp date2 = Timestamp.valueOf(date1);
 //		fm.setUploadTime(date2);
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm);
+		String currentPage = request.getParameter("currentPage");
+		String jumpPage = request.getParameter("jumpPage");
+		currentPage=currentPage==null?"1":currentPage;
+		String pageSize = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount();
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(Integer.parseInt(currentPage));
+		cc.setPageSize(Integer.parseInt(pageSize));
+		cc.setTotalCount(totalCount);
+		int []item=new int[totalCount];
+		int j=1;
+		for(int i=0;i<totalCount;i++) {//填充页码
+			item[i]=i+j;
+		}
+		cc.setItem(item);
+		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
 		request.setAttribute("fileList", list);
 		
 		return "recoveryFileList";
@@ -133,7 +185,23 @@ public class FileManagerAction extends ActionSupport{
 		String id = request.getParameter("id");
 		fdi.updateFileStatus(Integer.parseInt(id));
 		String type=request.getParameter("type");
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm);
+		String currentPage = request.getParameter("currentPage");
+		String jumpPage = request.getParameter("jumpPage");
+		currentPage=currentPage==null?"1":currentPage;
+		String pageSize = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount();
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(Integer.parseInt(currentPage));
+		cc.setPageSize(Integer.parseInt(pageSize));
+		cc.setTotalCount(totalCount);
+		int []item=new int[totalCount];
+		int j=1;
+		for(int i=0;i<totalCount;i++) {//填充页码
+			item[i]=i+j;
+		}
+		cc.setItem(item);
+		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
 		request.setAttribute("fileList", list);
 		return "fileInfo";//跳转到文件列表
 	}
