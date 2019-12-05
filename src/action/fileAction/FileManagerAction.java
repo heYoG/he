@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,32 +37,47 @@ public class FileManagerAction extends ActionSupport{
 	
 	public String execute(){
 		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session = request.getSession();
-		UserVo uv = (UserVo)session.getAttribute("userVo");
+		HttpSession session = request.getSession(false);//会话存在则返回，不存在返回null，解决session过期调用session提示Session already invalidated问题
+		UserVo uv =null;
+		if(session!=null)
+			uv = (UserVo)session.getAttribute("userVo");
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		String type = request.getParameter("type");
-		String currentPage = request.getParameter("currentPage");
-		String jumpPage = request.getParameter("jumpPage");
-		currentPage=currentPage==null?"1":currentPage;
-		String pageSize = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount();
+		String type = request.getParameter("type");//查询类型,0:查询已删除文件;1:查询未删除文件
+		String currentPage1 = request.getParameter("currentPage");//从页面取
+		String jumpPage = request.getParameter("jumpPage");//所跳转的页码
+		currentPage1=currentPage1==null?"1":currentPage1;//获取当前页
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数,从配置文件取
+		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		int pageSize2=Integer.parseInt(pageSize1);//转为整型
+		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
-		cc.setCurrentPage(Integer.parseInt(currentPage));
-		cc.setPageSize(Integer.parseInt(pageSize));
-		cc.setTotalCount(totalCount);
-		int []item=new int[totalCount];
-		int j=1;
-		for(int i=0;i<totalCount;i++) {//填充页码
-			item[i]=i+j;
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		int totalPages=0;
+		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
+			totalPages=totalCount/pageSize2;
+		}else {//不能整除取商+1
+			totalPages=totalCount/pageSize2+1;
 		}
-		cc.setItem(item);
-		
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
-		request.setAttribute("fileList", list);
+		/*封装页码集合*/
+		for(int i=1;i<=totalPages;i++) {
+			itemList.add(i);
+		}
+		cc.setTotalPage(totalPages);
+		/*封装分页相关数据*/
+		listPage.add(cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageList", listPage);//分页的其它数据
+		request.setAttribute("itemList", itemList);//页码集合
+		request.setAttribute("currentPage", currentPage2);//当前页
 		return "fileInfo";
 	}
 	
@@ -105,7 +121,8 @@ public class FileManagerAction extends ActionSupport{
 		
 	}
 	
-	public String deleteFile() throws IOException{//删除文件
+	/*虚拟删除*/
+	public String delete_update() throws IOException{//删除文件
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		UserVo uv = (UserVo)session.getAttribute("userVo");
@@ -114,27 +131,88 @@ public class FileManagerAction extends ActionSupport{
 			return ERROR;
 		}
 		int id=Integer.parseInt(request.getParameter("id"));
-		fdi.deleteFile(id);
+		fdi.deleteFile(id,1);
 		String type=request.getParameter("type");
-		String currentPage = request.getParameter("currentPage");
+		String currentPage1 = request.getParameter("currentPage");
 		String jumpPage = request.getParameter("jumpPage");
-		currentPage=currentPage==null?"1":currentPage;
-		String pageSize = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount();
+		currentPage1=currentPage1==null?"1":currentPage1;
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		int pageSize2=Integer.parseInt(pageSize1);//转为整型
+		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
-		cc.setCurrentPage(Integer.parseInt(currentPage));
-		cc.setPageSize(Integer.parseInt(pageSize));
-		cc.setTotalCount(totalCount);
-		int []item=new int[totalCount];
-		int j=1;
-		for(int i=0;i<totalCount;i++) {//填充页码
-			item[i]=i+j;
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		int totalPages=0;
+		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
+			totalPages=totalCount/pageSize2;
+		}else {//不能整除取商+1
+			totalPages=totalCount/pageSize2+1;
 		}
-		cc.setItem(item);
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
-		request.setAttribute("fileList", list);
-		return "fileInfo";
+		/*封装页码集合*/
+		for(int i=1;i<=totalPages;i++) {
+			itemList.add(i);
+		}
+		cc.setTotalPage(totalPages);
+		/*封装分页相关数据*/
+		listPage.add(cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageList", listPage);//分页的其它数据
+		request.setAttribute("itemList", itemList);//页码集合
+		request.setAttribute("currentPage", currentPage2);//当前页
+		return "fileInfo";//返回文件管理
+	}
+	
+	/*彻底删除*/
+	public String delete_complete() {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		UserVo uv = (UserVo)session.getAttribute("userVo");
+		if(uv==null){//系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		int id=Integer.parseInt(request.getParameter("id"));
+		fdi.deleteFile(id,0);
+		String type=request.getParameter("type");//查询类型
+		String currentPage1 = request.getParameter("currentPage");
+		String jumpPage = request.getParameter("jumpPage");
+		currentPage1=currentPage1==null?"1":currentPage1;
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		int pageSize2=Integer.parseInt(pageSize1);//转为整型
+		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		List<Integer> itemList=new ArrayList<Integer>();
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		int totalPages=0;
+		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
+			totalPages=totalCount/pageSize2;
+		}else {//不能整除取商+1
+			totalPages=totalCount/pageSize2+1;
+		}
+		/*封装页码集合*/
+		for(int i=1;i<=totalPages;i++) {
+			itemList.add(i);
+		}
+		cc.setTotalPage(totalPages);
+		/*封装分页相关数据*/
+		listPage.add(cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageList", listPage);//分页的其它数据
+		request.setAttribute("itemList", itemList);//页码集合
+		request.setAttribute("currentPage", currentPage2);//当前页
+		return "recoveryFileList";//返回可恢复列表
 	}
 	
 	public String recoveryFileList() {//查询出可恢复文件列表
@@ -152,32 +230,47 @@ public class FileManagerAction extends ActionSupport{
 //		String date1 = request.getParameter("date");
 //		Timestamp date2 = Timestamp.valueOf(date1);
 //		fm.setUploadTime(date2);
-		String currentPage = request.getParameter("currentPage");
+		String currentPage1 = request.getParameter("currentPage");
 		String jumpPage = request.getParameter("jumpPage");
-		currentPage=currentPage==null?"1":currentPage;
-		String pageSize = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount();
+		currentPage1=currentPage1==null?"1":currentPage1;
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount(0);//获取总记录数,实参0表示已删除文件
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		int pageSize2=Integer.parseInt(pageSize1);//转为整型
+		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
-		cc.setCurrentPage(Integer.parseInt(currentPage));
-		cc.setPageSize(Integer.parseInt(pageSize));
-		cc.setTotalCount(totalCount);
-		int []item=new int[totalCount];
-		int j=1;
-		for(int i=0;i<totalCount;i++) {//填充页码
-			item[i]=i+j;
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		int totalPages=0;
+		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
+			totalPages=totalCount/pageSize2;
+		}else {//不能整除取商+1
+			totalPages=totalCount/pageSize2+1;
 		}
-		cc.setItem(item);
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
-		request.setAttribute("fileList", list);
-		
+		/*封装页码集合*/
+		for(int i=1;i<=totalPages;i++) {
+			itemList.add(i);
+		}
+		cc.setTotalPage(totalPages);
+		/*封装分页相关数据*/
+		listPage.add(cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageList", listPage);//分页的其它数据
+		request.setAttribute("itemList", itemList);//页码集合
+		request.setAttribute("currentPage", currentPage2);//当前页
 		return "recoveryFileList";
 	}
 	
 	public String recoveryFile() {//修改文件状态,恢复文件
 		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session = request.getSession();
-		UserVo uv = (UserVo)session.getAttribute("userVo");
+		HttpSession session = request.getSession(false);
+		UserVo uv=null;
+		if(session!=null)
+		 uv= (UserVo)session.getAttribute("userVo");
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -185,24 +278,38 @@ public class FileManagerAction extends ActionSupport{
 		String id = request.getParameter("id");
 		fdi.updateFileStatus(Integer.parseInt(id));
 		String type=request.getParameter("type");
-		String currentPage = request.getParameter("currentPage");
+		String currentPage1 = request.getParameter("currentPage");
 		String jumpPage = request.getParameter("jumpPage");
-		currentPage=currentPage==null?"1":currentPage;
-		String pageSize = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount();
+		currentPage1=currentPage1==null?"1":currentPage1;
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		int pageSize2=Integer.parseInt(pageSize1);//转为整型
+		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
-		cc.setCurrentPage(Integer.parseInt(currentPage));
-		cc.setPageSize(Integer.parseInt(pageSize));
-		cc.setTotalCount(totalCount);
-		int []item=new int[totalCount];
-		int j=1;
-		for(int i=0;i<totalCount;i++) {//填充页码
-			item[i]=i+j;
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		int totalPages=0;
+		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
+			totalPages=totalCount/pageSize2;
+		}else {//不能整除取商+1
+			totalPages=totalCount/pageSize2+1;
 		}
-		cc.setItem(item);
-		List<FileManageVo> list = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
-		request.setAttribute("fileList", list);
+		/*封装页码集合*/
+		for(int i=1;i<=totalPages;i++) {
+			itemList.add(i);
+		}
+		cc.setTotalPage(totalPages);
+		/*封装分页相关数据*/
+		listPage.add(cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageList", listPage);//分页的其它数据
+		request.setAttribute("itemList", itemList);//页码集合
+		request.setAttribute("currentPage", currentPage2);//当前页
 		return "fileInfo";//跳转到文件列表
 	}
 	

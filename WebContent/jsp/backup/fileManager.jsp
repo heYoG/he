@@ -11,13 +11,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文件管理</title>
 <script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.js"></script>
+	src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
 <script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.easyui.mobile.js"></script>
+	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=path%>/css/fileManage.css">
 <style type="text/css">
@@ -48,7 +44,8 @@ td, th {
 }
 
 .currentPage{
-	font:red 12pt;
+	font-size:20px;
+	color:red;
 }
 </style>
 <script type="text/javascript">
@@ -68,9 +65,9 @@ td, th {
 		alert("暂不支持的操作,敬请期待...");
 	}
 	
-	function del(obj){
+	function del(fileId){
 		if(confirm("确定删除此文件吗?"))
-			location.href="fileManage!deleteFile.action?id="+obj+"&type=1";
+			location.href="fileManage!delete_update.action?id="+fileId+"&type=1";
 	}
 	
 	function viewOperator(){
@@ -81,6 +78,22 @@ td, th {
 		if(confirm("确认恢复该文件？"))
 			location.href="fileManage!recoveryFile.action?id="+fileId;
 	}
+	
+	function sum(totalPage){
+		var jumpPage=$("#jumpPage").val().trim();
+		if(jumpPage==''){
+			alert("请输入要跳转页码!");
+			return false;
+		}else if(isNaN(jumpPage)){
+			alert("跳转页码必须是数字!");
+			return false;			
+		}else if(jumpPage>totalPage){
+			alert("输入页码超出范围,请重新输入!");
+			return false;
+		}
+		location="fileManage.action?currentPage="+jumpPage+"&type=1";
+	}
+	
 </script>
 </head>
 <body>
@@ -125,38 +138,43 @@ td, th {
 		<!-- 页码列表 -->
 		<div id="pageDiv">
 			<!-- 上一页 -->
-			<c:choose>
-				<c:when test="${currentPage!=1}">
-					<a href=""><input type="button" name="previousPage" value="上一页"></a>
-				</c:when>
-				<c:otherwise>
-					<input type="button" disabled="true" name="previousPage"
-						value="上一页">
-				</c:otherwise>
-			</c:choose>
-			<!-- 循环列出所有页数 -->
-			<c:forEach items="${pageList}" var="item">
+			<c:forEach items="${pageList}" var="p">
 				<c:choose>
-					<c:when test="${item==currentPage}">
-						<!-- 是当前页突出修饰 -->
-						<a href="" class="currentPage">${item }</a>
+					<c:when test="${p.currentPage!=1}">
+						<a href="fileManage.action?currentPage=${p.currentPage-1}&type=1"><input
+							type="button" name="previousPage" value="上一页"></a>
 					</c:when>
 					<c:otherwise>
-						<a href="">${item}</a>
+						<input type="button" disabled="true" name="previousPage"
+							value="上一页">
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<!-- 循环列出所有页数 -->
+			<c:forEach items="${itemList}" var="p" varStatus="vs"><!-- items的集合必须有多条记录才能列表显示,如其中含数组，而集合只有一条数据，则只显示一条 -->
+				<c:choose>
+					<c:when test="${p==currentPage}&type=1">
+						<!-- 是当前页突出显示-->
+						<a href="fileManage.action?currentPage=${currentPage}&type=1" class="currentPage">${p }</a>
+					</c:when>
+					<c:otherwise>
+						<a href="fileManage.action?currentPage=${p}&type=1">${p}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<!-- 下一页 -->
-			<c:choose>
-				<c:when test="${currentPage!=totalPage }">
-					<!-- 即不为最后一页 -->
-					<a href=""><input type="button" name="nextPage" value="下一页"></a>
-				</c:when>
-				<c:otherwise>
-					<input type="button" disabled="true" value="下一页">
-				</c:otherwise>
-			</c:choose>
-			_共${totalPage }页&nbsp;&nbsp;第<input type="text" size="10" name="jumpPage">页&nbsp;&nbsp;<input type="button" id="jumpBT" value="跳转">
+			<c:forEach items="${pageList}" var="p">
+				<c:choose>
+					<c:when test="${p.currentPage!=p.totalPage }"><!-- 即不为最后一页 -->
+						<a href="fileManage.action?currentPage=${p.currentPage+1}&type=1"><input
+							type="button" name="nextPage" value="下一页"></a>
+					</c:when>
+					<c:otherwise>
+						<input type="button" disabled="true" value="下一页">
+					</c:otherwise>
+				</c:choose>
+			_共${p.totalPage }页|当前第${p.currentPage}页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input type="button" id="jumpBt" onclick="sum(${p.totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+			</c:forEach>
 		</div>
 	</center>
 </body>

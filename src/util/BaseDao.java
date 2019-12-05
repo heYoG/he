@@ -20,7 +20,7 @@ public class BaseDao<T> {
 			for(int i=0;i<orgs.length;i++){//设置占位符
 				statement.setObject(i+1, orgs[i]);
 			}
-			System.out.println("sql:"+statement);
+//			System.out.println("sql:"+statement);
 			ret=statement.executeUpdate();//执行Sql
 		} catch (SQLException e) {
 			e.printStackTrace();

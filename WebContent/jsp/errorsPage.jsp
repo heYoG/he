@@ -11,7 +11,7 @@
 	if("${pwd}"=="password")
 		alert("用户密码错误!");
 	if("${user}"=="outtime")
-		alert("请重新登录再操作!");
+		alert("登录已失效,请重新登录!");
 	window.open("<%=request.getContextPath()%>/index.jsp","_parent","");
 </script>
 </head>
