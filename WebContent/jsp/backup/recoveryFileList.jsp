@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% String path=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>可恢复文件列表</title>
+<script type="text/javascript"
+	src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
+<script type="text/javascript"
+	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	function recovery(fileId){
 		if(confirm("确定恢复该文件吗？"))
@@ -20,6 +25,21 @@
 	
 	function viewOperator(){
 		alert("暂不支持的操作,敬请期待...");
+	}
+	
+	function sum(totalPage){
+		var jumpPage=$("#jumpPage").val().trim();
+		if(jumpPage==''){
+			alert("请输入要跳转页码!");
+			return false;
+		}else if(isNaN(jumpPage)){
+			alert("跳转页码必须是数字!");
+			return false;			
+		}else if(jumpPage>totalPage){
+			alert("输入页码超出范围,请重新输入!");
+			return false;
+		}
+		location="fileManage!recoveryFileList.action?currentPage="+jumpPage+"&type=0";
 	}
 	
 </script>
@@ -43,6 +63,12 @@ td, th {
 	color: #4f6b72;
 	height: 22px;
 }
+
+#pageDiv{
+	margin-top:10px;
+	border:solid 0px;
+	text-align:right
+}
 </style>
 </head>
 <body>
@@ -57,7 +83,6 @@ td, th {
 			<table>
 				<tr>
 					<th>序号</th>
-					<th>id</th>
 					<th>文件名称</th>
 					<th>文件大小</th>
 					<th>上传时间</th>
@@ -68,7 +93,6 @@ td, th {
 				<c:forEach items="${fileList}" var="fileIn" varStatus="s">
 					<tr>
 						<td>${s.count}</td>
-						<td>${fileIn.id }</td>
 						<td>${fileIn.originalFileName }</td>
 						<td>${fileIn.fileSize }</td>
 						<td>${fileIn.uploadTime }</td>
@@ -80,6 +104,37 @@ td, th {
 					</tr>
 				</c:forEach>
 			</table>
+		<div id="pageDiv">
+		<!-- 上一页按钮 -->
+			<c:choose>
+				<c:when test="${currentPage!=1 }">
+					<a href="fileManage!recoveryFileList.action?currentPage=${currentPage-1 }&type=0"><input type="button" name="previousPage" value="上一页"></a>
+				</c:when>
+				<c:otherwise>
+					<input type="button" name="previousPage" disabled="true" value="上一页">
+				</c:otherwise>
+			</c:choose>
+			<!-- 页码显示 -->
+			<c:forEach items="${itemList }" var="p">
+				<c:choose>
+					<c:when test="${p==currentPage }">
+						<a href="fileManage!recoveryFileList.action?currentPage=${p }&type=0" class="currentPage">${p }</a>
+					</c:when>
+					<c:otherwise>
+						<a href="fileManage!recoveryFileList.action?currentPage=${p }&type=0">${p }</a>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${currentPage!=totalPage }">
+					<a href="fileManage!recoveryFileList.action?currentPage=${currentPage+1 }&type=0"><input type="button" name="nextPage" value="下一页" ></a>
+				</c:when>
+				<c:otherwise>
+					<input type="button" name="nextPage" value="下一页" disabled="true">
+				</c:otherwise>
+			</c:choose>
+			_共${totalPage }页|当前第${currentPage }页&nbsp;&nbsp;跳转到第<input type="text" id="jumpPage" size="4">页&nbsp;<input type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+		</div>
 		</c:if>
 	</center>
 </body>
