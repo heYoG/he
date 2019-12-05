@@ -47,7 +47,6 @@ public class FileManagerAction extends ActionSupport{
 		}
 		String type = request.getParameter("type");//查询类型,0:查询已删除文件;1:查询未删除文件
 		String currentPage1 = request.getParameter("currentPage");//从页面取
-		String jumpPage = request.getParameter("jumpPage");//所跳转的页码
 		currentPage1=currentPage1==null?"1":currentPage1;//获取当前页
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数,从配置文件取
 		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
@@ -78,6 +77,7 @@ public class FileManagerAction extends ActionSupport{
 		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
+		request.setAttribute("totalPage", totalPages);//总页数
 		return "fileInfo";
 	}
 	
@@ -134,7 +134,6 @@ public class FileManagerAction extends ActionSupport{
 		fdi.deleteFile(id,1);
 		String type=request.getParameter("type");
 		String currentPage1 = request.getParameter("currentPage");
-		String jumpPage = request.getParameter("jumpPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
 		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
@@ -165,6 +164,7 @@ public class FileManagerAction extends ActionSupport{
 		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
+		request.setAttribute("totalPage", totalPages);//总页数
 		return "fileInfo";//返回文件管理
 	}
 	
@@ -181,7 +181,6 @@ public class FileManagerAction extends ActionSupport{
 		fdi.deleteFile(id,0);
 		String type=request.getParameter("type");//查询类型
 		String currentPage1 = request.getParameter("currentPage");
-		String jumpPage = request.getParameter("jumpPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
 		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
@@ -212,13 +211,16 @@ public class FileManagerAction extends ActionSupport{
 		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
+		request.setAttribute("totalPage", totalPages);//总页数
 		return "recoveryFileList";//返回可恢复列表
 	}
 	
 	public String recoveryFileList() {//查询出可恢复文件列表
 		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session = request.getSession();
-		UserVo uv = (UserVo)session.getAttribute("userVo");
+		HttpSession session = request.getSession(false);
+		UserVo uv=null;
+		if(session!=null)
+			uv= (UserVo)session.getAttribute("userVo");
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -231,7 +233,6 @@ public class FileManagerAction extends ActionSupport{
 //		Timestamp date2 = Timestamp.valueOf(date1);
 //		fm.setUploadTime(date2);
 		String currentPage1 = request.getParameter("currentPage");
-		String jumpPage = request.getParameter("jumpPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
 		int totalCount=fdi.getCount(0);//获取总记录数,实参0表示已删除文件
@@ -262,6 +263,7 @@ public class FileManagerAction extends ActionSupport{
 		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
+		request.setAttribute("totalPage", totalPages);//总页数
 		return "recoveryFileList";
 	}
 	
@@ -279,7 +281,6 @@ public class FileManagerAction extends ActionSupport{
 		fdi.updateFileStatus(Integer.parseInt(id));
 		String type=request.getParameter("type");
 		String currentPage1 = request.getParameter("currentPage");
-		String jumpPage = request.getParameter("jumpPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
 		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
@@ -310,6 +311,7 @@ public class FileManagerAction extends ActionSupport{
 		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
+		request.setAttribute("totalPage", totalPages);//总页数
 		return "fileInfo";//跳转到文件列表
 	}
 	
