@@ -134,14 +134,13 @@ td, th {
 					</tr>
 				</c:forEach>
 			</table>
-		</c:if>
+
 		<!-- 页码列表 -->
 		<div id="pageDiv">
 			<!-- 上一页 -->
-			<c:forEach items="${pageList}" var="p">
 				<c:choose>
-					<c:when test="${p.currentPage!=1}">
-						<a href="fileManage.action?currentPage=${p.currentPage-1}&type=1"><input
+					<c:when test="${currentPage!=1}">
+						<a href="fileManage.action?currentPage=${currentPage-1}&type=1"><input
 							type="button" name="previousPage" value="上一页"></a>
 					</c:when>
 					<c:otherwise>
@@ -149,7 +148,6 @@ td, th {
 							value="上一页">
 					</c:otherwise>
 				</c:choose>
-			</c:forEach>
 			<!-- 循环列出所有页数 -->
 			<c:forEach items="${itemList}" var="p" varStatus="vs"><!-- items的集合必须有多条记录才能列表显示,如其中含数组，而集合只有一条数据，则只显示一条 -->
 				<c:choose>
@@ -163,19 +161,18 @@ td, th {
 				</c:choose>
 			</c:forEach>
 			<!-- 下一页 -->
-			<c:forEach items="${pageList}" var="p">
 				<c:choose>
-					<c:when test="${p.currentPage!=p.totalPage }"><!-- 即不为最后一页 -->
-						<a href="fileManage.action?currentPage=${p.currentPage+1}&type=1"><input
+					<c:when test="${currentPage!=totalPage }"><!-- 即不为最后一页 -->
+						<a href="fileManage.action?currentPage=${currentPage+1}&type=1"><input
 							type="button" name="nextPage" value="下一页"></a>
 					</c:when>
 					<c:otherwise>
 						<input type="button" disabled="true" value="下一页">
 					</c:otherwise>
 				</c:choose>
-			_共${p.totalPage }页|当前第${p.currentPage}页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input type="button" id="jumpBt" onclick="sum(${p.totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
-			</c:forEach>
+			_共${totalPage }页|当前第${currentPage}页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
 		</div>
+		</c:if>
 	</center>
 </body>
 </html>
