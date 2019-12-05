@@ -34,7 +34,7 @@ public class UploadAndDownloadUtil {
 
 		String destPath2 = "F:\\upload";
 		String destFile = destPath2 + File.separatorChar + fileName;
-		System.out.println("保存路径:" + destFile);
+//		System.out.println("上传文件保存路径:" + destFile);
 		File destFile2 = new File(destFile);
 		try {
 			FileUtils.copyFile(sourceFile, destFile2);

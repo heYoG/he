@@ -3,6 +3,7 @@ package vo.fileVo;
 import java.sql.Blob;
 import java.sql.Timestamp;
 
+import util.CommenClass;
 import vo.userVo.UserVo;
 
 
@@ -33,8 +34,6 @@ public class FileManageVo {
 		this.originalFileName = originalFileName;
 		this.fileSize=fileSize;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -96,11 +95,9 @@ public class FileManageVo {
 		this.originalFileName = originalFileName;
 	}
 
-
 	public String getFileSize() {
 		return fileSize;
 	}
-
 
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;

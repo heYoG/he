@@ -25,9 +25,10 @@ public interface IFileManageDao<T,G> {
 	/**
 	 * 删除单个文件
 	 * @param id 文件唯一标识
+	 * @param flag 删除标识 0:彻底从数据库删除;1:虚拟删除，更改文件状态
 	 * @return
 	 */
-	public int deleteFile(int id);
+	public int deleteFile(int id,int flag);
 	
 	/**
 	 * 批量删除文件
@@ -73,7 +74,8 @@ public interface IFileManageDao<T,G> {
 	
 	/**
 	 * 获取总记录数
+	 * @param  flag   标识：flag=0:已删除总数;flag=1:未删除总数
 	 * @return 记录总数
 	 */
-	public int getCount();
+	public int getCount(int flag);
 }

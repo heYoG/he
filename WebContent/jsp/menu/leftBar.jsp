@@ -59,7 +59,7 @@
 			<!-- type=1表示查询状态为1的正常文件,type=0表示查询已删除的文件 -->
 				<li><a href="fileManage.action?type=1" target="showPageName">文件管理</a></li>
 				<li><a href="../backup/fileBackup.jsp" target="showPageName">新增备份</a></li>
-				<li><a href="../backup/fileRecovery.jsp" target="showPageName">备份还原</a></li>
+				<li><a href="../backup/searchRecoveryFile.jsp" target="showPageName">备份还原</a></li>
 			</ul>
 		</li>
 	</ul>

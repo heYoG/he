@@ -53,10 +53,15 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 
 
 	@Override
-	public int deleteFile(int id) {
-		String sql="update "+TableManager.FILETABLE+" set status=0 where id=?";
+	public int deleteFile(int id,int flag) {
+		String sql=null;
+		if(flag==0) {
+			sql="delete from "+TableManager.FILETABLE+" where id=?";
+		}else {
+			sql="update "+TableManager.FILETABLE+" set status=0 where id=?";
+		}
 		int i = executeUpdate(sql, new Object[]{id});
-		System.out.println("删除单个文件返回值:"+i);
+//		System.out.println("删除单个文件返回值:"+i);
 		return i;
 	}
 
@@ -88,7 +93,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	public void uploadFile(FileManageVo vo) {
 		String sql="insert into "+TableManager.FILETABLE+" (id,myFile,fileSize,uploadTime,operator,status,user_id,originalFileName) values (null,?,?,?,?,?,?,?)";
 		int i = executeUpdate(sql,new Object[]{vo.getMyFile(),vo.getFileSize(),vo.getUploadTime(),vo.getOperator(),vo.getStatus(),vo.getUser().getId(),vo.getOriginalFileName()});
-		System.out.println("单个文件上传返回值:"+i);
+//		System.out.println("单个文件上传返回值:"+i);
 		close();
 		
 	}
@@ -105,7 +110,6 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 		Session session = sessionCls.getOpenedSession();
 		Transaction transaction = session.beginTransaction();
 		String sql="update "+FileManageVo.class.getSimpleName()+" set status=1 where id="+id;
-//		System.out.println("class:"+FileManageVo.class+"\nsql:"+sql);
 		Query query = session.createQuery(sql);
 		query.executeUpdate();
 		transaction.commit();
@@ -127,34 +131,50 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 				if(authValue==1)//管理员查询
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-							+ " t2 where t1.user_id=t2.id and t1.status=1";
+							+ " t2 where t1.user_id=t2.id and t1.status=1 limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
 				else//普通用户查询
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-							+ " t2 where t1.user_id=t2.id and t1.status=1 and t1.user_id=" + userId;
+							+ " t2 where t1.user_id=t2.id and t1.status=1 and t1.user_id=" + userId+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
 			} else {// 查询已删除文件
-				if(!vo.getOperator().equals("")&&!vo.getOriginalFileName().equals("")&&vo.getUploadTime()!=null) {//条件都不为空
+				if (vo.getOperator() != null && !vo.getOperator().equals("") && vo.getOriginalFileName() != null
+						&& !vo.getOriginalFileName().equals("") && vo.getUploadTime() != null) {// 条件都不为空
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
 							+ " t2 where t1.user_id=t2.id and t2.userNo=?"
-							+ " and t1.originalFileName=? and t1.uploadtime=? and t1.status=0 and t1.user_id="+userId;	
-					flag=1;
-				}else if(vo.getOperator().equals("")&&!vo.getOriginalFileName().equals("")&&vo.getUploadTime()!=null){
-					flag=1;
-					
-				}else if(!vo.getOperator().equals("")&&vo.getOriginalFileName().equals("")&&vo.getUploadTime()!=null){
-					flag=1;
-				}else if(!vo.getOperator().equals("")&&!vo.getOriginalFileName().equals("")&&vo.getUploadTime()==null){
-					flag=1;
-				}else{//条件都为空
-					if(authValue==1)//管理员查询
+							+ " and t1.originalFileName=? and t1.uploadtime=? and t1.status=0 and t1.user_id=" + userId;
+					flag = 1;
+				}
+//				else if (vo.getOriginalFileName() != null && !vo.getOriginalFileName().equals("")
+//						&& vo.getUploadTime() != null && vo.getOperator() == null || vo.getOperator().equals("")) {// 操作者为空,必须放最后判断,否则操作者为空直接结束判断
+//					flag = 1;
+//
+//				} else if (vo.getOperator() != null && !vo.getOperator().equals("") && vo.getUploadTime() != null
+//						&& vo.getOriginalFileName() == null || vo.getOriginalFileName().equals("")) {// 文件名为空,同上理
+//					flag = 1;
+//				} else if (vo.getOperator() != null && !vo.getOperator().equals("") && vo.getOriginalFileName() != null
+//						&& !vo.getOriginalFileName().equals("") && vo.getUploadTime() == null) {// 日期为空
+//					flag = 1;
+//				} else if(vo.getOperator() != null && !vo.getOperator().equals("") && vo.getOriginalFileName() == null
+//				|| vo.getOriginalFileName().equals("") && vo.getUploadTime() == null){//仅操作者不为空
+				
+//			    } else if(vo.getOperator() == null || vo.getOperator().equals("") && vo.getOriginalFileName() != null
+//				&& !vo.getOriginalFileName().equals("") && vo.getUploadTime() == null) {//仅文件名不为空
+//			    
+//			    } else if(vo.getOperator() == null && vo.getOperator().equals("") && vo.getOriginalFileName() == null
+//				&& vo.getOriginalFileName().equals("") && vo.getUploadTime() != null) {//仅日期不为空
+//			    
+//			    }
+			    	  	
+				else {// 条件都为空
+					if (authValue == 1)// 管理员查询
 						sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 								+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-								+ " t2 where t1.user_id=t2.id and t1.status=0";
-					else//普通用户查询
+								+ " t2 where t1.user_id=t2.id and t1.status=0 limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
+					else// 普通用户查询
 						sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 								+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-								+ " t2 where t1.user_id=t2.id and t1.status=0 and t1.user_id=" + userId;
+								+ " t2 where t1.user_id=t2.id and t1.status=0 and t1.user_id=" + userId+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
 				}
 			}
 			rs = executeQuery(sql,flag,new Object[] {vo.getOperator(), vo.getOriginalFileName(), vo.getUploadTime() });
@@ -174,12 +194,17 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 
 
 	@Override
-	public int getCount() {
-		String sql = "select count(id) from " + TableManager.FILETABLE;
+	public int getCount(int flag) {
+		String sql = "";
+		if (flag == 0)
+			sql = "select count(id) from " + TableManager.FILETABLE + " where status=0";
+		else
+			sql = "select count(id) from " + TableManager.FILETABLE + " where status=1";
 		ResultSet rs = executeQuery(sql, 0);
-		int val=0;
+		int val = 0;
 		try {
-			val = rs.getInt(1);
+			while (rs.next())
+				val = rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

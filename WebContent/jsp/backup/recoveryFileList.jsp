@@ -12,9 +12,9 @@
 			location.href="fileManage!recoveryFile.action?id="+fileId+"&type=1";
 	}
 	
-	function del(obj){
+	function del(fileId){
 		if(confirm("are you sure to delete this file completely?")){
-			
+			location="fileManage!delete_complete.action?id="+fileId+"&type=0";
 		}
 	}
 	

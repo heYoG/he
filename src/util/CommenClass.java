@@ -9,8 +9,9 @@ public class CommenClass{
 	private int totalCount;//总记录数
 	private int currentPage;//当前页
 	private int pageSize;//每页显示数
-	private int jumpPage;//跳转页面
-	private int[] item;//所有页标号(1,2,3...)
+	private int totalPage;//总页数
+	private int jumpPage;//跳转页
+	private int[] item;//页数
 	
 	public int getTotalCount() {
 		return totalCount;
@@ -35,6 +36,12 @@ public class CommenClass{
 		return jumpPage;
 	}
 
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
 	public void setJumpPage(int jumpPage) {
 		this.jumpPage = jumpPage;
 	}
