@@ -36,7 +36,7 @@ public class BaseDao<T> {
 				for (int i = 0; i < orgs.length; i++) {
 					statement.setObject(i + 1, orgs[i]);
 				}
-			System.out.println("sql:"+statement);
+//			System.out.println("sql:"+statement);
 			rs = statement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

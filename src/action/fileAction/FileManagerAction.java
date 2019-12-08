@@ -45,39 +45,88 @@ public class FileManagerAction extends ActionSupport{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		String type = request.getParameter("type");//查询类型,0:查询已删除文件;1:查询未删除文件
-		String currentPage1 = request.getParameter("currentPage");//从页面取
-		currentPage1=currentPage1==null?"1":currentPage1;//获取当前页
-		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数,从配置文件取
-		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		
+		String type=request.getParameter("type");
+		String currentPage1 = request.getParameter("currentPage");
+		currentPage1=currentPage1==null?"1":currentPage1;
+		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
+		int totalCount=fdi.getCount(1,uv);//获取总记录数,实参1表示未删除文件
 		int currentPage2=Integer.parseInt(currentPage1);//转为整型
 		int pageSize2=Integer.parseInt(pageSize1);//转为整型
-		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		int totalPages=0;//总页数
+		String start1=request.getParameter("start");//开始页,用于列表显示可点击页码数的开始位置
+		String end1=request.getParameter("end");//结束页,用于列表显示可点击页码数的结束位置
+		String pageButtonNum1 = cc.getProperty("pageButtonNum");//显示可点击页码数
+		int pageButtonNum2=Integer.parseInt(pageButtonNum1);
+		int start2=0;
+		int end2=0;
+		String nextOrPre=request.getParameter("nextOrPre");//判断是点击上一页还是下一页
 		List<Integer> itemList=new ArrayList<Integer>();
 		
-		/*封装分页查询基本数据*/
-		cc.setCurrentPage(currentPage2);//当前页
-		cc.setPageSize(pageSize2);//每页记录数
-		cc.setTotalCount(totalCount);//总记录数
-		int totalPages=0;
 		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
 			totalPages=totalCount/pageSize2;
 		}else {//不能整除取商+1
 			totalPages=totalCount/pageSize2+1;
 		}
+
+		/*获取start和end值*/
+		if(start1==null&&end1==null) {//初始页面、跳转时页面和点击具体页码页面起止位
+			if(currentPage2%pageButtonNum2==0) {//当前页是要显示数目的整数倍
+				start2=currentPage2-pageButtonNum2+1;//起始位置,每pageButtonNum2换一个区间
+				end2=currentPage2;//结束位置
+			}else {//当前页不是要显示数目的整数倍
+				if(totalPages<pageButtonNum2) {//总页数或当前页小于要显示页的数目
+					start2=1;
+					end2=totalPages;
+				}else {//总页数大于要显示页数目
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2) {//不是最后一个区页
+						if(currentPage2<pageButtonNum2)
+							start2=1;
+						else
+							start2=currentPage2/pageButtonNum2*pageButtonNum2+1;						
+						end2=currentPage2/pageButtonNum2*pageButtonNum2+pageButtonNum2;
+					}else {//是最后一个区页
+						start2=currentPage2/pageButtonNum2*pageButtonNum2+1;
+						end2=totalPages/pageButtonNum2*pageButtonNum2+totalPages%pageButtonNum2;
+					}
+				}
+			}
+		}else {//上一页或下一页时起止位置
+			start2=Integer.parseInt(start1);
+			end2=Integer.parseInt(end1);
+			if(nextOrPre.equals("previous")){//点击上一页
+				if(currentPage2%pageButtonNum2==0) {//进入上一个区间的尾页
+					start2=currentPage2-pageButtonNum2+1;
+					end2=currentPage2;
+				}
+			}else {//点击下一页
+				if(currentPage2%pageButtonNum2==1) {//进入下一个区间的第一页
+					start2=currentPage2;
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2+1)
+						end2=start2+pageButtonNum2-1;
+					else
+						end2=start2+totalPages%pageButtonNum2-1;//最后不满pageButtonNum2数目的页
+				}
+			}			
+		}
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
 		/*封装页码集合*/
-		for(int i=1;i<=totalPages;i++) {
+		for(int i=start2;i<=end2;i++) {
 			itemList.add(i);
 		}
 		cc.setTotalPage(totalPages);
-		/*封装分页相关数据*/
-		listPage.add(cc);
-		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
-		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
 		request.setAttribute("totalPage", totalPages);//总页数
+		request.setAttribute("totalCount", totalCount);//总记录数
+		request.setAttribute("start", start2);//起始武林风
+		request.setAttribute("end", end2);//结束位置
 		return "fileInfo";
 	}
 	
@@ -136,35 +185,88 @@ public class FileManagerAction extends ActionSupport{
 		String currentPage1 = request.getParameter("currentPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int totalCount=fdi.getCount(1,uv);//获取总记录数,实参0表示已删除文件
 		int currentPage2=Integer.parseInt(currentPage1);//转为整型
 		int pageSize2=Integer.parseInt(pageSize1);//转为整型
-		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		int totalPages=0;//总页数
+		String start1=request.getParameter("start");//开始页,用于列表显示可点击页码数的开始位置
+		String end1=request.getParameter("end");//结束页,用于列表显示可点击页码数的结束位置
+		String pageButtonNum1 = cc.getProperty("pageButtonNum");//显示可点击页码数
+		int pageButtonNum2=Integer.parseInt(pageButtonNum1);
+		int start2=0;
+		int end2=0;
+		String nextOrPre=request.getParameter("nextOrPre");//判断是点击上一页还是下一页
 		List<Integer> itemList=new ArrayList<Integer>();
 		
-		/*封装分页查询基本数据*/
-		cc.setCurrentPage(currentPage2);//当前页
-		cc.setPageSize(pageSize2);//每页记录数
-		cc.setTotalCount(totalCount);//总记录数
-		int totalPages=0;
 		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
 			totalPages=totalCount/pageSize2;
 		}else {//不能整除取商+1
 			totalPages=totalCount/pageSize2+1;
 		}
+		
+		/**
+		 * 1.获取start和end值
+		 * 2.按[start,end]区间显示可点击页码
+		 * 3.单个区间的显示
+		 * */
+		if(start1==null&&end1==null) {//初始页面、跳转时页面和点击具体页码页面起止位
+			if(currentPage2%pageButtonNum2==0) {//当前页是要显示数目的整数倍
+				start2=currentPage2-pageButtonNum2+1;//起始位置,每pageButtonNum2换一个区间
+				end2=currentPage2;//结束位置
+			}else {//当前页不是要显示数目的整数倍
+				if(totalPages<pageButtonNum2) {//总页数或当前页小于要显示页的数目
+					start2=1;
+					end2=totalPages;
+				}else {//总页数大于要显示页数目
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2) {//不是最后一个区页
+						if(currentPage2<pageButtonNum2)
+							start2=1;
+						else
+							start2=currentPage2/pageButtonNum2*pageButtonNum2+1;						
+						end2=currentPage2/pageButtonNum2*pageButtonNum2+pageButtonNum2;
+					}else {//是最后一个区页
+						start2=currentPage2/pageButtonNum2*pageButtonNum2+1;
+						end2=totalPages/pageButtonNum2*pageButtonNum2+totalPages%pageButtonNum2;
+					}
+				}
+			}
+		}else {//上一页或下一页时起止位置
+			start2=Integer.parseInt(start1);
+			end2=Integer.parseInt(end1);
+			if(nextOrPre.equals("previous")){//点击上一页
+				if(currentPage2%pageButtonNum2==0) {//进入上一个区间的尾页
+					start2=currentPage2-pageButtonNum2+1;
+					end2=currentPage2;
+				}
+			}else {//点击下一页
+				if(currentPage2%pageButtonNum2==1) {//进入下一个区间的第一页
+					start2=currentPage2;
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2+1)
+						end2=start2+pageButtonNum2-1;
+					else
+						end2=start2+totalPages%pageButtonNum2-1;//最后不满pageButtonNum2数目的页
+				}
+			}			
+		}
+		
+		/*封装分页查询基本数据*/
+		cc.setCurrentPage(currentPage2);//当前页
+		cc.setPageSize(pageSize2);//每页记录数
+		cc.setTotalCount(totalCount);//总记录数
+		
 		/*封装页码集合*/
-		for(int i=1;i<=totalPages;i++) {
+		for(int i=start2;i<=end2;i++) {
 			itemList.add(i);
 		}
 		cc.setTotalPage(totalPages);
-		/*封装分页相关数据*/
-		listPage.add(cc);
-		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
-		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
 		request.setAttribute("totalPage", totalPages);//总页数
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("start", start2);//起始武林风
+		request.setAttribute("end", end2);//结束位置
 		return "fileInfo";//返回文件管理
 	}
 	
@@ -179,39 +281,85 @@ public class FileManagerAction extends ActionSupport{
 		}
 		int id=Integer.parseInt(request.getParameter("id"));
 		fdi.deleteFile(id,0);
-		String type=request.getParameter("type");//查询类型
+		String type=request.getParameter("type");
 		String currentPage1 = request.getParameter("currentPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int totalCount=fdi.getCount(0,uv);//获取总记录数,实参0表示已删除文件
 		int currentPage2=Integer.parseInt(currentPage1);//转为整型
 		int pageSize2=Integer.parseInt(pageSize1);//转为整型
-		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		int totalPages=0;//总页数
+		String start1=request.getParameter("start");//开始页,用于列表显示可点击页码数的开始位置
+		String end1=request.getParameter("end");//结束页,用于列表显示可点击页码数的结束位置
+		String pageButtonNum1 = cc.getProperty("pageButtonNum");//显示可点击页码数
+		int pageButtonNum2=Integer.parseInt(pageButtonNum1);
+		int start2=0;
+		int end2=0;
+		String nextOrPre=request.getParameter("nextOrPre");//判断是点击上一页还是下一页
 		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
 		cc.setCurrentPage(currentPage2);//当前页
 		cc.setPageSize(pageSize2);//每页记录数
 		cc.setTotalCount(totalCount);//总记录数
-		int totalPages=0;
 		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
 			totalPages=totalCount/pageSize2;
 		}else {//不能整除取商+1
 			totalPages=totalCount/pageSize2+1;
 		}
+		/*获取start和end值*/
+		if(start1==null&&end1==null) {//初始页面、跳转时页面和点击具体页码页面起止位
+			if(currentPage2%pageButtonNum2==0) {//当前页是要显示数目的整数倍
+				start2=currentPage2-pageButtonNum2+1;//起始位置,每pageButtonNum2换一个区间
+				end2=currentPage2;//结束位置
+			}else {//当前页不是要显示数目的整数倍
+				if(totalPages<pageButtonNum2) {//总页数或当前页小于要显示页的数目
+					start2=1;
+					end2=totalPages;
+				}else {//总页数大于要显示页数目
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2) {//不是最后一个区页
+						if(currentPage2<pageButtonNum2)
+							start2=1;
+						else
+							start2=currentPage2/pageButtonNum2*pageButtonNum2+1;						
+						end2=currentPage2/pageButtonNum2*pageButtonNum2+pageButtonNum2;
+					}else {//是最后一个区页
+						start2=currentPage2/pageButtonNum2*pageButtonNum2+1;
+						end2=totalPages/pageButtonNum2*pageButtonNum2+totalPages%pageButtonNum2;
+					}
+				}
+			}
+		}else {//上一页或下一页时起止位置
+			start2=Integer.parseInt(start1);
+			end2=Integer.parseInt(end1);
+			if(nextOrPre.equals("previous")){//点击上一页
+				if(currentPage2%pageButtonNum2==0) {//进入上一个区间的尾页
+					start2=currentPage2-pageButtonNum2+1;
+					end2=currentPage2;
+				}
+			}else {//点击下一页
+				if(currentPage2%pageButtonNum2==1) {//进入下一个区间的第一页
+					start2=currentPage2;
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2+1)
+						end2=start2+pageButtonNum2-1;
+					else
+						end2=start2+totalPages%pageButtonNum2-1;//最后不满pageButtonNum2数目的页
+				}
+			}			
+		}
 		/*封装页码集合*/
-		for(int i=1;i<=totalPages;i++) {
+		for(int i=start2;i<=end2;i++) {
 			itemList.add(i);
 		}
 		cc.setTotalPage(totalPages);
-		/*封装分页相关数据*/
-		listPage.add(cc);
-		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
-		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
 		request.setAttribute("totalPage", totalPages);//总页数
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("start", start2);//起始武林风
+		request.setAttribute("end", end2);//结束位置
 		return "recoveryFileList";//返回可恢复列表
 	}
 	
@@ -227,43 +375,92 @@ public class FileManagerAction extends ActionSupport{
 		}
 		fm.setOperator(request.getParameter("userNo"));
 		fm.setOriginalFileName(request.getParameter("fileName"));
-		String type=request.getParameter("type");
 //		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 //		String date1 = request.getParameter("date");
 //		Timestamp date2 = Timestamp.valueOf(date1);
 //		fm.setUploadTime(date2);
+		String type=request.getParameter("type");
 		String currentPage1 = request.getParameter("currentPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount(0);//获取总记录数,实参0表示已删除文件
+		int totalCount=fdi.getCount(0,uv);//获取总记录数,实参0表示已删除文件
 		int currentPage2=Integer.parseInt(currentPage1);//转为整型
 		int pageSize2=Integer.parseInt(pageSize1);//转为整型
-		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		int totalPages=0;//总页数
+		String start1=request.getParameter("start");//开始页,用于列表显示可点击页码数的开始位置
+		String end1=request.getParameter("end");//结束页,用于列表显示可点击页码数的结束位置
+		String pageButtonNum1 = cc.getProperty("pageButtonNum");//显示可点击页码数
+		int pageButtonNum2=Integer.parseInt(pageButtonNum1);
+		int start2=0;
+		int end2=0;
+		String nextOrPre=request.getParameter("nextOrPre");//判断是点击上一页还是下一页
 		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
 		cc.setCurrentPage(currentPage2);//当前页
 		cc.setPageSize(pageSize2);//每页记录数
 		cc.setTotalCount(totalCount);//总记录数
-		int totalPages=0;
+		/*计算总页数*/
 		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
 			totalPages=totalCount/pageSize2;
 		}else {//不能整除取商+1
 			totalPages=totalCount/pageSize2+1;
 		}
+		
+		/*获取start和end值*/
+		if(start1==null&&end1==null) {//初始页面、跳转时页面和点击具体页码页面起止位
+			if(currentPage2%pageButtonNum2==0) {//当前页是要显示数目的整数倍
+				start2=currentPage2-pageButtonNum2+1;//起始位置,每pageButtonNum2换一个区间
+				end2=currentPage2;//结束位置
+			}else {//当前页不是要显示数目的整数倍
+				if(totalPages<pageButtonNum2) {//总页数或当前页小于要显示页的数目
+					start2=1;
+					end2=totalPages;
+				}else {//总页数大于要显示页数目
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2) {//不是最后一个区页
+						if(currentPage2<pageButtonNum2)
+							start2=1;
+						else
+							start2=currentPage2/pageButtonNum2*pageButtonNum2+1;						
+						end2=currentPage2/pageButtonNum2*pageButtonNum2+pageButtonNum2;
+					}else {//是最后一个区页
+						start2=currentPage2/pageButtonNum2*pageButtonNum2+1;
+						end2=totalPages/pageButtonNum2*pageButtonNum2+totalPages%pageButtonNum2;
+					}
+				}
+			}
+		}else {//上一页或下一页时起止位置
+			start2=Integer.parseInt(start1);
+			end2=Integer.parseInt(end1);
+			if(nextOrPre.equals("previous")){//点击上一页
+				if(currentPage2%pageButtonNum2==0) {//进入上一个区间的尾页
+					start2=currentPage2-pageButtonNum2+1;
+					end2=currentPage2;
+				}
+			}else {//点击下一页
+				if(currentPage2%pageButtonNum2==1) {//进入下一个区间的第一页
+					start2=currentPage2;
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2+1)
+						end2=start2+pageButtonNum2-1;
+					else
+						end2=start2+totalPages%pageButtonNum2-1;//最后不满pageButtonNum2数目的页
+				}
+			}			
+		}
+		
 		/*封装页码集合*/
-		for(int i=1;i<=totalPages;i++) {
+		for(int i=start2;i<=end2;i++) {
 			itemList.add(i);
 		}
 		cc.setTotalPage(totalPages);
-		/*封装分页相关数据*/
-		listPage.add(cc);
-		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
-		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
 		request.setAttribute("totalPage", totalPages);//总页数
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("start", start2);//起始武林风
+		request.setAttribute("end", end2);//结束位置
 		return "recoveryFileList";
 	}
 	
@@ -283,35 +480,81 @@ public class FileManagerAction extends ActionSupport{
 		String currentPage1 = request.getParameter("currentPage");
 		currentPage1=currentPage1==null?"1":currentPage1;
 		String pageSize1 = cc.getProperty("pageSize");//每页显示记录数
-		int totalCount=fdi.getCount(1);//获取总记录数,实参1表示未删除文件
+		int totalCount=fdi.getCount(1,uv);//获取总记录数,实参0表示已删除文件
 		int currentPage2=Integer.parseInt(currentPage1);//转为整型
 		int pageSize2=Integer.parseInt(pageSize1);//转为整型
-		List<CommenClass> listPage=new ArrayList<CommenClass>();
+		int totalPages=0;//总页数
+		String start1=request.getParameter("start");//开始页,用于列表显示可点击页码数的开始位置
+		String end1=request.getParameter("end");//结束页,用于列表显示可点击页码数的结束位置
+		String pageButtonNum1 = cc.getProperty("pageButtonNum");//显示可点击页码数
+		int pageButtonNum2=Integer.parseInt(pageButtonNum1);
+		int start2=0;
+		int end2=0;
+		String nextOrPre=request.getParameter("nextOrPre");//判断是点击上一页还是下一页
 		List<Integer> itemList=new ArrayList<Integer>();
 		
 		/*封装分页查询基本数据*/
 		cc.setCurrentPage(currentPage2);//当前页
 		cc.setPageSize(pageSize2);//每页记录数
 		cc.setTotalCount(totalCount);//总记录数
-		int totalPages=0;
 		if(totalCount%pageSize2==0) {//整除取商,totalCount和pageSize2必须是整型
 			totalPages=totalCount/pageSize2;
 		}else {//不能整除取商+1
 			totalPages=totalCount/pageSize2+1;
 		}
+		/*获取start和end值*/
+		if(start1==null&&end1==null) {//初始页面、跳转时页面和点击具体页码页面起止位
+			if(currentPage2%pageButtonNum2==0) {//当前页是要显示数目的整数倍
+				start2=currentPage2-pageButtonNum2+1;//起始位置,每pageButtonNum2换一个区间
+				end2=currentPage2;//结束位置
+			}else {//当前页不是要显示数目的整数倍
+				if(totalPages<pageButtonNum2) {//总页数或当前页小于要显示页的数目
+					start2=1;
+					end2=totalPages;
+				}else {//总页数大于要显示页数目
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2) {//不是最后一个区页
+						if(currentPage2<pageButtonNum2)
+							start2=1;
+						else
+							start2=currentPage2/pageButtonNum2*pageButtonNum2+1;						
+						end2=currentPage2/pageButtonNum2*pageButtonNum2+pageButtonNum2;
+					}else {//是最后一个区页
+						start2=currentPage2/pageButtonNum2*pageButtonNum2+1;
+						end2=totalPages/pageButtonNum2*pageButtonNum2+totalPages%pageButtonNum2;
+					}
+				}
+			}
+		}else {//上一页或下一页时起止位置
+			start2=Integer.parseInt(start1);
+			end2=Integer.parseInt(end1);
+			if(nextOrPre.equals("previous")){//点击上一页
+				if(currentPage2%pageButtonNum2==0) {//进入上一个区间的尾页
+					start2=currentPage2-pageButtonNum2+1;
+					end2=currentPage2;
+				}
+			}else {//点击下一页
+				if(currentPage2%pageButtonNum2==1) {//进入下一个区间的第一页
+					start2=currentPage2;
+					if(currentPage2<totalPages/pageButtonNum2*pageButtonNum2+1)
+						end2=start2+pageButtonNum2-1;
+					else
+						end2=start2+totalPages%pageButtonNum2-1;//最后不满pageButtonNum2数目的页
+				}
+			}			
+		}
 		/*封装页码集合*/
-		for(int i=1;i<=totalPages;i++) {
+		for(int i=start2;i<=end2;i++) {
 			itemList.add(i);
 		}
 		cc.setTotalPage(totalPages);
-		/*封装分页相关数据*/
-		listPage.add(cc);
-		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc);
+		List<FileManageVo> listFile = fdi.getFileInfo(type,uv.getAv().getAuthVal(),fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
-		request.setAttribute("pageList", listPage);//分页的其它数据
 		request.setAttribute("itemList", itemList);//页码集合
 		request.setAttribute("currentPage", currentPage2);//当前页
 		request.setAttribute("totalPage", totalPages);//总页数
+		request.setAttribute("totalCount", totalCount);//总记录数
+		request.setAttribute("start", start2);//起始武林风
+		request.setAttribute("end", end2);//结束位置
 		return "fileInfo";//跳转到文件列表
 	}
 	

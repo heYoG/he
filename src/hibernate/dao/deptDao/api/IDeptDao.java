@@ -7,9 +7,11 @@ public interface IDeptDao<T> {
 	
 	/**
 	 * hibernate查询所有部门信息
+	 * @param	currentPage	当前页
+	 * @param	pageSize	每页显示记录数
 	 * @return
 	 */
-	public List<T> getDeptInfos(T t);
+	public List<T> getDeptInfos(T t,int currentPage,int pageSize);
 	
 	/**
 	 * 根据条件查询单条数据
@@ -31,4 +33,10 @@ public interface IDeptDao<T> {
 	 * @return
 	 */
 	public void delDept(T t,Serializable obj);
+	
+	/**
+	 * hibernate查询记录总数
+	 * @return
+	 */
+	public long getCount(T t);
 }

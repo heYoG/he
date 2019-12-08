@@ -23,7 +23,7 @@ import vo.CommenVo;
 import vo.fileVo.FileManageVo;
 import vo.userVo.UserVo;
 
-public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo,CommenClass>{
+public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo,CommenClass,UserVo>{
 
 	private SessionClass sessionCls;
 	private static HttpServletRequest request = ServletActionContext.getRequest();
@@ -118,12 +118,10 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	}
 
 	@Override
-	public List<FileManageVo> getFileInfo(String type,int authValue,FileManageVo vo,CommenClass cc) {
+	public List<FileManageVo> getFileInfo(String type,int authValue,FileManageVo vo,CommenClass cc,UserVo uv) {
 		String sql=null;
 		List<FileManageVo> list=new ArrayList<FileManageVo>();
 		ResultSet rs=null;
-		UserVo uv = (UserVo)session.getAttribute("userVo");
-		int userId=uv.getId();
 		int flag=0;//0：不设置占位符，1：设置占位符
 		
 		try {
@@ -135,14 +133,14 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 				else//普通用户查询
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-							+ " t2 where t1.user_id=t2.id and t1.status=1 and t1.user_id=" + userId+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
+							+ " t2 where t1.user_id=t2.id and t1.status=1 and t1.user_id=" + uv.getId()+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
 			} else {// 查询已删除文件
 				if (vo.getOperator() != null && !vo.getOperator().equals("") && vo.getOriginalFileName() != null
 						&& !vo.getOriginalFileName().equals("") && vo.getUploadTime() != null) {// 条件都不为空
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
 							+ " t2 where t1.user_id=t2.id and t2.userNo=?"
-							+ " and t1.originalFileName=? and t1.uploadtime=? and t1.status=0 and t1.user_id=" + userId;
+							+ " and t1.originalFileName=? and t1.uploadtime=? and t1.status=0 and t1.user_id=" + uv.getId();
 					flag = 1;
 				}
 //				else if (vo.getOriginalFileName() != null && !vo.getOriginalFileName().equals("")
@@ -174,7 +172,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 					else// 普通用户查询
 						sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 								+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
-								+ " t2 where t1.user_id=t2.id and t1.status=0 and t1.user_id=" + userId+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
+								+ " t2 where t1.user_id=t2.id and t1.status=0 and t1.user_id=" + uv.getId()+" limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
 				}
 			}
 			rs = executeQuery(sql,flag,new Object[] {vo.getOperator(), vo.getOriginalFileName(), vo.getUploadTime() });
@@ -194,12 +192,19 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 
 
 	@Override
-	public int getCount(int flag) {
+	public int getCount(int flag,UserVo uv) {
 		String sql = "";
-		if (flag == 0)
-			sql = "select count(id) from " + TableManager.FILETABLE + " where status=0";
-		else
-			sql = "select count(id) from " + TableManager.FILETABLE + " where status=1";
+		if (flag == 0) {//查询已删除文件
+			if(uv.getAv().getAuthVal()==1)//管理员查询
+				sql = "select count(id) from " + TableManager.FILETABLE + " where status=0";
+			else//普通用户查询
+				sql = "select count(t1.id) from " + TableManager.FILETABLE+" t1,"+TableManager.USERTABLE + " t2 where t1.user_id=t2.id and t1.status=0 and t1.user_id="+uv.getId();
+		}else{//查询未删除文件
+			if(uv.getAv().getAuthVal()==1)//管理员查询
+				sql = "select count(id) from " + TableManager.FILETABLE + " where status=1";
+			else//普通用户查询
+				sql = "select count(t1.id) from " + TableManager.FILETABLE+" t1,"+TableManager.USERTABLE + " t2 where t1.user_id=t2.id and t1.status=1 and t1.user_id="+uv.getId();
+		}
 		ResultSet rs = executeQuery(sql, 0);
 		int val = 0;
 		try {

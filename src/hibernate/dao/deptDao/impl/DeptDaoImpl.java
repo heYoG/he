@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 
 import hibernate.dao.deptDao.api.IDeptDao;
 
+@SuppressWarnings(value= {"all"})
 public class DeptDaoImpl<T> implements IDeptDao<T> {
 	public Session getOpenedSession() {
 		Configuration cfg = new Configuration();
@@ -21,9 +21,13 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 	}
 
 	@Override
-	public List<T> getDeptInfos(T t) {
+	public List<T> getDeptInfos(T t,int currentPage,int pageSize) {
 		Session session=this.getOpenedSession();
 		Query getDepts = session.createQuery("from DeptVo");
+		if(currentPage!=0&&pageSize!=0) {//分页查询
+			getDepts.setFirstResult((currentPage-1)*pageSize);
+			getDepts.setMaxResults(pageSize);			
+		}
 		List<T> list = getDepts.list();
 		session.close();
 		return list;
@@ -55,6 +59,16 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 		session.delete(session.get(t.getClass(), id));//id必须是主键
 		transaction.commit();
 		session.close();
+	}
+
+	@Override
+	public long getCount(T t) {
+		Session session = this.getOpenedSession();
+		String sql="select count(deptID) from "+t.getClass().getSimpleName();
+		Query query = session.createQuery(sql);
+		long count = (long) query.uniqueResult();
+		session.close();//关闭session
+		return count;
 	}
 
 }

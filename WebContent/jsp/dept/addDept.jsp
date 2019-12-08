@@ -39,6 +39,7 @@
 									dept = retVal[i].deptName;
 								}
 								alert("'"+dept+"'已存在,请重新输入！");
+								document.getElementById("deptID").value='';
 								return false;
 							}
 							addDeptForm.submit();

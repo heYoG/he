@@ -10,8 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文件管理</title>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
 <script type="text/javascript"
 	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -37,15 +36,21 @@ td, th {
 	height: 22px;
 }
 
-#pageDiv{
-	margin-top:10px;
-	border:solid 0px;
-	text-align:right
+#pageDiv {
+	margin-top: 10px;
+	border: solid 0px;
+	text-align: right
 }
 
-.currentPage{
-	font-size:20px;
-	color:red;
+.currentPage {
+	font-size: 20px;
+	color: red;
+	border:0px;
+	cursor:pointer;
+}
+
+a:link{
+	text-decoration:none
 }
 </style>
 <script type="text/javascript">
@@ -86,9 +91,11 @@ td, th {
 			return false;
 		}else if(isNaN(jumpPage)){
 			alert("跳转页码必须是数字!");
+			document.getElementById("jumpPage").value='';
 			return false;			
 		}else if(jumpPage>totalPage){
 			alert("输入页码超出范围,请重新输入!");
+			document.getElementById("jumpPage").value='';
 			return false;
 		}
 		location="fileManage.action?currentPage="+jumpPage+"&type=1";
@@ -101,7 +108,7 @@ td, th {
 		<c:if test="${fileList=='[]'}">
 			<!-- fileList是集合(可变数组) -->
 			<!-- 查询为空 -->
-			<span style="text-align:center;font:red 15pt">此处空空如也</span>
+			<span style="text-align: center; font: red 15pt">此处空空如也</span>
 			<br>
 			<a href="../backup/fileBackup.jsp" targer="showPageName">前往文件备份...</a>
 		</c:if>
@@ -130,17 +137,16 @@ td, th {
 							<a href="fileManage!downloadFile.action?id=${fileIn.id}"
 							target="_self">下载</a>&nbsp;&nbsp; <a href="javascript:void(0)"
 							target="showPageName" onclick="del(${fileIn.id})">删除</a></td>
-						<!-- 删除用ajax局部刷新 -->
 					</tr>
 				</c:forEach>
 			</table>
 
-		<!-- 页码列表 -->
-		<div id="pageDiv">
-			<!-- 上一页 -->
+			<!-- 页码列表 -->
+			<div id="pageDiv">
+				<!-- 上一页 -->
 				<c:choose>
 					<c:when test="${currentPage!=1}">
-						<a href="fileManage.action?currentPage=${currentPage-1}&type=1"><input
+						<a href="fileManage.action?currentPage=${currentPage-1}&type=1&nextOrPre=previous&start=${start}&end=${end}"><input
 							type="button" name="previousPage" value="上一页"></a>
 					</c:when>
 					<c:otherwise>
@@ -148,30 +154,34 @@ td, th {
 							value="上一页">
 					</c:otherwise>
 				</c:choose>
-			<!-- 循环列出所有页数 -->
-			<c:forEach items="${itemList}" var="p" varStatus="vs"><!-- items的集合必须有多条记录才能列表显示,如其中含数组，而集合只有一条数据，则只显示一条 -->
+				<!-- 循环列出所有页数 -->
+				<c:forEach items="${itemList}" var="p" varStatus="vs">
+					<!-- items的集合必须有多条记录才能列表显示,如其中含数组，而集合只有一条数据，则只显示一条 -->
+					<c:choose>
+						<c:when test="${p==currentPage}">
+							<!-- 是当前页突出显示-->
+							<span class="currentPage">${p }</span><!-- 禁止点击当前页 -->
+						</c:when>
+						<c:otherwise>
+							<a href="fileManage.action?currentPage=${p}&type=1">${p}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<!-- 下一页 -->
 				<c:choose>
-					<c:when test="${p==currentPage}&type=1">
-						<!-- 是当前页突出显示-->
-						<a href="fileManage.action?currentPage=${currentPage}&type=1" class="currentPage">${p }</a>
-					</c:when>
-					<c:otherwise>
-						<a href="fileManage.action?currentPage=${p}&type=1">${p}</a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<!-- 下一页 -->
-				<c:choose>
-					<c:when test="${currentPage!=totalPage }"><!-- 即不为最后一页 -->
-						<a href="fileManage.action?currentPage=${currentPage+1}&type=1"><input
+					<c:when test="${currentPage!=totalPage }">
+						<!-- 即不为最后一页 -->
+						<a href="fileManage.action?currentPage=${currentPage+1}&type=1&nextOrPre=next&start=${start}&end=${end}"><input
 							type="button" name="nextPage" value="下一页"></a>
 					</c:when>
 					<c:otherwise>
 						<input type="button" disabled="true" value="下一页">
 					</c:otherwise>
 				</c:choose>
-			_共${totalPage }页|当前第${currentPage}页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
-		</div>
+				_ 共${totalCount}条数据|共${totalPage }页|当前第${currentPage}页&nbsp;&nbsp;跳到第<input
+					type="text" size="4" id="jumpPage">页&nbsp;<input
+					type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+			</div>
 		</c:if>
 	</center>
 </body>

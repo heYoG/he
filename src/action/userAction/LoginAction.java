@@ -132,7 +132,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	}
 	
 	public String beforeAddUser() {//获取部门数据
-		List<DeptVo> list=dt.getDeptInfos(dv);
+		List<DeptVo> list=dt.getDeptInfos(dv,0,0);//普通查询
 		request.setAttribute("deptList", list);
 		return "beforeAddUser";
 		

@@ -4,7 +4,7 @@
 <!-- 配置i18n -->
 <!-- <constant name="struts.custom.i18n.resources" value="resource"></constant>-->
 <package name="struts5 test" extends="struts-default">
-	<!--用户信息action  -->
+	<!--用户信息action,jsp:method.action调用action的方法  -->
 	<action name="login" class="action.userAction.LoginAction">
 		<result name="success">/jsp/mainPage.jsp</result>
 		<result name="error">/jsp/errorsPage.jsp</result>
@@ -17,7 +17,7 @@
 		<result name="invalid.token" type="redirect">/jsp/token/invalidRequest.jsp</result>
 		< param name="includeMethods">execute</param>-->
 	</action>
-	<!-- 用户权限action -->
+	<!-- 用户权限action,jsp:auth_method调用action的方法 -->
 	<action name="auth_*" class="action.userAction.AuthorityAction" method="{1}">
 		<result name="authList">/jsp/auth/authList.jsp</result>
 	</action>
@@ -36,8 +36,10 @@
 		<result name="error">/jsp/errorsPage.jsp</result>
 		<result name="recoveryFileList">/jsp/backup/recoveryFileList.jsp</result>
 	</action>
+	<!-- 部门action,jsp:类名_method调用action的方法 -->
 	<action name="*_*" class="action.deptAction.{1}" method="{2}">
 		<result name="deptList">/jsp/dept/deptList.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
 	</action>
 </package>
 <constant name="struts.multipart.maxSize" value="10240000"/>

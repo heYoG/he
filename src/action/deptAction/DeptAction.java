@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -17,41 +19,87 @@ import com.opensymphony.xwork2.ModelDriven;
 import hibernate.dao.deptDao.impl.DeptDaoImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import util.CommenClass;
 import vo.deptVo.DeptVo;
+import vo.userVo.UserVo;
 
 @SuppressWarnings(value= {"all"})
 public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 	
 	private static DeptDaoImpl<DeptVo> dept=new DeptDaoImpl<DeptVo>();
 	DeptVo dv=new DeptVo();
-	/**
-	 * 获取部门信息列表
-	 */
+	CommenClass cc=new CommenClass();
+	UserVo uv=null;
+	
+	/*获取部门信息列表*/
 	@Override
 	public String execute() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		List<DeptVo> list=dept.getDeptInfos(dv);
+		HttpSession session = request.getSession(false);
+		if(session!=null)//判断session是否已过期
+			uv=(UserVo) session.getAttribute("userVo");
+		if(uv==null) {//session过期则跳转到登录页面
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		/*分页*/
+		String currentPage1=request.getParameter("currentPage");//获取当前页
+		currentPage1=currentPage1==null?"1":currentPage1;
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		String pageSize1 = CommenClass.getProperty("pageSize");//获取每页显示数目
+		int pageSize2=Integer.parseInt(pageSize1);
+		long count = dept.getCount(dv);//获取记录总数
+		long totalPages=0;//总页数
+		List<Integer> itemList=new ArrayList<Integer>();//存储页码集合
+		/*获取总页数*/
+		if(count%pageSize2==0)
+			totalPages=count/pageSize2;
+		else
+			totalPages=count/pageSize2+1;
+		/*填充页码集合*/
+		for(int i=1;i<=totalPages;i++)
+			itemList.add(i);
+		List<DeptVo> list=dept.getDeptInfos(dv,currentPage2,pageSize2);
 		request.setAttribute("deptList", list);
+		request.setAttribute("itemList", itemList);
+		request.setAttribute("currentPage", currentPage1);
+		request.setAttribute("totalCount", count);
+		request.setAttribute("totalPage", totalPages);
 		return "deptList";
 	}
 	
 	/*添加部门*/
 	public String addDept() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		//int deptID=4;
 		String deptName2 = dv.getDeptName();
 		String deptName = request.getParameter("deptName");
-//		System.out.println("deptName:"+deptName);
 		int flag=0;
-		//dv.setDeptID(deptID);//deptID数据库自动递增
 		dv.setDeptName(deptName);
 		dv.setFlag(flag);
 		Serializable addDept = dept.addDept(dv);
-//		System.out.println("addDept:"+addDept);
-		List<DeptVo> list=dept.getDeptInfos(dv);
+		/*分页*/
+		String currentPage1=request.getParameter("currentPage");//获取当前页
+		currentPage1=currentPage1==null?"1":currentPage1;
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		String pageSize1 = CommenClass.getProperty("pageSize");//获取每页显示数目
+		int pageSize2=Integer.parseInt(pageSize1);
+		long count = dept.getCount(dv);//获取记录总数
+		long totalPages=0;//总页数
+		List<Integer> itemList=new ArrayList<Integer>();//存储页码集合
+		/*获取总页数*/
+		if(count%pageSize2==0)
+			totalPages=count/pageSize2;
+		else
+			totalPages=count/pageSize2+1;
+		/*填充页码集合*/
+		for(int i=1;i<=totalPages;i++)
+			itemList.add(i);
+		List<DeptVo> list=dept.getDeptInfos(dv,currentPage2,pageSize2);
 		request.setAttribute("deptList", list);
-//		System.out.println("addDept:"+addDept);
+		request.setAttribute("itemList", itemList);
+		request.setAttribute("currentPage", currentPage1);
+		request.setAttribute("totalCount", count);
+		request.setAttribute("totalPage", totalPages);
 		return "deptList";
 	}
 	
@@ -60,18 +108,42 @@ public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String id=request.getParameter("id");
 		dept.delDept(dv, Integer.parseInt(id));
-		List<DeptVo> list=dept.getDeptInfos(dv);
+		/*分页*/
+		String currentPage1=request.getParameter("currentPage");//获取当前页
+		currentPage1=currentPage1==null?"1":currentPage1;
+		int currentPage2=Integer.parseInt(currentPage1);//转为整型
+		String pageSize1 = CommenClass.getProperty("pageSize");//获取每页显示数目
+		int pageSize2=Integer.parseInt(pageSize1);
+		long count = dept.getCount(dv);//获取记录总数
+		long totalPages=0;//总页数
+		List<Integer> itemList=new ArrayList<Integer>();//存储页码集合
+		/*获取总页数*/
+		if(count%pageSize2==0)
+			totalPages=count/pageSize2;
+		else
+			totalPages=count/pageSize2+1;
+		/*填充页码集合*/
+		for(int i=1;i<=totalPages;i++)
+			itemList.add(i);
+		List<DeptVo> list=dept.getDeptInfos(dv,currentPage2,pageSize2);
 		request.setAttribute("deptList", list);
+		request.setAttribute("itemList", itemList);
+		request.setAttribute("currentPage", currentPage1);
+		request.setAttribute("totalCount", count);
+		request.setAttribute("totalPage", totalPages);
 		return "deptList";
 	}
 	
-	public void isExit_DeptName() {//判断部门名称是否已存在
+	/**
+	 *	判断部门名称是否已存在
+	 *	返回json类型数据,前端通过ajax判断 
+	 */
+	public void isExit_DeptName() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		try {
-//			request.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html;charset=utf-8");
-			response.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");//响应设置编码,是否可能返回乱码数据
 			PrintWriter out = response.getWriter();
 			JsonConfig jsonConfig = new JsonConfig();
 			String deptName = request.getParameter("deptNm");
