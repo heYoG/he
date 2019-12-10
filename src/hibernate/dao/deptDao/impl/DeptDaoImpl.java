@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import hibernate.dao.deptDao.api.IDeptDao;
+import util.CommenClass;
 
 @SuppressWarnings(value= {"all"})
 public class DeptDaoImpl<T> implements IDeptDao<T> {
@@ -21,22 +22,30 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 	}
 
 	@Override
-	public List<T> getDeptInfos(T t,int currentPage,int pageSize) {
+	public List<T> getDeptInfos(T t,CommenClass cc) {
 		Session session=this.getOpenedSession();
-		Query getDepts = session.createQuery("from DeptVo");
-		if(currentPage!=0&&pageSize!=0) {//分页查询
-			getDepts.setFirstResult((currentPage-1)*pageSize);
-			getDepts.setMaxResults(pageSize);			
-		}
+		Query getDepts = session.createQuery("from " + t.getClass().getSimpleName());
+		/*设置分页查询参数*/
+		getDepts.setFirstResult((cc.getCurrentPage() - 1) * cc.getPageSize());
+		getDepts.setMaxResults(cc.getPageSize());
 		List<T> list = getDepts.list();
 		session.close();
 		return list;
 	}
 
 	@Override
+	public List<T> getDeptInfos() {
+		Session session=this.getOpenedSession();
+		Query getDepts = session.createQuery("from DeptVo");
+		List<T> list = getDepts.list();
+		session.close();
+		return list;
+	}
+	
+	@Override
 	public List<T> getDeptInfo(T t,String obj) {
 		Session session = this.getOpenedSession();
-		Query sqlQuery = session.createQuery("from DeptVo where deptName='"+obj+"'");
+		Query sqlQuery = session.createQuery("from "+t.getClass().getSimpleName()+" where deptName='"+obj+"'");
 		List<T> list = sqlQuery.list();
 		return list;
 	}
@@ -65,6 +74,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 	public long getCount(T t) {
 		Session session = this.getOpenedSession();
 		String sql="select count(deptID) from "+t.getClass().getSimpleName();
+		
 		Query query = session.createQuery(sql);
 		long count = (long) query.uniqueResult();
 		session.close();//关闭session

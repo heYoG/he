@@ -8,13 +8,13 @@
 			org.hibernate.dialect.MySQLDialect
 		</property>
 		<property name="connection.url">
-			jdbc:mysql://127.0.0.1:3306/ssh?useUnicode=true&amp;characterEncoding=utf-8
+			jdbc:mysql://127.0.0.1:3306/ssh?useUnicode=true&amp;characterEncoding=UTF8
 		</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">root</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 		<mapping resource="vo/userVo/UserVo.hbm.xml"></mapping>
 		<mapping resource="vo/userVo/AuthorityVo.hbm.xml"></mapping>
 		<mapping resource="vo/deptVo/DeptVo.hbm.xml"></mapping>

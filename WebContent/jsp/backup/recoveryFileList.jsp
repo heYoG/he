@@ -127,44 +127,46 @@ a:link{
 					</tr>
 				</c:forEach>
 			</table>
+			<!-- 页码列表 -->
 			<div id="pageDiv">
-				<!-- 上一页按钮 -->
+				<!-- 上一页 -->
 				<c:choose>
-					<c:when test="${currentPage!=1 }">
-						<a
-							href="fileManage!recoveryFileList.action?currentPage=${currentPage-1 }&type=0&nextOrPre=previous&start=${start}&end=${end}"><input
+					<c:when test="${pageData.currentPage!=1}">
+						<a href="fileManage!recoveryFileList.action?currentPage=${pageData.currentPage-1}&type=0&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
 							type="button" name="previousPage" value="上一页"></a>
 					</c:when>
 					<c:otherwise>
-						<input type="button" name="previousPage" disabled="true"
+						<input type="button" disabled="true" name="previousPage"
 							value="上一页">
 					</c:otherwise>
 				</c:choose>
-				<!-- 显示 页码-->
-				<c:forEach items="${itemList }" var="p">
+				<!-- 循环列出所有页数 -->
+				<c:forEach items="${pageData.itemList}" var="p" varStatus="vs">
+					<!-- items的集合必须有多条记录才能列表显示,如其中含数组，而集合只有一条数据，则只显示一条 -->
 					<c:choose>
-						<c:when test="${p==currentPage }">
-								<span class="currentPage">${p }</span><!-- 禁止点击当前页 -->
+						<c:when test="${p==pageData.currentPage}">
+							<!-- 是当前页突出显示-->
+							<span class="currentPage">${p }</span><!-- 禁止点击当前页 -->
 						</c:when>
 						<c:otherwise>
-							<a
-								href="fileManage!recoveryFileList.action?currentPage=${p }&type=0">${p }</a>
+							<a href="fileManage!recoveryFileList.action?currentPage=${p}&type=0">${p}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
+				<!-- 下一页 -->
 				<c:choose>
-					<c:when test="${currentPage!=totalPage }">
-						<a
-							href="fileManage!recoveryFileList.action?currentPage=${currentPage+1 }&type=0&nextOrPre=next&start=${start}&end=${end}"><input
+					<c:when test="${pageData.currentPage!=pageData.totalPage }">
+						<!-- 即不为最后一页 -->
+						<a href="fileManage!recoveryFileList.action?currentPage=${pageData.currentPage+1}&type=0&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 							type="button" name="nextPage" value="下一页"></a>
 					</c:when>
 					<c:otherwise>
-						<input type="button" name="nextPage" value="下一页" disabled="true">
+						<input type="button" disabled="true" value="下一页">
 					</c:otherwise>
 				</c:choose>
-				_共${totalCount}条数据|共${totalPage }页|当前第${currentPage }页&nbsp;&nbsp;跳转到第<input
-					type="text" id="jumpPage" size="4">页&nbsp;<input
-					type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+				_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第${pageData.currentPage}页&nbsp;&nbsp;跳到第<input
+					type="text" size="4" id="jumpPage">页&nbsp;<input
+					type="button" id="jumpBt" onclick="sum(${pageData.totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
 			</div>
 		</c:if>
 	</center>

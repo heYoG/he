@@ -13,7 +13,8 @@
 		<property name="flag" type="java.lang.Integer">
 			<column name="flag"></column>
 		</property>
-		<set name="user" lazy="false" inverse="true"><!-- 双向时必须设置控制反转,否则两个表都更新外键 -->
+		<!-- 双向时必须设置控制反转,否则两个表都更新外键 -->
+		<set name="user" lazy="false" inverse="true" cascade="delete"><!-- 设置级联删除,当删除部门时关联的用户也会被彻底删除 -->
 			<key column="dept_id"></key>
 			<one-to-many class="vo.userVo.UserVo"/><!-- 部门表1对多——>用户表 -->
 		</set>

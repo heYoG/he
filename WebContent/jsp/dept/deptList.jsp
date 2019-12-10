@@ -80,7 +80,7 @@ a:link{
 			document.getElementById("jumpPage").value='';
 			return false;
 		}
-		location="fileManage.action?currentPage="+jumpPage+"&type=1";
+		location="DeptAction.action?currentPage="+jumpPage;
 	}
 </script>
 </head>
@@ -97,14 +97,12 @@ a:link{
 				<table>
 					<tr>
 						<th>序号</th>
-						<th>部门编号</th>
 						<th>部门名称</th>
 						<th>操作</th>
 					</tr>
 					<c:forEach var="dept" items="${deptList}" varStatus="st">
 						<tr>
 							<td>${st.count}</td>
-							<td>${dept.deptID }</td>
 							<td>${dept.deptName }</td>
 							<td><c:choose>
 									<c:when test="${userVo.av.authVal!=1}"><!-- 非管理员不可删除 -->
@@ -121,8 +119,8 @@ a:link{
 				<div id="pageDiv">
 					<!-- 上一页 -->
 					<c:choose>
-						<c:when test="${currentPage!=1}">
-							<a href="DeptAction.action?currentPage=${currentPage-1}"><input
+						<c:when test="${pageData.currentPage!=1}">
+							<a href="DeptAction.action?currentPage=${pageData.currentPage-1}"><input
 								type="button" name="previousPage" value="上一页"></a>
 						</c:when>
 						<c:otherwise>
@@ -130,9 +128,9 @@ a:link{
 						</c:otherwise>
 					</c:choose>
 					<!-- 页码 -->
-					<c:forEach items="${itemList }" var="p">
+					<c:forEach items="${pageData.itemList }" var="p">
 						<c:choose>
-							<c:when test="${currentPage==p}">
+							<c:when test="${pageData.currentPage==p}">
 								<!-- 突出显示当前页 -->
 								<a href="DeptAction.action?currentPage=${p}" class="currentPage">${p }</a>
 							</c:when>
@@ -143,17 +141,17 @@ a:link{
 					</c:forEach>
 					<!-- 下一页 -->
 					<c:choose>
-						<c:when test="${currentPage!=totalPage }">
-							<a href="DeptAction.action?currentPage=${currentPage+1}"><input
+						<c:when test="${pageData.currentPage!=pageData.totalPage }">
+							<a href="DeptAction.action?currentPage=${pageData.currentPage+1}"><input
 								type="button" name='nextPage' value='下一页'></a>
 						</c:when>
 						<c:otherwise>
 							<input type="button" disabled='true' value='下一页'>
 						</c:otherwise>
 					</c:choose>
-					_ 共${totalCount}条数据|共${totalPage }页|当前第${currentPage}页&nbsp;&nbsp;跳到第<input
+					_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第${pageData.currentPage}页&nbsp;&nbsp;跳到第<input
 						type="text" size="4" id="jumpPage">页&nbsp;<input
-						type="button" id="jumpBt" onclick="sum(${totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+						type="button" id="jumpBt" onclick="sum(${pageData.totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
 				</div>
 			</c:if>
 		</form>

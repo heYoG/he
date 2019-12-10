@@ -20,9 +20,13 @@
 		<property name="userName" type="java.lang.String">
 			<column name="userName"></column>
 		</property>
+		<property name="status" type="java.lang.String">
+			<column name="status"></column>
+		</property>
 		<!-- 不懒加载，不级联更新(级联更新当前对象，关联对象同时会更新)，默认none -->
 		<many-to-one name="av" lazy="false" column="AuthorityID" cascade="none" class="vo.userVo.AuthorityVo"/>
-		<set name="fileVo" lazy="false" inverse="true"><!--控制反转，交由文件表管理外键-->
+		<!-- 级联删除文件 -->
+		<set name="fileVo" lazy="false" inverse="true" cascade="delete"><!--控制反转，交由文件表管理外键-->
 			<key column="user_id"></key>
 			<one-to-many class="vo.fileVo.FileManageVo"/>
 		</set>

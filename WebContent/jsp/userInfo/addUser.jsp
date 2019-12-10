@@ -29,12 +29,6 @@
 				alert("两次输入密码不一致!");
 				return false;
 			}
-
-			try {
-				
-			} catch (e) {
-				// TODO: handle exception
-			}
 			$.get("login!ajaxReturn.action?userNo=" + v1, function(msg) {
 				var returnData = eval(msg);//解析后台返回的json数据
 				var retVal = "";
@@ -43,6 +37,9 @@
 						retVal = returnData[i].userNo;//取其中的指定字段值
 					}
 					alert("用户名:"+retVal+"已存在,请重新输入!");
+					addUserForm.userNo.value='';
+					addUserForm.pwd.value='';
+					addUserForm.pwd2.value='';
 					return false;
 				} else {
 					addUserForm.action = "login!addUser.action?deptName=" + v5;

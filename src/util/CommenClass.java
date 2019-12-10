@@ -2,6 +2,7 @@ package util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -11,7 +12,10 @@ public class CommenClass{
 	private int pageSize;//每页显示数
 	private int totalPage;//总页数
 	private int jumpPage;//跳转页
-	private int[] item;//页数
+	private List<Integer> itemList;//页数
+	private int start;//起始位置
+	private int end;//结束位置
+	private String type;//查询类型，0：查询已删除文件，1：查询正常文件
 	
 	public int getTotalCount() {
 		return totalCount;
@@ -45,13 +49,31 @@ public class CommenClass{
 	public void setJumpPage(int jumpPage) {
 		this.jumpPage = jumpPage;
 	}
-	public int[] getItem() {
-		return item;
+	public List<Integer> getItemList() {
+		return itemList;
 	}
-	public void setItem(int[] item) {
-		this.item = item;
+	public void setItemList(List<Integer> itemList) {
+		this.itemList = itemList;
+	}
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getEnd() {
+		return end;
+	}
+	public void setEnd(int end) {
+		this.end = end;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public static String getProperty(String key) {
 		ClassLoader loader = CommenClass.class.getClassLoader();
 		InputStream inputStream = loader.getResourceAsStream("config.properties");
@@ -65,5 +87,7 @@ public class CommenClass{
 		}
 		return value;
 	}
+	
+	
 	
 }

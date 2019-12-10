@@ -23,7 +23,9 @@ import hibernate.dao.userDao.impl.UserDaoImplHib;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import util.CommenClass;
 import util.InitializeSys;
+import util.PageUtil;
 import vo.deptVo.DeptVo;
 import vo.fileVo.FileManageVo;
 import vo.userVo.AuthorityVo;
@@ -32,20 +34,22 @@ import vo.userVo.UserVo;
 @SuppressWarnings(value={"all"})
 public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
+	HttpServletRequest request=ServletActionContext.getRequest();
 	UserDaoImplHib<UserVo> userDaoImpl = new UserDaoImplHib<UserVo>();
-	UserVo userVo =new UserVo();
+	UserVo userVo=new UserVo();
 	DeptVo dv=new DeptVo();
 	AuthorityVo av=new AuthorityVo();
 	DeptDaoImpl<DeptVo> dt=new DeptDaoImpl();
-	HttpServletRequest request=ServletActionContext.getRequest();
-	HttpSession session = request.getSession();
+	CommenClass cc=new CommenClass();//实例化工具类
 	
 	public String execute() throws InterruptedException{
+		HttpSession session = request.getSession();
 		/*通过模型驱动获取输入值*/
+		
 		String userNo = userVo.getUserNo();
 		String userPWD=userVo.getPwd();
-		List<UserVo> list = userDaoImpl.selectUser(userVo, userNo,0);
-		userVo.setDept(dv);
+		List<UserVo> list = userDaoImpl.selectUser(userVo,1);
+//		userVo.setDept(dv);
 //		Thread.sleep(2000);//延时2s模拟网络延时测试令牌
 		if(list.isEmpty()){
 			System.out.println("用户名不存在");
@@ -56,15 +60,17 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			for(UserVo uv:list){//用于设置session
 				userVo.setId(uv.getId());
 				userVo.setUserNo(uv.getUserNo());
-				userVo.setUserName(uv.getUserName());
-				userVo.getDept().setDeptID(uv.getDept().getDeptID());
-				userVo.setStatus(uv.getStatus());
-				userVo.setAv(uv.getAv());
 				userVo.setPwd(uv.getPwd());
+				userVo.setAge(uv.getAge());
+				userVo.setUserName(uv.getUserName());
+				userVo.setAv(uv.getAv());
+//				userVo.getDept().setDeptID(uv.getDept().getDeptID());
+				userVo.setDept(uv.getDept());
+				userVo.setStatus(uv.getStatus());
 			}
 			if(!userPWD.equals("")&&userPWD.equals(userVo.getPwd())){
 				session.setAttribute("userVo", userVo);
-//				session.setMaxInactiveInterval(1800);//单位s
+//				session.setMaxInactiveInterval(30);//单位s
 				return SUCCESS;	
 			}else{
 				System.out.println(userNo+"用户密码错误");
@@ -74,12 +80,34 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}			
 	}
 	
+	/*用户信息列表*/
+	public String userInfo(){
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}else {
+			userVo=(UserVo) session.getAttribute("userVo");
+		}
+		long count = userDaoImpl.getCount(userVo);
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+		request.setAttribute("userList", list);//用户信息
+		request.setAttribute("pageData", cc);//分页数据
+		return "userInfo";
+	}
 	
-	/*修改回显*/
+	/*修改前回显,模型驱动带值到jsp*/
 	public String updateUser(){
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
 		List<UserVo> list=new ArrayList<UserVo>();
 		String userNo=request.getParameter("userNo");
-		list = userDaoImpl.selectUser(userVo,userNo,0);
+		list = userDaoImpl.selectUser(userVo);
 //		request.setAttribute("updateList", list);
 		for(UserVo u:list) {
 			userVo.setAge(u.getAge());
@@ -91,54 +119,113 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		return "update";
 	}
 	
-	public String userInfo(){
-		List<UserVo> list = userDaoImpl.pageSelectUser(1, 10, 0, userVo);
-		request.setAttribute("userList", list);
-		return "userInfo";
-	}
-	
+	/*更新用户信息*/
 	public String updateUserRet(){//改事务
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
 		String userNo=request.getParameter("userNo");
-//		System.out.println("userNo:"+userNo);
 		userVo.setUserNo(userNo);
 		userVo.setUserName(request.getParameter("userName"));
 		userVo.setAge(Integer.parseInt(request.getParameter("userAge")));
 		userVo.setPwd(request.getParameter("newPWDName"));
 		int updateRet = userDaoImpl.updateUser(userVo);
+		if(session!=null)
+			userVo=(UserVo) session.getAttribute("userVo");//重新获取当前登录用户信息用于列表显示用户信息
+		else {
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
 		if(updateRet>0){
-			int c=userDaoImpl.getCount(userNo);
-			List<UserVo> list = userDaoImpl.pageSelectUser(1, 10, c, userVo);
+			long count = userDaoImpl.getCount(userVo);
+			cc.setTotalCount((int)count);
+			cc = PageUtil.pageMethod(cc, request);
+			List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+			request.setAttribute("pageData", cc);//分页列表
 			request.setAttribute("userList", list);
 		}else{
 			System.out.println("修改密码失败!");
 			request.setAttribute("updateInfo", "update_fail");
-			int c=userDaoImpl.getCount(userNo);
-			List<UserVo> list = userDaoImpl.pageSelectUser(1, 10, c, userVo);
+			long count = userDaoImpl.getCount(userVo);
+			cc.setTotalCount((int)count);
+			cc = PageUtil.pageMethod(cc, request);
+			List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+			request.setAttribute("pageData", cc);//分页列表
 			request.setAttribute("userList", list);
 		}
 		return "userInfo";
 	}
 	
+	/*虚拟删除用户*/
 	public String delUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}else {
+			userVo=(UserVo) session.getAttribute("userVo");
+		}
 		int userID=Integer.parseInt(request.getParameter("id"));
-		int delUserRet = userDaoImpl.delUser(userVo, userID);
+		int delUserRet = userDaoImpl.delUser(userVo, userID,1);
 		if(delUserRet>0)
 			System.out.println("删除用户成功,id:"+userID);
 		else
 			System.out.println("删除用户失败,id:"+userID);
-		List<UserVo> list = userDaoImpl.pageSelectUser(1, 10, 0, userVo);
+		long count = userDaoImpl.getCount(userVo);
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
 		request.setAttribute("userList", list);
+		request.setAttribute("pageData", cc);//分页列表
 		return "userInfo";
 	}
 	
-	public String beforeAddUser() {//获取部门数据
-		List<DeptVo> list=dt.getDeptInfos(dv,0,0);//普通查询
+	/*彻底删除用户,连同关联外键记录也删除-文件*/
+	public String delComplete() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}else {
+			userVo=(UserVo) session.getAttribute("userVo");
+		}
+		int userID=Integer.parseInt(request.getParameter("id"));
+		int delUserRet = userDaoImpl.delUser(userVo, userID,0);
+		if(delUserRet>0)
+			System.out.println("彻底删除用户成功,id:"+userID);
+		else
+			System.out.println("彻底删除用户失败,id:"+userID);
+		long count = userDaoImpl.getCount(userVo);
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+		request.setAttribute("userList", list);
+		request.setAttribute("pageData", cc);//分页列表
+		return "userInfo";
+	}
+	
+	/*获取部门数据,用于回显*/
+	public String beforeAddUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		List<DeptVo> list=dt.getDeptInfos();//普通查询
 		request.setAttribute("deptList", list);
 		return "beforeAddUser";
 		
 	}
 	
-	public String addUser() {//添加用户
+	/*添加用户*/
+	public String addUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
 		String deptName=request.getParameter("deptName");
 		/*根据部门名称获取部门id*/
 		List<DeptVo> deptInfo = dt.getDeptInfo(dv, deptName);
@@ -147,16 +234,26 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		userVo.setDept(dv);
 		av.setAuthVal(2);//默认为普通用户
 		userVo.setAv(av);
-		int i = userDaoImpl.addUser(userVo);
-//		System.out.println("添加用户返回值:"+i);
-		List<UserVo> list = userDaoImpl.pageSelectUser(1, 10, 0, userVo);
-		request.setAttribute("userList", list);
+		int i = userDaoImpl.addUser(userVo);//由模型驱动获取
+		if(session!=null)
+			userVo=(UserVo) session.getAttribute("userVo");//重新获取当前登录用户信息用于列表显示用户信息
+		else {
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		long count = userDaoImpl.getCount(userVo);
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+		request.setAttribute("userList", list);//用户列表
+		request.setAttribute("pageData", cc);//分页列表
 		return "userInfo";
 	}
 
-	public void ajaxReturn() {//返回json用于ajax判断用户名是否已存在
-		HttpServletRequest request = ServletActionContext.getRequest();
+	/*ajax判断用户是否已存在*/
+	public void ajaxReturn() {
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpSession session = request.getSession();
 		try {
 			/*中文乱码时设置响应或请求的编码*/
 			response.setContentType("text/html;charset=utf-8");
@@ -164,7 +261,8 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			String userNo = request.getParameter("userNo");
-			List<UserVo> list = userDaoImpl.selectUser(userVo, userNo, 1);
+			userVo.setUserNo(userNo);
+			List<UserVo> list = userDaoImpl.selectUser(userVo);
 			
 			JsonConfig jsonConfig = new JsonConfig();
 			
@@ -179,6 +277,30 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/*激活用户*/
+	public String activeUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}else {
+			userVo=(UserVo) session.getAttribute("userVo");
+		}
+		int userID=Integer.parseInt(request.getParameter("id"));
+		int delUserRet = userDaoImpl.updateStatus(userVo, userID);
+		if(delUserRet>0)
+			System.out.println("激活用户成功,id:"+userID);
+		else
+			System.out.println("激活用户失败,id:"+userID);
+		long count = userDaoImpl.getCount(userVo);
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+		request.setAttribute("userList", list);
+		request.setAttribute("pageData", cc);//分页列表
+		return "userInfo";
 	}
 	
 	/*国际化*/

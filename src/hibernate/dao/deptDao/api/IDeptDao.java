@@ -3,15 +3,22 @@ package hibernate.dao.deptDao.api;
 import java.io.Serializable;
 import java.util.List;
 
+import util.CommenClass;
+
 public interface IDeptDao<T> {
 	
 	/**
-	 * hibernate查询所有部门信息
-	 * @param	currentPage	当前页
-	 * @param	pageSize	每页显示记录数
+	 * hibernate分页查询所有部门信息
+	 * @param	cc	封装分页数据		
 	 * @return
 	 */
-	public List<T> getDeptInfos(T t,int currentPage,int pageSize);
+	public List<T> getDeptInfos(T t,CommenClass cc);
+	
+	/**
+	 * 普通查询所有部门信息
+	 * @return
+	 */
+	public List<T> getDeptInfos();
 	
 	/**
 	 * 根据条件查询单条数据

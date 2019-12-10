@@ -118,15 +118,15 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	}
 
 	@Override
-	public List<FileManageVo> getFileInfo(String type,int authValue,FileManageVo vo,CommenClass cc,UserVo uv) {
+	public List<FileManageVo> getFileInfo(FileManageVo vo,CommenClass cc,UserVo uv) {
 		String sql=null;
 		List<FileManageVo> list=new ArrayList<FileManageVo>();
 		ResultSet rs=null;
 		int flag=0;//0：不设置占位符，1：设置占位符
 		
 		try {
-			if (type.equals("1")) {// 查询正常文件
-				if(authValue==1)//管理员查询
+			if (cc.getType().equals("1")) {// 查询正常文件
+				if(uv.getAv().getAuthVal()==1)//管理员查询
 					sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 							+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
 							+ " t2 where t1.user_id=t2.id and t1.status=1 limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
@@ -165,7 +165,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 //			    }
 			    	  	
 				else {// 条件都为空
-					if (authValue == 1)// 管理员查询
+					if (uv.getAv().getAuthVal()== 1)// 管理员查询
 						sql = "select t1.id,t1.myFile,t1.fileData,t1.fileSize,t1.uploadTime,t1.operator,t1.status,t1.originalFileName,t1.fileSize from "
 								+ TableManager.FILETABLE + " t1," + TableManager.USERTABLE
 								+ " t2 where t1.user_id=t2.id and t1.status=0 limit "+(cc.getCurrentPage()-1)*cc.getPageSize()+","+cc.getPageSize();
@@ -192,9 +192,9 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 
 
 	@Override
-	public int getCount(int flag,UserVo uv) {
+	public int getCount(String flag,UserVo uv) {
 		String sql = "";
-		if (flag == 0) {//查询已删除文件
+		if (flag.equals("0")) {//查询已删除文件
 			if(uv.getAv().getAuthVal()==1)//管理员查询
 				sql = "select count(id) from " + TableManager.FILETABLE + " where status=0";
 			else//普通用户查询
