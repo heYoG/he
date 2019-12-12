@@ -16,6 +16,6 @@
 <div style="float:right;color:red;font:10; border:0px solid">
 	<a href="javascript:void(0)" onclick="loginout()">退出</a>
 </div>
-<marquee scrollamount="10" scrolldelay="50" direction="left" onmouseover="this.stop()" onmouseout="this.start()"><span style="text-align:center;"><h2>Welcome you  ${userVo.userNo}</h2></span></marquee>
+<marquee scrollamount="10" scrolldelay="50" direction="left" onmouseover="this.stop()" onmouseout="this.start()"><span style="text-align:center;"><h2>Welcome you  ${USERSESSION.userNo}</h2></span></marquee>
 </body>
 </html>

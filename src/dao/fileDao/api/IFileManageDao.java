@@ -31,10 +31,11 @@ public interface IFileManageDao<T,G,M> {
 	
 	/**
 	 * 批量删除文件
-	 * @param id 文件唯一标识
+	 * @param	ids 	文件唯一标识
+	 * @param	flag	删除标识 0:彻底删除;1:虚拟删除,更改文件状态
 	 * @return
 	 */
-	public int deleteFiles(int ...id);
+	public int deleteFiles(String ids,int flag);
 	
 	/**
 	 * 在线浏览文件
@@ -66,10 +67,11 @@ public interface IFileManageDao<T,G,M> {
 	
 	/**
 	 * 备份还原文件
-	 * @param id 文件唯一标识，删除时是虚拟删除,会定时清理
+	 * @param ids			文件唯一标识，删除时是虚拟删除,会定时清理
+	 * @param batchFiles	恢复标识 0:单个文件恢复;1:批量恢复
 	 * @return
 	 */
-	public int updateFileStatus(int id);
+	public int updateFileStatus(String ids,int batchFiles);
 	
 	/**
 	 * 获取总记录数

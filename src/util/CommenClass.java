@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
-
 public class CommenClass{
 	private int totalCount;//总记录数
 	private int currentPage;//当前页
@@ -16,6 +15,7 @@ public class CommenClass{
 	private int start;//起始位置
 	private int end;//结束位置
 	private String type;//查询类型，0：查询已删除文件，1：查询正常文件
+	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
 	
 	public int getTotalCount() {
 		return totalCount;

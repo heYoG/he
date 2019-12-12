@@ -37,7 +37,7 @@ public class FileManagerAction extends ActionSupport{
 		HttpSession session = request.getSession(false);//会话存在则返回，不存在返回null，解决session过期调用session提示Session already invalidated问题
 		
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -60,7 +60,7 @@ public class FileManagerAction extends ActionSupport{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -86,7 +86,7 @@ public class FileManagerAction extends ActionSupport{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -98,12 +98,12 @@ public class FileManagerAction extends ActionSupport{
 		
 	}
 	
-	/*虚拟删除*/
+	/*单个虚拟删除*/
 	public String delete_update() throws IOException{//删除文件
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -121,12 +121,35 @@ public class FileManagerAction extends ActionSupport{
 		return "fileInfo";//返回文件管理页面
 	}
 	
-	/*彻底删除*/
+	/*批量虚拟删除*/
+	public String delete_updateBatch() {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session = request.getSession(false);
+		if(session!=null)
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		if(uv==null){//系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		String ids = request.getParameter("ids");
+		fdi.deleteFiles(ids,1);//虚拟删除
+		String type=request.getParameter("type");//查询类型
+		int totalCount=fdi.getCount(type,uv);//获取总记录
+		cc.setTotalCount(totalCount);//公用方法pageMethod含泛型参数,无法获取此值
+		cc.setType(type);
+		cc = PageUtil.pageMethod(cc, request);//重新设置cc对象
+		List<FileManageVo> listFile = fdi.getFileInfo(fm,cc,uv);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageData", cc);
+		return "fileInfo";//返回文件管理页面
+	}
+	
+	/*单个彻底删除*/
 	public String delete_complete() {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -144,12 +167,35 @@ public class FileManagerAction extends ActionSupport{
 		return "recoveryFileList";//返回可恢复列表页面
 	}
 	
+	/*批量彻底删除文件*/
+	public String delete_completeBatch() {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session = request.getSession(false);
+		if(session!=null)
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		if(uv==null){//系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		String ids=request.getParameter("ids");
+		fdi.deleteFiles(ids,0);//彻底删除
+		String type=request.getParameter("type");//查询类型
+		int totalCount=fdi.getCount(type,uv);//获取总记录
+		cc.setTotalCount(totalCount);//公用方法pageMethod含泛型参数,无法获取此值
+		cc.setType(type);
+		cc = PageUtil.pageMethod(cc, request);//重新设置cc对象
+		List<FileManageVo> listFile = fdi.getFileInfo(fm,cc,uv);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageData", cc);
+		return "recoveryFileList";//返回可恢复列表页面
+	}
+	
 	/*查询出可恢复文件列表*/
 	public String recoveryFileList() {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)
-			uv = (UserVo)session.getAttribute("userVo");
+			uv = (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -171,19 +217,19 @@ public class FileManagerAction extends ActionSupport{
 		return "recoveryFileList";//返回可恢复列表页面
 	}
 	
-	/*修改文件状态,恢复文件*/
+	/*修改文件状态,单个恢复文件*/
 	public String recoveryFile() {
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		UserVo uv=null;
 		if(session!=null)
-		 uv= (UserVo)session.getAttribute("userVo");
+		 uv= (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null){//系统登录过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
 		String id = request.getParameter("id");
-		fdi.updateFileStatus(Integer.parseInt(id));
+		fdi.updateFileStatus(id,0);
 		String type=request.getParameter("type");//查询类型
 		int totalCount=fdi.getCount(type,uv);//获取总记录
 		cc.setTotalCount(totalCount);//公用方法pageMethod含泛型参数,无法获取此值
@@ -195,7 +241,29 @@ public class FileManagerAction extends ActionSupport{
 		return "fileInfo";//返回文件管理页面
 	}
 	
-	
+	/*批量恢复文件*/
+	public String recoveryFiles() {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpSession session = request.getSession(false);
+		UserVo uv=null;
+		if(session!=null)
+		 uv= (UserVo)session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		if(uv==null){//系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		String ids = request.getParameter("ids");
+		fdi.updateFileStatus(ids,1);
+		String type=request.getParameter("type");//查询类型
+		int totalCount=fdi.getCount(type,uv);//获取总记录
+		cc.setTotalCount(totalCount);//公用方法pageMethod含泛型参数,无法获取此值
+		cc.setType(type);
+		cc = PageUtil.pageMethod(cc, request);//重新设置cc对象
+		List<FileManageVo> listFile = fdi.getFileInfo(fm,cc,uv);
+		request.setAttribute("fileList", listFile);//文件集合
+		request.setAttribute("pageData", cc);
+		return "fileInfo";//返回文件管理页面
+	}
 	public FileManageVo getFm() {
 		return fm;
 	}

@@ -38,7 +38,7 @@ public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)//判断session是否已过期
-			uv=(UserVo) session.getAttribute("userVo");
+			uv=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null) {//session过期则跳转到登录页面
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -57,7 +57,7 @@ public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)//判断session是否已过期
-			uv=(UserVo) session.getAttribute("userVo");
+			uv=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null) {//session过期则跳转到登录页面
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -83,7 +83,7 @@ public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession(false);
 		if(session!=null)//判断session是否已过期
-			uv=(UserVo) session.getAttribute("userVo");
+			uv=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		if(uv==null) {//session过期则跳转到登录页面
 			request.setAttribute("user", "outtime");
 			return ERROR;

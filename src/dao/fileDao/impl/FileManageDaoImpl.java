@@ -66,9 +66,17 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	}
 
 	@Override
-	public int deleteFiles(int... id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteFiles(String ids,int flag) {
+		String sql=null;
+		if(flag==0) {
+			sql="delete from "+TableManager.FILETABLE+" where id in("+ids+")";
+		}else {
+			sql="update "+TableManager.FILETABLE+" set status=0 where id in("+ids+")";
+		}
+		System.out.println("delSql:"+sql);
+		int i = executeUpdate(sql);
+//		System.out.println("批量删除文件返回值:"+i);
+		return i;
 	}
 
 	@Override
@@ -103,14 +111,19 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 		System.out.println("come here!");
 	}
 
-	/*hibernate实现修改*/
+	/*hql实现修改*/
 	@Override
-	public int updateFileStatus(int id) {
+	public int updateFileStatus(String ids,int batchFiles) {
 		sessionCls=new SessionClass();
 		Session session = sessionCls.getOpenedSession();
 		Transaction transaction = session.beginTransaction();
-		String sql="update "+FileManageVo.class.getSimpleName()+" set status=1 where id="+id;
-		Query query = session.createQuery(sql);
+		String hql="update "+FileManageVo.class.getSimpleName()+" set status=1 where 1=1";
+		if(batchFiles==0)//单个恢复
+			hql+=" and id="+ids;
+		else//批量恢复
+			hql+=" and id in("+ids+")";
+//		System.out.println("hql:"+hql);
+		Query query = session.createQuery(hql);
 		query.executeUpdate();
 		transaction.commit();
 		session.close();

@@ -93,7 +93,7 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 		if(uv.getAv().getAuthVal()!=1) {//非管理员只能查询正常用户
 			sql+=" and t1.status='1'";
 		}
-		System.out.println("pageSql:"+sql);
+//		System.out.println("pageSql:"+sql);
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setFirstResult((cc.getCurrentPage()-1)*cc.getPageSize());
 		query.setMaxResults(cc.getPageSize());

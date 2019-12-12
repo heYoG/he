@@ -13,22 +13,22 @@
 <script type="text/javascript"
 	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	function recovery(fileId){
+	function recovery(fileId){//单个文件恢复
 		if(confirm("确定恢复该文件吗？"))
 			location.href="fileManage!recoveryFile.action?id="+fileId+"&type=1";
 	}
 	
-	function del(fileId){
+	function del(fileId){//单个文件彻底删除
 		if(confirm("are you sure to delete this file completely?")){
 			location="fileManage!delete_complete.action?id="+fileId+"&type=0";
 		}
 	}
 	
-	function viewOperator(){
+	function viewOperator(){//查看上传文件者
 		alert("暂不支持的操作,敬请期待...");
 	}
 	
-	function sum(totalPage){
+	function sum(totalPage){//跳转页码
 		var jumpPage=$("#jumpPage").val().trim();
 		if(jumpPage==''){
 			alert("请输入要跳转页码!");
@@ -44,6 +44,66 @@
 		}
 		location="fileManage!recoveryFileList.action?currentPage="+jumpPage+"&type=0";
 	}
+	
+	$(function(){//jQuery函数
+		$("#selectAllID").click(function(){//复选框全选
+			var ch=$(":checkbox[name='chName']");
+			var deselectAll=$(":checkbox[name='deselectAllName']");
+			for(var i=0;i<ch.length;i++){//全选
+				ch[i].checked=true;
+			}
+			for(var j=0;j<deselectAll.length;j++){//反选框不选
+				deselectAll[j].checked=false;
+			}
+		});
+		
+		$("#deselectAllID").click(function(){//复选框反选
+			var ch=$(":checkbox[name='chName']");
+			var selectAll=$(":checkbox[name='selectAllName']");
+			for(var i=0;i<ch.length;i++){//反选
+				ch[i].checked=false;
+			}
+			for(var j=0;j<selectAll.length;j++){//全选框反选
+				selectAll[j].checked=false;
+			}
+		});
+		
+		$("#recoveryID").click(function(){//批量恢复文件
+			var ch=$(":checkbox[name='chName']");
+			var rec="";
+			for(var i=0;i<ch.length;i++){
+				if(ch[i].checked){
+					rec+=","+ch[i].value;
+				}
+			}
+			if(rec==""){
+				alert("至少选择一项恢复!");
+				return false;
+			}else{
+				if(confirm("确定恢复所选文件吗?")){
+					location.href="fileManage!recoveryFiles.action?ids="+rec.substring(1)+"&type=1";//操作后跳转到文件管理页面					
+				}
+			}
+		});
+		
+		$("#deleteSelectedID").click(function(){//批量彻底删除文件
+			var ch=$(":checkbox[name='chName']");
+			var deleteComplete="";
+			for(var i=0;i<ch.length;i++){
+				if(ch[i].checked){
+					deleteComplete+=","+ch[i].value;
+				}
+			}
+				if(deleteComplete==""){
+					alert("至少选择一项删除!");
+					return false;
+				}else{
+					if(confirm("确定永久删除所选项吗?")){
+						location.href="fileManage!delete_completeBatch.action?ids="+deleteComplete.substring(1)+"&type=0";//操作后跳转到可恢复文件页面						
+					}
+				}
+		});
+	})
 	
 </script>
 <style type="text/css">
@@ -67,10 +127,21 @@ td, th {
 	height: 22px;
 }
 
-#pageDiv {
+#checkDiv { /*全选、反选*/
+	width: 25%;
+	border: solid 0px;
+	margin-top: 10px;
+	margin-left: 10px;
+	text-align: left;
+	float: left
+}
+
+#pageDiv { /*页码*/
+	width: 50%;
 	margin-top: 10px;
 	border: solid 0px;
-	text-align: right
+	text-align: right;
+	float: right
 }
 
 .currentPage {
@@ -104,6 +175,7 @@ a:link{
 			<!-- 查询不为空 -->
 			<table>
 				<tr>
+					<th>选择</th>
 					<th>序号</th>
 					<th>文件名称</th>
 					<th>文件大小</th>
@@ -114,6 +186,7 @@ a:link{
 				</tr>
 				<c:forEach items="${fileList}" var="fileIn" varStatus="s">
 					<tr>
+						<td><input type="checkbox" name="chName" id="chID" value="${ fileIn.id}"></td>
 						<td>${s.count}</td>
 						<td>${fileIn.originalFileName }</td>
 						<td>${fileIn.fileSize }</td>
@@ -127,6 +200,12 @@ a:link{
 					</tr>
 				</c:forEach>
 			</table>
+			<div id="checkDiv">
+				<input type="checkbox" name="selectAllName" id="selectAllID">&nbsp;全选&nbsp;&nbsp;
+				<input type="checkbox" name="deselectAllName" id="deselectAllID">&nbsp;反选&nbsp;&nbsp;
+				<input type="button" name="recoveryName" id="recoveryID" value="恢复所选">&nbsp;&nbsp;
+				<input type="button" name="deleteSelectedName" id="deleteSelectedID" value="删除所选">
+			</div>
 			<!-- 页码列表 -->
 			<div id="pageDiv">
 				<!-- 上一页 -->

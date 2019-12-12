@@ -36,55 +36,93 @@ td, th {
 	height: 22px;
 }
 
-#pageDiv {
+#checkDiv { /*全选、反选*/
+	width: 20%;
+	border: solid 0px;
+	margin-top: 10px;
+	margin-left: 10px;
+	text-align: left;
+	float: left
+}
+
+#pageDiv { /*页码*/
+	width: 50%;
 	margin-top: 10px;
 	border: solid 0px;
-	text-align: right
+	text-align: right;
+	float: right
 }
 
-.currentPage {
+.currentPage { /*当前页*/
 	font-size: 20px;
 	color: red;
-	border:0px;
-	cursor:pointer;
+	border: 0px;
+	cursor: pointer;
 }
 
-a:link{
-	text-decoration:none
+a:link {
+	text-decoration: none
 }
 </style>
 <script type="text/javascript">
-	function del(obj){
-		alert("value:"+$("#dl").val());
-		$.ajax({
-			type:"post",
-			url:"fileManage!deleteFile.action",
-			data:{"id":$("#dl").val()},
-			dataType:"json",
-			success:function(data){
-				location.href="fileInfo.action";
+	$(function(){//复选框全选
+		$("#selectAllID").click(function(){
+			var ch=$(":checkbox[name='chName']");
+			var deselectAll=$(":checkbox[name='deselectAllName']");
+			for(var i=0;i<ch.length;i++)
+				ch[i].checked=true;
+			for(var i=0;i<deselectAll.length;i++)
+				deselectAll[i].checked=false;
+		});
+	
+		$("#deselectAllID").click(function(){//复选框反选
+			var ch=$(":checkbox[name='chName']");
+			var selectAll=$(":checkbox[name='selectAllName']");
+			for(var i=0;i<ch.length;i++){
+				ch[i].checked=false;
 			}
-	});
-}
-	function viewOnline(){
+			for(var i=0;i<selectAll.length;i++)
+				selectAll[i].checked=false;
+		});
+		
+		$("#deleteSelectedID").click(function(){//批量虚拟删除
+			var ids=$(":checkbox[name='chName']");
+			var delAllIds="";
+			for(var i=0;i<ids.length;i++){
+				if(ids[i].checked)
+					delAllIds+=","+ids[i].value;
+			}
+			if(delAllIds==""){
+				alert("至少选择一个要删除的文件!");
+				return false;
+			}else{
+				if(confirm("确定删除所有已选文件吗?")){
+					location.href="fileManage!delete_updateBatch.action?ids="+delAllIds.substring(1)+"&type=1";
+				}				
+			}
+		});
+	})
+
+
+	function viewOnline(){//在线查看文件
 		alert("暂不支持的操作,敬请期待...");
 	}
 	
-	function del(fileId){
+	function del(fileId){//虚拟删除文件
 		if(confirm("确定删除此文件吗?"))
 			location.href="fileManage!delete_update.action?id="+fileId+"&type=1";
 	}
 	
-	function viewOperator(){
+	function viewOperator(){//查看文件上传者
 		alert("暂不支持的操作,敬请期待...");
 	}
 	
-	function rec(fileId){
+	function rec(fileId){//恢复虚拟删除文件
 		if(confirm("确认恢复该文件？"))
 			location.href="fileManage!recoveryFile.action?id="+fileId;
 	}
 	
-	function sum(totalPage){
+	function sum(totalPage){//跳转页面
 		var jumpPage=$("#jumpPage").val().trim();
 		if(jumpPage==''){
 			alert("请输入要跳转页码!");
@@ -116,6 +154,8 @@ a:link{
 			<!-- 查询不为空 -->
 			<table>
 				<tr>
+					<!-- <th>表示标题列 -->
+					<th>选择</th>
 					<th>序号</th>
 					<th>文件名称</th>
 					<th>文件大小</th>
@@ -126,6 +166,8 @@ a:link{
 				</tr>
 				<c:forEach items="${fileList}" var="fileIn" varStatus="s">
 					<tr>
+						<td><input type="checkbox" name="chName" id="chID"
+							value="${fileIn.id}"></td>
 						<td>${s.count}</td>
 						<td>${fileIn.originalFileName }</td>
 						<td>${fileIn.fileSize }</td>
@@ -140,13 +182,18 @@ a:link{
 					</tr>
 				</c:forEach>
 			</table>
-
+			<div id="checkDiv">
+				<input type="checkbox" name="selectAllName" id="selectAllID">&nbsp;全选&nbsp;&nbsp;
+				<input type="checkbox" name="deselectAllName" id="deselectAllID">&nbsp;反选&nbsp;&nbsp;
+				<input type="button" name="deleteSelectedName" id="deleteSelectedID" value="删除所选">
+			</div>
 			<!-- 页码列表 -->
 			<div id="pageDiv">
 				<!-- 上一页 -->
 				<c:choose>
 					<c:when test="${pageData.currentPage!=1}">
-						<a href="fileManage.action?currentPage=${pageData.currentPage-1}&type=1&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
+						<a
+							href="fileManage.action?currentPage=${pageData.currentPage-1}&type=1&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
 							type="button" name="previousPage" value="上一页"></a>
 					</c:when>
 					<c:otherwise>
@@ -160,7 +207,8 @@ a:link{
 					<c:choose>
 						<c:when test="${p==pageData.currentPage}">
 							<!-- 是当前页突出显示-->
-							<span class="currentPage">${p }</span><!-- 禁止点击当前页 -->
+							<span class="currentPage">${p }</span>
+							<!-- 禁止点击当前页 -->
 						</c:when>
 						<c:otherwise>
 							<a href="fileManage.action?currentPage=${p}&type=1">${p}</a>
@@ -171,7 +219,8 @@ a:link{
 				<c:choose>
 					<c:when test="${pageData.currentPage!=pageData.totalPage }">
 						<!-- 即不为最后一页 -->
-						<a href="fileManage.action?currentPage=${pageData.currentPage+1}&type=1&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
+						<a
+							href="fileManage.action?currentPage=${pageData.currentPage+1}&type=1&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 							type="button" name="nextPage" value="下一页"></a>
 					</c:when>
 					<c:otherwise>
@@ -180,7 +229,8 @@ a:link{
 				</c:choose>
 				_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第${pageData.currentPage}页&nbsp;&nbsp;跳到第<input
 					type="text" size="4" id="jumpPage">页&nbsp;<input
-					type="button" id="jumpBt" onclick="sum(${pageData.totalPage})" value="确定">&nbsp;&nbsp;&nbsp;
+					type="button" id="jumpBt" onclick="sum(${pageData.totalPage})"
+					value="确定">&nbsp;&nbsp;&nbsp;
 			</div>
 		</c:if>
 	</center>

@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.UUID;
 
@@ -14,12 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.struts2.ServletActionContext;
 
+
+/**
+ * 文件的上传下载
+ * @author Administrator
+ *
+ */
 public class UploadAndDownloadUtil {
 	/**
 	 * 上传
-	 * 
+	 * 只能上传可识别文件类型
 	 * @param sourceFile
 	 *            源文件路径
 	 * @param fileName
@@ -27,14 +31,10 @@ public class UploadAndDownloadUtil {
 	 * @return 保存文件路径
 	 */
 	public static String uploadFile(File sourceFile, String fileName) {
-		String destPath0 = ServletActionContext.getServletContext().getRealPath("upload");
-
-		String destPath1 = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("upload");
 		fileName = UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
-
 		String destPath2 = "F:\\upload";
 		String destFile = destPath2 + File.separatorChar + fileName;
-//		System.out.println("上传文件保存路径:" + destFile);
+		System.out.println("上传文件保存路径:" + destFile);
 		File destFile2 = new File(destFile);
 		try {
 			FileUtils.copyFile(sourceFile, destFile2);

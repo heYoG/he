@@ -105,7 +105,7 @@ a:link{
 							<td>${st.count}</td>
 							<td>${dept.deptName }</td>
 							<td><c:choose>
-									<c:when test="${userVo.av.authVal!=1}"><!-- 非管理员不可删除 -->
+									<c:when test="${USERSESSION.av.authVal!=1}"><!-- 非管理员不可删除 -->
 										<input type="button" disabled='true' value="删除" title="普通用户无权操作">
 									</c:when>
 									<c:otherwise>

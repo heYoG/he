@@ -24,7 +24,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import util.CommenClass;
-import util.InitializeSys;
 import util.PageUtil;
 import vo.deptVo.DeptVo;
 import vo.fileVo.FileManageVo;
@@ -49,7 +48,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		String userNo = userVo.getUserNo();
 		String userPWD=userVo.getPwd();
 		List<UserVo> list = userDaoImpl.selectUser(userVo,1);
-//		userVo.setDept(dv);
 //		Thread.sleep(2000);//延时2s模拟网络延时测试令牌
 		if(list.isEmpty()){
 			System.out.println("用户名不存在");
@@ -57,20 +55,15 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "user");
 			return ERROR;		
 		}else{
-			for(UserVo uv:list){//用于设置session
-				userVo.setId(uv.getId());
-				userVo.setUserNo(uv.getUserNo());
-				userVo.setPwd(uv.getPwd());
-				userVo.setAge(uv.getAge());
-				userVo.setUserName(uv.getUserName());
-				userVo.setAv(uv.getAv());
-//				userVo.getDept().setDeptID(uv.getDept().getDeptID());
-				userVo.setDept(uv.getDept());
-				userVo.setStatus(uv.getStatus());
-			}
+			userVo = list.get(0);//重新设置userVo
 			if(!userPWD.equals("")&&userPWD.equals(userVo.getPwd())){
-				session.setAttribute("userVo", userVo);
-//				session.setMaxInactiveInterval(30);//单位s
+				if(session.getAttribute(CommenClass.CURRENTUSERSESSION)!=null) {//重新设置session(可能有数据更新)
+					session.removeAttribute(CommenClass.CURRENTUSERSESSION);
+					session.setAttribute(CommenClass.CURRENTUSERSESSION, userVo);
+				}else {//服务已停或session已过期
+					session.setAttribute(CommenClass.CURRENTUSERSESSION, userVo);
+				}
+//				session.setMaxInactiveInterval(30);//设置session有效性,单位s
 				return SUCCESS;	
 			}else{
 				System.out.println(userNo+"用户密码错误");
@@ -87,7 +80,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}else {
-			userVo=(UserVo) session.getAttribute("userVo");
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		long count = userDaoImpl.getCount(userVo);
 		cc.setTotalCount((int)count);
@@ -133,7 +126,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		userVo.setPwd(request.getParameter("newPWDName"));
 		int updateRet = userDaoImpl.updateUser(userVo);
 		if(session!=null)
-			userVo=(UserVo) session.getAttribute("userVo");//重新获取当前登录用户信息用于列表显示用户信息
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);//重新获取当前登录用户信息用于列表显示用户信息
 		else {
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -165,7 +158,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}else {
-			userVo=(UserVo) session.getAttribute("userVo");
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,1);
@@ -189,7 +182,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}else {
-			userVo=(UserVo) session.getAttribute("userVo");
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,0);
@@ -236,7 +229,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		userVo.setAv(av);
 		int i = userDaoImpl.addUser(userVo);//由模型驱动获取
 		if(session!=null)
-			userVo=(UserVo) session.getAttribute("userVo");//重新获取当前登录用户信息用于列表显示用户信息
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);//重新获取当前登录用户信息用于列表显示用户信息
 		else {
 			request.setAttribute("user", "outtime");
 			return ERROR;
@@ -263,7 +256,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			String userNo = request.getParameter("userNo");
 			userVo.setUserNo(userNo);
 			List<UserVo> list = userDaoImpl.selectUser(userVo);
-			
 			JsonConfig jsonConfig = new JsonConfig();
 			
 			/*去除级联关系,String数组包含所有要去除的属性,不管是什么类型的属性;要写在一起，不能分开写多个setExcludes*/
@@ -286,7 +278,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}else {
-			userVo=(UserVo) session.getAttribute("userVo");
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.updateStatus(userVo, userID);
