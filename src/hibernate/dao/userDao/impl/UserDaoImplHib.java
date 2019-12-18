@@ -32,7 +32,7 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 	public int addUser(UserVo entity) {
 		Session session = getOpenedSession();
 		Transaction transaction = session.beginTransaction();
-		String sql="insert into "+TableManager.USERTABLE+" values(null,?,?,?,?,2,?,1)";//默认为普通用户、正常启用
+		String sql="insert into "+TableManager.USERTABLE+" values(null,?,?,?,?,2,?,2)";//默认为普通用户、待审批
 		SQLQuery sqlQuery = session.createSQLQuery(sql);
 		sqlQuery.setString(0, entity.getUserNo());
 		sqlQuery.setString(1, entity.getPwd());
@@ -90,10 +90,10 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 		uv =list2.get(0);
 		String sql="select t1.*,t2.authVal,t2.authName,t3.deptName from "+TableManager.USERTABLE+" t1,"+TableManager.AUTHORITY+" t2,"+TableManager.DEPT+ " t3 "
 				+ "where t1.AuthorityID=t2.id and t1.dept_id=t3.deptID";
-		if(uv.getAv().getAuthVal()!=1) {//非管理员只能查询正常用户
-			sql+=" and t1.status='1'";
-		}
-//		System.out.println("pageSql:"+sql);
+		if(cc.getType().equals("0")) 
+			sql+=" and t1.status='0'";//查询注销用户
+		else
+			sql+=" and t1.status='1'";//查询正常用户
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setFirstResult((cc.getCurrentPage()-1)*cc.getPageSize());
 		query.setMaxResults(cc.getPageSize());
@@ -108,12 +108,11 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 		Session session = getOpenedSession();
 		List<UserVo> list = selectUser(uv);
 		uv =list.get(0);
-		String sql="select count(id) from UserVo where 1=1";
-		if(uv.getAv().getAuthVal()!=1) {//非管理员只能查询正常用户
-			sql+=" and status='1'";
+		String hql="select count(id) from UserVo where 1=1";
+		if(uv.getAv().getAuthVal()!=1) {//非管理员只能查看正常用户
+			hql+=" and status='1'";
 		}
-//		System.out.println("sql:"+sql);
-		Query query = session.createQuery(sql);
+		Query query = session.createQuery(hql);
 		long count = (long) query.uniqueResult();
 		session.close();
 		return count;
@@ -123,11 +122,12 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 	public int updateUser(UserVo user) {
 		Session session = getOpenedSession();
 		Transaction transaction = session.beginTransaction();
-		String sql="update "+TableManager.USERTABLE+" set pwd=?,age=?,userName=? where userNo='"+user.getUserNo()+"'";
+		String sql="update "+TableManager.USERTABLE+" set pwd=?,age=?,userName=?,status=? where userNo='"+user.getUserNo()+"'";
 		SQLQuery sqlQuery = session.createSQLQuery(sql);
 		sqlQuery.setString(0, user.getPwd());
 		sqlQuery.setInteger(1, user.getAge());
 		sqlQuery.setString(2, user.getUserName());
+		sqlQuery.setString(3, "2");
 		sqlQuery.addEntity(user.getClass());
 		int i = sqlQuery.executeUpdate();
 		transaction.commit();
@@ -136,16 +136,53 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 	}
 
 	@Override
-	public int updateStatus(T t,int userID) {
+	public int updateStatus(UserVo user,int userID) {
 		Session session = getOpenedSession();//获取hibernate session
 		Transaction transaction = session.beginTransaction();
 		String sql="update "+TableManager.USERTABLE+" set status='1' where id=?";//sql
 		SQLQuery sqlQuery = session.createSQLQuery(sql);
 		sqlQuery.setInteger(0, userID);
-		sqlQuery.addEntity(t.getClass());//添加实例
+		sqlQuery.addEntity(user.getClass());//添加实例
 		int i = sqlQuery.executeUpdate();//执行
 		transaction.commit();//提交事务
 		session.close();//关闭session
+		return i;
+	}
+
+	@Override
+	public List<UserVo> pageApproveUser(UserVo vo,CommenClass cc) {
+		Session session = getOpenedSession();
+		List<UserVo> list1=new ArrayList<UserVo>();
+		String sql="select t1.*,t2.authVal,t2.authName,t3.deptName from "+TableManager.USERTABLE+" t1,"+TableManager.AUTHORITY+" t2,"+TableManager.DEPT+ " t3 "
+				+ "where t1.AuthorityID=t2.id and t1.dept_id=t3.deptID and t1.status in('2','3')";
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setFirstResult((cc.getCurrentPage()-1)*cc.getPageSize());
+		query.setMaxResults(cc.getPageSize());
+		query.addEntity(vo.getClass());
+		list1=query.list();
+		session.close();
+		return list1;
+	}
+
+	@Override
+	public long getApproveCount() {
+		Session session = getOpenedSession();
+		String hql="select count(id) from UserVo where status='2' or status='3'";//待审批用户
+		Query query = session.createQuery(hql);
+		long count = (long) query.uniqueResult();
+		session.close();
+		return count;
+	}
+
+	@Override
+	public int updateApproveUserStatus(UserVo user) {
+		Session session = getOpenedSession();
+		String hql="update "+user.getClass().getSimpleName()+" set status='3' where id="+user.getId();
+		Transaction transaction = session.beginTransaction();
+		Query hqlQuery = session.createQuery(hql);
+		int i = hqlQuery.executeUpdate();
+		transaction.commit();
+		session.close();
 		return i;
 	}
 

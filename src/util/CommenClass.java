@@ -14,8 +14,9 @@ public class CommenClass{
 	private List<Integer> itemList;//页数
 	private int start;//起始位置
 	private int end;//结束位置
-	private String type;//查询类型，0：查询已删除文件，1：查询正常文件
+	private String type;//查询类型，0：已删除，1：正常
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
+	
 	
 	public int getTotalCount() {
 		return totalCount;

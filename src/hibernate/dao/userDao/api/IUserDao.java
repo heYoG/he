@@ -57,16 +57,38 @@ import vo.userVo.UserVo;
 	
 	/**
 	 * 修改用户信息
-	 * @param userNo  用户号
+	 * @param user	 实例对象
 	 * @return
 	 */
 	public abstract int  updateUser(UserVo user);
 	
 	/**
 	 * 修改用户状态
+	 * @param user		实例对象
 	 * @param userID	用户id	
 	 * @return			修改结果,判断修改是否成功
 	 */
-	public int updateStatus(T t,int userID);
+	public int updateStatus(UserVo user,int userID);
+	
+	/**
+	 * 待审批用户信息
+	 * @param vo		实例对象
+	 * @param cc	分页工具类实体
+	 * @return		待审批用户
+	 */
+	public List<UserVo> pageApproveUser(UserVo vo,CommenClass cc);
+	
+	/**
+	 * 待审批用户总记录
+	 * @return
+	 */
+	public long getApproveCount();
+	
+	/**
+	 * 修改用户状态
+	 * @param user	实例对象
+	 * @return
+	 */
+	public int updateApproveUserStatus(UserVo user);
 	
 }

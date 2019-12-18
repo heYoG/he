@@ -17,14 +17,14 @@
 </head>
 <body>
 	<center>
-	<form action="login!updateUserRet.action?userNo=${userVo.userNo}" name="formName" id="formID" method="post">
+	<form action="login!updateUserRet.action?userNo=${userVo.userNo}&?type=1&isAppro=${isAppro}" name="formName" id="formID" method="post">
 		<table>
 			<tr>
 				<td>用户名:<input type="text" name="userNo" value="${userVo.userNo}" disabled="disabled" title="不可更改!"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;姓名:<input type="text"
-					name="userName" value="${userName}"></td><!-- 模型驱动取值 -->
+					name="userName" value="${userVo.userName}"></td><!-- 模型驱动取值 -->
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;年龄:<input type="text"

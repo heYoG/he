@@ -146,7 +146,7 @@ a:link {
 		<c:if test="${fileList=='[]'}">
 			<!-- fileList是集合(可变数组) -->
 			<!-- 查询为空 -->
-			<span style="text-align: center; font: red 15pt">此处空空如也</span>
+			<span style="text-align: center; font-size:15pt;color:red">此处空空如也</span>
 			<br>
 			<a href="../backup/fileBackup.jsp" targer="showPageName">前往文件备份...</a>
 		</c:if>

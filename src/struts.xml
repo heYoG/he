@@ -12,6 +12,7 @@
 		<result name="update">/jsp/userInfo/updateUser.jsp</result>
 		<result name="succ">index.jsp</result>
 		<result name="beforeAddUser">/jsp/userInfo/addUser.jsp</result>
+		<result name="approveUser">/jsp/userInfo/approveUser.jsp</result>
 	<!-- 	<interceptor-ref name="defaultStack"></interceptor-ref> -->
 		<!-- <interceptor-ref name="token"></interceptor-ref>
 		<result name="invalid.token" type="redirect">/jsp/token/invalidRequest.jsp</result>

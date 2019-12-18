@@ -10,7 +10,7 @@
 <title>备份文件</title>
 <link rel="stylesheet" type="text/css" href="<%=path %>/css/fileManage.css">
 <script type="text/javascript">
-	function addInput(){
+	function addInput(){//添加控件域
 		var doc=document.getElementById("addDoc");
 		var originName=document.getElementsByName("upFile").length;
 		var newInput1=document.createElement("<input type='file' name='upFile' id='upId"+originName+"'>");
@@ -20,7 +20,7 @@
 		doc.appendChild(newInput2);
 	}
 	
-	function del(obj){
+	function del(obj){//删除控件域
 		var doc=document.getElementById("addDoc");
 		var delInput1=obj.id.substring(5);//删除file域
 		doc.removeChild(document.getElementById("p"+delInput1));//删除空格行
@@ -28,7 +28,7 @@
 		doc.removeChild(document.getElementById("delId"+delInput1));
 	}
 	
-	function uploadFile(){
+	function uploadFile(){//上传文件
 		var file=document.getElementById("upId");
 		if(file.value==null||file.value==""){
 			alert("要上传的文件不能为空!");

@@ -42,7 +42,7 @@
 				id="img2">用户管理</span>
 			<ul style="display: none" id="u2">
 				<li><a href="login!beforeAddUser.action" target="showPageName">新增用户</a></li>
-				<li>用户审批</li>
+				<li><a href="login!approveUser.action" target="showPageName">用户审批</a></li>
 				<li><a href="login!userInfo.action"
 					target="showPageName">用户管理</a></li>
 			</ul></li>

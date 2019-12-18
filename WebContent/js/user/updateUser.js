@@ -1,5 +1,6 @@
 function giveUpUpdate(){
-	location.href="login!userInfo.action";
+	//location.href="login!userInfo.action";
+	window.history.go(-1);//返回上一页面
 }
 
 function updateUser(rightPWD){

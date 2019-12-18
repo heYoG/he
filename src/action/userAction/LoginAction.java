@@ -83,6 +83,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		long count = userDaoImpl.getCount(userVo);
+		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		cc.setType(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
 		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
@@ -100,26 +103,25 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}
 		List<UserVo> list=new ArrayList<UserVo>();
 		String userNo=request.getParameter("userNo");
+		String isAppro = request.getParameter("isAppro");//是否为审批模块的修改,不为空是
 		list = userDaoImpl.selectUser(userVo);
-//		request.setAttribute("updateList", list);
-		for(UserVo u:list) {
-			userVo.setAge(u.getAge());
-			userVo.setId(u.getId());
-			userVo.setUserName(u.getUserName());
-			userVo.setUserNo(u.getUserNo());
-			userVo.setPwd(u.getPwd());
-		}
+		userVo=(UserVo)list.get(0);
+		request.setAttribute("isAppro", isAppro);
 		return "update";
 	}
 	
 	/*更新用户信息*/
 	public String updateUserRet(){//改事务
 		HttpSession session = request.getSession(false);
+		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		cc.setType(type);
 		if(session==null) {//判断系统登录是否过期
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
 		String userNo=request.getParameter("userNo");
+		String isAppro = request.getParameter("isAppro");//是否为审批模块的修改,不为空是
 		userVo.setUserNo(userNo);
 		userVo.setUserName(request.getParameter("userName"));
 		userVo.setAge(Integer.parseInt(request.getParameter("userAge")));
@@ -131,14 +133,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		if(updateRet>0){
-			long count = userDaoImpl.getCount(userVo);
-			cc.setTotalCount((int)count);
-			cc = PageUtil.pageMethod(cc, request);
-			List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
-			request.setAttribute("pageData", cc);//分页列表
-			request.setAttribute("userList", list);
+
+		if(updateRet>0){//修改成功
+			return approveUser();//返回审批模块
 		}else{
+			if(isAppro.equals("3")) {//在审批中修改失败
+				request.setAttribute("updateInfo", "update_fail");
+				return approveUser();
+			}
 			System.out.println("修改密码失败!");
 			request.setAttribute("updateInfo", "update_fail");
 			long count = userDaoImpl.getCount(userVo);
@@ -148,7 +150,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("pageData", cc);//分页列表
 			request.setAttribute("userList", list);
 		}
-		return "userInfo";
+		return "userInfo";//在用户管理中修改失败
 	}
 	
 	/*虚拟删除用户*/
@@ -162,6 +164,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,1);
+		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		cc.setType(type);
 		if(delUserRet>0)
 			System.out.println("删除用户成功,id:"+userID);
 		else
@@ -186,6 +191,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,0);
+		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		cc.setType(type);
 		if(delUserRet>0)
 			System.out.println("彻底删除用户成功,id:"+userID);
 		else
@@ -234,13 +242,13 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		long count = userDaoImpl.getCount(userVo);
+		long count = userDaoImpl.getApproveCount();
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
-		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
+		List<UserVo> list = userDaoImpl.pageApproveUser(userVo,cc);
 		request.setAttribute("userList", list);//用户列表
 		request.setAttribute("pageData", cc);//分页列表
-		return "userInfo";
+		return "approveUser";
 	}
 
 	/*ajax判断用户是否已存在*/
@@ -271,7 +279,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}
 	}
 	
-	/*激活用户*/
+	/*激活用户、审批通过*/
 	public String activeUser() {
 		HttpSession session = request.getSession(false);
 		if(session==null) {//判断系统登录是否过期
@@ -280,8 +288,11 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		}else {
 			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
-		int userID=Integer.parseInt(request.getParameter("id"));
+		int userID=Integer.parseInt(request.getParameter("userID"));
 		int delUserRet = userDaoImpl.updateStatus(userVo, userID);
+		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		cc.setType(type);
 		if(delUserRet>0)
 			System.out.println("激活用户成功,id:"+userID);
 		else
@@ -293,6 +304,46 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		request.setAttribute("userList", list);
 		request.setAttribute("pageData", cc);//分页列表
 		return "userInfo";
+	}
+	
+	/*回显待审批用户*/
+	public String approveUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		
+		long count = userDaoImpl.getApproveCount();
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageApproveUser(userVo,cc);
+		request.setAttribute("userList", list);//用户列表
+		request.setAttribute("pageData", cc);//分页列表
+		return "approveUser";
+	}
+	
+	/*审批不通过*/
+	public String refuseUser() {
+		HttpSession session = request.getSession(false);
+		if(session==null) {//判断系统登录是否过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		int userID=Integer.parseInt(request.getParameter("userID"));
+		userVo.setId(userID);
+		int delUserRet = userDaoImpl.updateApproveUserStatus(userVo);
+		if(delUserRet>0)
+			System.out.println("审批通过,id:"+userID);
+		else
+			System.out.println("审批不通过,id:"+userID);
+		long count = userDaoImpl.getApproveCount();
+		cc.setTotalCount((int)count);
+		cc = PageUtil.pageMethod(cc, request);
+		List<UserVo> list = userDaoImpl.pageApproveUser(userVo,cc);
+		request.setAttribute("userList", list);
+		request.setAttribute("pageData", cc);//分页列表
+		return "approveUser";
 	}
 	
 	/*国际化*/

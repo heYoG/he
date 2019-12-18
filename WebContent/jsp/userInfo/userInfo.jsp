@@ -12,10 +12,6 @@
 <script type="text/javascript" src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
 <script type="text/javascript"
 	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-if("${updateInfo}"=="update_fail")
-	alert("修改密码失败!");
-</script>
 <style type="text/css">
 table {
 	border: 1px solid #B1CDE3;
@@ -29,41 +25,50 @@ th, td {
 	text-align: center;
 }
 
-#pageDiv {<!--分页属性-- > margin-top:10px;
+#pageDiv { /*分页属性*/
+	margin-top: 10px;
 	border: solid 0px;
 }
 
-.currentPage {<!--当前页属性-- > font-size:20px;
+.currentPage { /*当前页属性*/
+	font-size: 20px;
 	color: red;
 	border: 0px;
 	cursor: pointer;
 }
 
-.disableChange{
-	border:none;
+.disableChange {
+	border: none;
+}
+
+#normalOrCancel {
+	margin-bottom: 10px
 }
 </style>
 <script type="text/javascript">
-	/*obj1:用户id,obj2:权限值*/
+	if("${updateInfo}"=="update_fail")
+		alert("修改密码失败!");
+
+	<!--obj1:用户id,obj2:权限值-->
 	function delUser(obj1,obj2){//注销用户
-		if(confirm("确定删除当前用户?")){
+		if(confirm("确定注销该用户吗?")){
 			if(obj2==1){
 				alert("当前用户为管理员,无法注销！");
 				return false;			
 			}
-			location.href="login!delUser.action?id="+obj1;			
+			location.href="login!delUser.action?userID="+obj1+"&type=1";			
 		}
 	}
 	
 	function active(userID){//激活用户
-		if(confirm("确认激活此用户吗?")){
-			location="login!activeUser.action?id="+userID;
+		if(confirm("确定激活该用户吗?")){
+			location="login!activeUser.action?userID="+userID+"&type=1";
 		}
 	}
 	
 	function del_Complete(userID){//彻底删除
-		if(confirm("确定永久删除此用户吗?")){
-			location="login!delComplete?id="+userID;
+		if(confirm("删除将无法恢复,确定继续执行吗?")){
+			location="login!delComplete?id="+userID+"&type=1";
 		}	
 	}
 	
@@ -82,12 +87,33 @@ th, td {
 			document.getElementById("jumpPage").value='';
 			return false;
 		}
-		location="login!userInfo.action?currentPage="+jumpPage;
+		location="login!userInfo.action?currentPage="+jumpPage+"&type=1";
+	}
+	
+	function setSelect(){//设置下拉列表
+		var type=${pageData.type};
+		var status=document.getElementById("normalOrCancel");
+		status.innerHTML="";
+		if(type==0)
+			status.innerHTML="<option name='op1' value='normal'>正常用户</option><option name='op2' value='cancel' selected='selected'>注销用户</option>";
+		else
+			status.innerHTML="<option name='op1' value='normal' selected='selected'>正常用户</option><option name='op2' value='cancel'>注销用户</option>"	;
+	}
+	
+	function show(){//显示可选项
+		var selectedVal=$("#normalOrCancel").val();
+		if(selectedVal=="normal")	
+			location.href="login!userInfo.action?type=1";			
+		else
+			location.href="login!userInfo.action?type=0";	
 	}
 </script>
 </head>
-<body>
+<body onload="setSelect()">
 	<center>
+		<div id="selectDoc">
+			<select id="normalOrCancel" onchange='show()'></select>
+		</div>
 		<table border="1px" border-color="#72D4F4">
 			<tr>
 				<th>序号</th>
@@ -108,29 +134,28 @@ th, td {
 					<td>${list.av.authName}</td>
 					<td>${list.dept.deptName}</td>
 					<td><c:if test="${list.status==1}">正常</c:if> <c:if
-							test="${list.status==0 }">已注销</c:if>${status }</td>
+							test="${list.status==0 }">已注销</c:if></td>
 					<td nowrap><c:if test="${USERSESSION.av.authVal==1}">
-								<a href="login!updateUser.action?userNo=${list.userNo}"
-									target="showPageName">修改</a> &nbsp;<a href="javascript:void(0)"
-									target="showPageName"
-									onclick="delUser(${list.id},${list.av.authVal})"> <c:if
-										test="${list.status==1 }">注销</c:if></a>
-								<a href="javascript:void(0)" onclick="active(${list.id})"><c:if
-										test="${list.status==0 }">激活</c:if></a>
-								<!-- 当前记录已删除且当前登录用户是管理员 -->
-								<c:if test="${list.status==0}">
-									<a href="javascript:void(0)" onclick="del_Complete(${list.id})">彻底删除</a>
-								</c:if>
+							<a href="login!updateUser.action?userNo=${list.userNo}"
+								target="showPageName">修改</a> &nbsp;<a href="javascript:void(0)"
+								target="showPageName"
+								onclick="delUser(${list.id},${list.av.authVal})"> <c:if
+									test="${list.status==1 }">注销</c:if></a>
+							<a href="javascript:void(0)" onclick="active(${list.id})"><c:if
+									test="${list.status==0 }">激活</c:if></a>
+							<!-- 当前记录已删除且当前登录用户是管理员 -->
+							<c:if test="${list.status==0}">
+								<a href="javascript:void(0)" onclick="del_Complete(${list.id})">彻底删除</a>
 							</c:if>
-							<c:if test="${USERSESSION.av.authVal!=1 and list.userNo==USERSESSION.userNo}">
-								<a href="login!updateUser.action?userNo=${list.userNo}"
-									target="showPageName">修改</a>
-							</c:if>
-							<c:if test="${USERSESSION.av.authVal!=1 and list.userNo!=USERSESSION.userNo}">
-							<input type="button" disabled="true" class="disableChange" value="不可操作">
-							</c:if>
-		
-				</td>
+						</c:if> <c:if
+							test="${USERSESSION.av.authVal!=1 and list.userNo==USERSESSION.userNo}">
+							<a href="login!updateUser.action?userNo=${list.userNo}"
+								target="showPageName">修改</a>
+						</c:if> <c:if
+							test="${USERSESSION.av.authVal!=1 and list.userNo!=USERSESSION.userNo}">
+							<input type="button" disabled="true" class="disableChange"
+								title="普通用户无权操作" value="不可操作">
+						</c:if></td>
 				</tr>
 			</c:forEach>
 		</table>

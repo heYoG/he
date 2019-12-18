@@ -4,30 +4,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import dao.fileDao.api.IFileManageDao;
 import hibernate.utils.SessionClass;
 import util.BaseDao;
 import util.CommenClass;
 import util.TableManager;
-import vo.CommenVo;
 import vo.fileVo.FileManageVo;
 import vo.userVo.UserVo;
 
 public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo,CommenClass,UserVo>{
 
 	private SessionClass sessionCls;
-	private static HttpServletRequest request = ServletActionContext.getRequest();
-	private static HttpSession session = request.getSession();
 	
 	@Override
 	public FileManageVo getFileInfo(int id) {
@@ -73,7 +63,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 		}else {
 			sql="update "+TableManager.FILETABLE+" set status=0 where id in("+ids+")";
 		}
-		System.out.println("delSql:"+sql);
+//		System.out.println("delSql:"+sql);
 		int i = executeUpdate(sql);
 //		System.out.println("批量删除文件返回值:"+i);
 		return i;
@@ -100,8 +90,7 @@ public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileMan
 	@Override
 	public void uploadFile(FileManageVo vo) {
 		String sql="insert into "+TableManager.FILETABLE+" (id,myFile,fileSize,uploadTime,operator,status,user_id,originalFileName) values (null,?,?,?,?,?,?,?)";
-		int i = executeUpdate(sql,new Object[]{vo.getMyFile(),vo.getFileSize(),vo.getUploadTime(),vo.getOperator(),vo.getStatus(),vo.getUser().getId(),vo.getOriginalFileName()});
-//		System.out.println("单个文件上传返回值:"+i);
+		executeUpdate(sql,new Object[]{vo.getMyFile(),vo.getFileSize(),vo.getUploadTime(),vo.getOperator(),vo.getStatus(),vo.getUser().getId(),vo.getOriginalFileName()});
 		close();
 		
 	}

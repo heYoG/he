@@ -42,7 +42,7 @@
 					addUserForm.pwd2.value='';
 					return false;
 				} else {
-					addUserForm.action = "login!addUser.action?deptName=" + v5;
+					addUserForm.action = "login!addUser.action?deptName=" + v5+"&type=1";
 					addUserForm.submit();
 				}
 			}, "json");
