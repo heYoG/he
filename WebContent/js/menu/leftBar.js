@@ -10,6 +10,8 @@ function doAction(index,src1,src2){
 			document.getElementById('img3').src=src1;
 		else if(index=='4')
 			document.getElementById('img4').src=src1;
+		else if(index=='5')
+			document.getElementById('img5').src=src1;
 	}else{
 		obj.style.display='none';
 		if(index=='1')
@@ -20,5 +22,7 @@ function doAction(index,src1,src2){
 			document.getElementById('img3').src=src2;
 		else if(index=='4')
 			document.getElementById('img4').src=src2;
+		else if(index=='5')
+			document.getElementById('img5').src=src2;
 	}
 }

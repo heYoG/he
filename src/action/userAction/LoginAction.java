@@ -35,7 +35,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	HttpServletRequest request=ServletActionContext.getRequest();
 	UserDaoImplHib<UserVo> userDaoImpl = new UserDaoImplHib<UserVo>();
-	UserVo userVo=new UserVo();
+	UserVo userVo=new UserVo();//为了登录时通过模型驱动取值,不能设置为null
 	DeptVo dv=new DeptVo();
 	AuthorityVo av=new AuthorityVo();
 	DeptDaoImpl<DeptVo> dt=new DeptDaoImpl();
@@ -75,12 +75,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*用户信息列表*/
 	public String userInfo(){
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
-		}else {
-			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		long count = userDaoImpl.getCount(userVo);
 		String type = request.getParameter("type");
@@ -96,8 +98,12 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*修改前回显,模型驱动带值到jsp*/
 	public String updateUser(){
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
@@ -155,12 +161,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*虚拟删除用户*/
 	public String delUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
-		}else {
-			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,1);
@@ -182,12 +190,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*彻底删除用户,连同关联外键记录也删除-文件*/
 	public String delComplete() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
-		}else {
-			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("id"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,0);
@@ -209,8 +219,12 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*获取部门数据,用于回显*/
 	public String beforeAddUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
@@ -222,8 +236,12 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*添加用户*/
 	public String addUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
@@ -254,7 +272,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	/*ajax判断用户是否已存在*/
 	public void ajaxReturn() {
 		HttpServletResponse response = ServletActionContext.getResponse();
-		HttpSession session = request.getSession();
 		try {
 			/*中文乱码时设置响应或请求的编码*/
 			response.setContentType("text/html;charset=utf-8");
@@ -268,7 +285,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			
 			/*去除级联关系,String数组包含所有要去除的属性,不管是什么类型的属性;要写在一起，不能分开写多个setExcludes*/
 			jsonConfig.setExcludes(new String[] {"av","dept","fileVo"});
-			
 			JSONArray js = new JSONArray();
 			String ret=null;
 			if(list.size()>0)
@@ -281,12 +297,14 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*激活用户、审批通过*/
 	public String activeUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
-		}else {
-			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
 		}
 		int userID=Integer.parseInt(request.getParameter("userID"));
 		int delUserRet = userDaoImpl.updateStatus(userVo, userID);
@@ -308,8 +326,12 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*回显待审批用户*/
 	public String approveUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
@@ -325,8 +347,12 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*审批不通过*/
 	public String refuseUser() {
+		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session==null) {//判断系统登录是否过期
+		if(session!=null) {//判断系统登录是否过期
+			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		}
+		if(userVo==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
@@ -379,7 +405,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 
 	@Override
 	public UserVo getModel() {
-		// TODO Auto-generated method stub
 		return userVo;
 	}
 

@@ -32,8 +32,8 @@ public class UploadAndDownloadUtil {
 	 */
 	public static String uploadFile(File sourceFile, String fileName) {
 		fileName = UUID.randomUUID().toString().replace("-", "") + fileName.substring(fileName.lastIndexOf("."));
-		String destPath2 = "F:\\upload";
-		String destFile = destPath2 + File.separatorChar + fileName;
+		String destPath=CommenClass.getProperty("fileDestPath");
+		String destFile = destPath + File.separatorChar + fileName;
 		System.out.println("上传文件保存路径:" + destFile);
 		File destFile2 = new File(destFile);
 		try {
@@ -50,7 +50,7 @@ public class UploadAndDownloadUtil {
 	 * @param request		request对象
 	 * @param response		response对象
 	 */
-	public static void downloadFile(String sourcePath, HttpServletRequest request, HttpServletResponse response) {
+	public static String downloadFile(String sourcePath, HttpServletRequest request, HttpServletResponse response) {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 		try {
@@ -71,6 +71,7 @@ public class UploadAndDownloadUtil {
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			return CommenClass.FILENOTFOUNDEXCEPTION;
 		} catch (IOException e) {// bos
 			e.printStackTrace();
 		} finally {
@@ -83,6 +84,7 @@ public class UploadAndDownloadUtil {
 				e.printStackTrace();
 			}
 		}
+		return CommenClass.NORMAL_RETURN;
 
 	}
 }

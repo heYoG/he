@@ -7,6 +7,6 @@
 <title>显示页面</title>
 </head>
 <body>
-<span style="align:center">rightBar</span>
+<center><h1 style="margin-top:10%;color:#F4EFFA">showPage</h1></center>
 </body>
 </html>

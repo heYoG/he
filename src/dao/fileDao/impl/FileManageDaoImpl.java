@@ -15,7 +15,7 @@ import util.TableManager;
 import vo.fileVo.FileManageVo;
 import vo.userVo.UserVo;
 
-public class FileManageDaoImpl extends BaseDao<FileManageVo> implements IFileManageDao<FileManageVo,CommenClass,UserVo>{
+public class FileManageDaoImpl extends BaseDao implements IFileManageDao<FileManageVo,CommenClass,UserVo>{
 
 	private SessionClass sessionCls;
 	

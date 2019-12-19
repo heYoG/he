@@ -16,6 +16,8 @@ public class CommenClass{
 	private int end;//结束位置
 	private String type;//查询类型，0：已删除，1：正常
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
+	public static final String NORMAL_RETURN="0000";
+	public static final String FILENOTFOUNDEXCEPTION="0001";
 	
 	
 	public int getTotalCount() {

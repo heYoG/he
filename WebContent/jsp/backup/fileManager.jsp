@@ -65,6 +65,12 @@ a:link {
 }
 </style>
 <script type="text/javascript">
+	var ret="${downloadError}";
+	if(ret!=""){//下载文件出错(文件不存在)
+		alert("下载文件出错,错误码:${downloadError}");
+		window.history.go(-1);//返回上一页
+	}
+
 	$(function(){//复选框全选
 		$("#selectAllID").click(function(){
 			var ch=$(":checkbox[name='chName']");

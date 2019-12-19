@@ -93,7 +93,11 @@ public class FileManagerAction extends ActionSupport{
 		}
 		int id=Integer.parseInt(request.getParameter("id"));
 		FileManageVo vo = fdi.getFileInfo(id);
-		UploadAndDownloadUtil.downloadFile(vo.getMyFile(), request, response);
+		String ret = UploadAndDownloadUtil.downloadFile(vo.getMyFile(), request, response);
+		if(!ret.equals(CommenClass.NORMAL_RETURN)) {//要下载文件不存在
+			request.setAttribute("downloadError", CommenClass.FILENOTFOUNDEXCEPTION);
+			return "fileInfo";
+		}
 		return null;//下载完成后留在当前页面
 		
 	}
