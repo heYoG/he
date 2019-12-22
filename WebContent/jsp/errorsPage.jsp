@@ -12,7 +12,7 @@
 		alert("用户密码错误!");
 	if("${user}"=="outtime")
 		alert("登录已失效,请重新登录!");
-	if("${downloadError}"!=null)
+	if("${downloadError}"!=null&&"${downloadError}"!="")
 		alert("下载文件出错,错误码:${downloadError}");
 	window.open("<%=request.getContextPath()%>/index.jsp","_parent","");
 </script>

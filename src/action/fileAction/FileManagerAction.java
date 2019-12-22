@@ -46,7 +46,7 @@ public class FileManagerAction extends ActionSupport{
 		int totalCount=fdi.getCount(type,uv);//获取总记录
 		cc.setTotalCount(totalCount);//公用方法pageMethod含泛型参数,无法获取此值
 		cc.setType(type);
-		cc = PageUtil.pageMethod(cc, request);//重新设置cc对象
+		cc = PageUtil.pageMethod(cc , request);//重新设置cc对象
 		List<FileManageVo> listFile = fdi.getFileInfo(fm,cc,uv);
 		request.setAttribute("fileList", listFile);//文件集合
 		request.setAttribute("pageData", cc);

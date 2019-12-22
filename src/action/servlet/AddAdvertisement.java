@@ -70,6 +70,8 @@ public class AddAdvertisement extends HttpServlet {
 		adVo.setAdSize(adSize);
 		adVo.setUploadtime(valueOf);
 		adVo.setOperator(userNo);
+		adVo.setUser_id(userVo.getId());
+		
 		int ad = uploadAd(request, response,adVo);
 		if(ad==0) {//图片上传失败
 			out.print("<script type='text/javascript'>alert('上传广告图片失败!')</script>");

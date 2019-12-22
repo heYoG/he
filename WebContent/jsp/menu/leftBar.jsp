@@ -66,7 +66,7 @@
 			<span onclick="doAction(5,'../../images/menu/tree_minus.gif','../../images/menu/tree_plus.gif')"><img alt="" src="<%=request.getContextPath()%>/images/menu/tree_plus.gif" id="img5">广告管理</span>
 			<ul style="display:none" id="u5">
 				<li><a href="../../jsp/ad/newAd.jsp" target="showPageName">新增广告</a></li>
-				<li>广告管理</li>
+				<li><a href="adManage.servletM" target="showPageName">广告管理</a></li>
 			</ul>
 		</li>
 	</ul>
