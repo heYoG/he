@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 import conn.ConnectDB;
 
+/**
+ * 	自定义连接数据库
+ * @author Administrator
+ *
+ */
 public class BaseDao {
 	Connection conn = new ConnectDB().getConnection();//创建连接对象
 	PreparedStatement statement = null;//创建预编译对象
