@@ -1,3 +1,3 @@
 # he
 he's repository
-struts2和hibernate整合20191201
+servlet、struts2和hibernate整合20191201
