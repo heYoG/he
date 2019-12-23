@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 组件扫描包 -->
+	<context:component-scan base-package="vo"></context:component-scan>
+	<context:component-scan base-package="util"></context:component-scan>
+	
+	<!-- 使用dbcp数据源及数据库连接配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- 驱动 -->
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<!-- 连接地址 -->
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1:3306/ssh?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>
+		<!-- 用户名,未加密 -->
+		<property name="username">
+			<value>root</value>
+		</property>
+		<!-- 密码,未加密 -->
+		<property name="password">
+			<value>root</value>
+		</property>
+	</bean>
+	
+	<!-- 集成hibernate框架配置，hibernate主要配置通过sessionFactory实现，property中的name必须与底层一致 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- hibernate使用前面已配置dbcp数据源，名称要一致 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- hibernate基本属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">true</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="format_sql">true</prop>
+			</props>
+		</property>
+		<!-- hibernate映射文件,不能是其它名称 -->
+		<property name="mappingResources">
+			<list>
+				<value>vo/userVo/UserVo.hbm.xml</value>
+				<value>vo/userVo/AuthorityVo.hbm.xml</value>
+				<value>vo/deptVo/DeptVo.hbm.xml</value>
+				<value>vo/fileVo/FileManageVo.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ? -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- ? -->
+	<bean id="defaultTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- ? -->
+	<tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/>
+</beans>

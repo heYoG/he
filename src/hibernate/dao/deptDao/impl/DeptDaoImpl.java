@@ -10,20 +10,15 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import hibernate.dao.deptDao.api.IDeptDao;
+import hibernate.utils.SessionClass;
 import util.CommenClass;
 
 @SuppressWarnings(value= {"all"})
-public class DeptDaoImpl<T> implements IDeptDao<T> {
-	public Session getOpenedSession() {
-		Configuration cfg = new Configuration();
-		Configuration configure = cfg.configure();
-		SessionFactory sessionFactory = configure.buildSessionFactory();
-		return sessionFactory.openSession();
-	}
-
+public class DeptDaoImpl<T> extends SessionClass implements IDeptDao<T> {
+	
 	@Override
 	public List<T> getDeptInfos(T t,CommenClass cc) {
-		Session session=this.getOpenedSession();
+		Session session=getOpenedSession();
 		Query getDepts = session.createQuery("from " + t.getClass().getSimpleName());
 		/*设置分页查询参数*/
 		getDepts.setFirstResult((cc.getCurrentPage() - 1) * cc.getPageSize());
@@ -35,7 +30,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 
 	@Override
 	public List<T> getDeptInfos() {
-		Session session=this.getOpenedSession();
+		Session session=getOpenedSession();
 		Query getDepts = session.createQuery("from DeptVo");
 		List<T> list = getDepts.list();
 		session.close();
@@ -44,7 +39,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 	
 	@Override
 	public List<T> getDeptInfo(T t,String obj) {
-		Session session = this.getOpenedSession();
+		Session session = getOpenedSession();
 		Query sqlQuery = session.createQuery("from "+t.getClass().getSimpleName()+" where deptName='"+obj+"'");
 		List<T> list = sqlQuery.list();
 		return list;
@@ -52,7 +47,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 
 	@Override
 	public Serializable addDept(T t) {
-		Session session=this.getOpenedSession();
+		Session session=getOpenedSession();
 		Transaction transaction = session.beginTransaction();
 		Serializable save = session.save(t);//直接调用save接口
 		transaction.commit();
@@ -62,7 +57,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 
 	@Override
 	public void delDept(T t,Serializable id) {
-		Session session=this.getOpenedSession();
+		Session session=getOpenedSession();
 		Transaction transaction = session.beginTransaction();
 		/*先根据条件获取要删除对象*/
 		session.delete(session.get(t.getClass(), id));//id必须是主键
@@ -72,7 +67,7 @@ public class DeptDaoImpl<T> implements IDeptDao<T> {
 
 	@Override
 	public long getCount(T t) {
-		Session session = this.getOpenedSession();
+		Session session = getOpenedSession();
 		String sql="select count(deptID) from "+t.getClass().getSimpleName();
 		
 		Query query = session.createQuery(sql);
