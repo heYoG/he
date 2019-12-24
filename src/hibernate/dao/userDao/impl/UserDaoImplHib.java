@@ -104,14 +104,13 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 	}
 
 	@Override
-	public long getCount(UserVo uv) {
+	public long getCount(String type) {
 		Session session = getOpenedSession();
-		List<UserVo> list = selectUser(uv);
-		uv =list.get(0);
 		String hql="select count(id) from UserVo where 1=1";
-		if(uv.getAv().getAuthVal()!=1) {//非管理员只能查看正常用户
+		if(type.equals("0")) //非管理员只能查看正常用户
+			hql+=" and status='0'";
+		else//查询正常用户
 			hql+=" and status='1'";
-		}
 		Query query = session.createQuery(hql);
 		long count = (long) query.uniqueResult();
 		session.close();

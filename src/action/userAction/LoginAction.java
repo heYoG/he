@@ -84,8 +84,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		long count = userDaoImpl.getCount(userVo);
 		String type = request.getParameter("type");
+		type=type==null?"1":type;
+		long count = userDaoImpl.getCount(type);
 		type=type==null?"1":type;
 		cc.setType(type);
 		cc.setTotalCount((int)count);
@@ -149,7 +150,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			}
 			System.out.println("修改密码失败!");
 			request.setAttribute("updateInfo", "update_fail");
-			long count = userDaoImpl.getCount(userVo);
+			long count = userDaoImpl.getCount(type);
 			cc.setTotalCount((int)count);
 			cc = PageUtil.pageMethod(cc, request);
 			List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
@@ -179,7 +180,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			System.out.println("删除用户成功,id:"+userID);
 		else
 			System.out.println("删除用户失败,id:"+userID);
-		long count = userDaoImpl.getCount(userVo);
+		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
 		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
@@ -208,7 +209,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			System.out.println("彻底删除用户成功,id:"+userID);
 		else
 			System.out.println("彻底删除用户失败,id:"+userID);
-		long count = userDaoImpl.getCount(userVo);
+		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
 		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);
@@ -311,7 +312,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			System.out.println("激活用户成功,id:"+userID);
 		else
 			System.out.println("激活用户失败,id:"+userID);
-		long count = userDaoImpl.getCount(userVo);
+		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
 		List<UserVo> list = userDaoImpl.pageSelectUser(userVo,cc);

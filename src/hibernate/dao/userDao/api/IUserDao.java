@@ -50,10 +50,10 @@ import vo.userVo.UserVo;
 	
 	/**
 	 *查询数据条数
-	 * @param entity      用户实体类
+	 * @param type      查询类型 0：查询虚拟删除用户;1:查询正常用户
 	 * @return
 	 */
-	public long getCount(UserVo entity);
+	public long getCount(String type);
 	
 	/**
 	 * 修改用户信息

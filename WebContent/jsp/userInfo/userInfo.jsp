@@ -189,8 +189,8 @@ th, td {
 			</c:forEach>
 			<!-- 下一页 -->
 			<c:choose>
-				<c:when test="${pageData.currentPage!=pageData.totalPage }">
-					<!-- 即不为最后一页 -->
+				<c:when test="${pageData.currentPage < pageData.totalPage }">
+					<!-- 当前页小于总页数,即不为最后一页 ,条件判断也可用lt-->
 					<a
 						href="login!userInfo.action?currentPage=${pageData.currentPage+1}&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 						type="button" name="nextPage" value="下一页"></a>
