@@ -236,12 +236,8 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	
 	/*添加用户*/
 	public String addUser() {
-		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
-		if(session!=null) {//判断系统登录是否过期
-			userVo=(UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
-		}
-		if(userVo==null) {
+		if(session==null) {
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
