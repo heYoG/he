@@ -30,7 +30,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		</property>
 	</bean>
 	
-	<!-- 集成hibernate框架配置，hibernate主要配置通过sessionFactory实现，property中的name必须与底层一致 -->
+	<!-- 集成hibernate框架配置，将SessionFactory交给了Spring来管理，property中的name必须与底层一致 -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<!-- hibernate使用前面已配置dbcp数据源，名称要一致 -->
 		<property name="dataSource" ref="dataSource"></property>
@@ -54,16 +54,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		</property>
 	</bean>
 	
-	<!-- ? -->
+	<!-- hibernate的crud bean配置,是hibernate Session的轻量级封装 -->
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	<!-- ? -->
+	<!-- hibernate事务管理配置 -->
 	<bean id="defaultTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	<!-- ? -->
+	<!-- tx标签采用声明式事务(defaultTransactionManager),使用annotation定义事务，设置true表示使用spring中的代理——开启事务注解功能 -->
 	<tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/>
 </beans>
