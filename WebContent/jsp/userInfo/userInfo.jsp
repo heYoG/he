@@ -199,8 +199,17 @@ th, td {
 					<input type="button" disabled="true" value="下一页">
 				</c:otherwise>
 			</c:choose>
-			_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第${pageData.currentPage}页&nbsp;&nbsp;跳到第<input
-				type="text" size="4" id="jumpPage">页&nbsp;<input
+			_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第
+			<c:choose>
+				<c:when test="${pageData.totalPage==0}">
+					<!-- 没有数据 -->
+					0
+				</c:when>
+				<c:otherwise>
+					${pageData.currentPage}
+				</c:otherwise>
+			</c:choose>
+			页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input
 				type="button" id="jumpBt" onclick="sum(${pageData.totalPage})"
 				value="确定">&nbsp;&nbsp;&nbsp;
 		</div>

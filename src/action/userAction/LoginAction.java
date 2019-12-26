@@ -44,7 +44,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	public String execute() throws InterruptedException{
 		HttpSession session = request.getSession();
 		/*通过模型驱动获取输入值*/
-		
 		String userNo = userVo.getUserNo();
 		String userPWD=userVo.getPwd();
 		List<UserVo> list = userDaoImpl.selectUser(userVo,1);
@@ -97,7 +96,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		return "userInfo";
 	}
 	
-	/*修改前回显,模型驱动带值到jsp*/
+	/*修改前回显,模型驱动带值到jsp时不能设置局部模型变量*/
 	public String updateUser(){
 		UserVo userVo=null;
 		HttpSession session = request.getSession(false);
@@ -109,11 +108,13 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			return ERROR;
 		}
 		List<UserVo> list=new ArrayList<UserVo>();
-		String userNo=request.getParameter("userNo");
+		String userNo=request.getParameter("userNo");//要修改用户
 		String isAppro = request.getParameter("isAppro");//是否为审批模块的修改,不为空是
+		userVo.setUserNo(userNo);
 		list = userDaoImpl.selectUser(userVo);
 		userVo=(UserVo)list.get(0);
 		request.setAttribute("isAppro", isAppro);
+		request.setAttribute("userVo", userVo);//设置了局部模板变量必需另外传值
 		return "update";
 	}
 	
@@ -171,7 +172,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		int userID=Integer.parseInt(request.getParameter("id"));
+		int userID=Integer.parseInt(request.getParameter("userID"));
 		int delUserRet = userDaoImpl.delUser(userVo, userID,1);
 		String type = request.getParameter("type");
 		type=type==null?"1":type;

@@ -27,7 +27,7 @@
 				document.getElementById("jumpPage").value='';
 				return false;
 			}
-			location="fileManage.action?currentPage="+jumpPage;
+			location="adManage.servletM?currentPage="+jumpPage;
 		}	
 	
 	function view(adID){
@@ -115,7 +115,7 @@ a:link {
 			<c:choose>
 				<c:when test="${pageData.currentPage!=1}">
 					<a
-						href="fileManage.action?currentPage=${pageData.currentPage-1}&type=1&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
+						href="adManage.servletM?currentPage=${pageData.currentPage-1}&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
 						type="button" name="previousPage" value="上一页"></a>
 				</c:when>
 				<c:otherwise>
@@ -133,7 +133,7 @@ a:link {
 						<!-- 禁止点击当前页 -->
 					</c:when>
 					<c:otherwise>
-						<a href="fileManage.action?currentPage=${p}&type=1">${p}</a>
+						<a href="adManage.servletM?currentPage=${p}">${p}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -142,15 +142,24 @@ a:link {
 				<c:when test="${pageData.currentPage!=pageData.totalPage }">
 					<!-- 即不为最后一页 -->
 					<a
-						href="fileManage.action?currentPage=${pageData.currentPage+1}&type=1&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
+						href="adManage.servletM?currentPage=${pageData.currentPage+1}&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 						type="button" name="nextPage" value="下一页"></a>
 				</c:when>
 				<c:otherwise>
 					<input type="button" disabled="true" value="下一页">
 				</c:otherwise>
 			</c:choose>
-			_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第${pageData.currentPage}页&nbsp;&nbsp;跳到第<input
-				type="text" size="4" id="jumpPage">页&nbsp;<input
+			_ 共${pageData.totalCount}条数据|共${pageData.totalPage }页|当前第
+			<c:choose>
+				<c:when test="${pageData.totalPage==0}">
+					<!-- 没有数据 -->
+					0
+				</c:when>
+				<c:otherwise>
+					${pageData.currentPage}
+				</c:otherwise>
+			</c:choose>
+			页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input
 				type="button" id="jumpBt" onclick="sum(${pageData.totalPage})"
 				value="确定">&nbsp;&nbsp;&nbsp;
 		</div>

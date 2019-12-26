@@ -24,11 +24,11 @@
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;姓名:<input type="text"
-					name="userName" value="${userVo.userName}"></td><!-- 模型驱动取值 -->
+					name="userName" value="${userVo.userName}"></td><!-- 后台未设置局部模型变量时可通过模型驱动取值 -->
 			</tr>
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;年龄:<input type="text"
-					name="userAge" value="${userVo.age}"></td><!-- 属性驱动取值 -->
+					name="userAge" value="${userVo.age}"></td><!-- 后台未设置局部模型变量时可通过模型驱动取值 -->
 			</tr>
 			<tr>
 				<td>

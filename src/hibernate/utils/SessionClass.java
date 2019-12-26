@@ -3,6 +3,7 @@ package hibernate.utils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -19,7 +20,7 @@ public class SessionClass {
 //	}
 	
 	 public Session getOpenedSession() {
-	    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+	    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	    SessionFactory sessionFactory = (SessionFactory)applicationContext.getBean(SessionFactory.class);
 	    return sessionFactory.openSession();
 	  }

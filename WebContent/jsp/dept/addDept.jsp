@@ -66,7 +66,7 @@
 		<form action="DeptAction_addDept" method="post" name="addDeptForm">
 			<table>
 				<tr>
-					<td>新部门名称:<input type="text" name="deptName" id="deptID"></td>
+					<td>部门名称:<input type="text" name="deptName" id="deptID"></td>
 				</tr>
 				<tr><td><input type="button" id="bt" value="确定"></td></tr>
 			</table>
