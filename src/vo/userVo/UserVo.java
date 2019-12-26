@@ -2,8 +2,10 @@ package vo.userVo;
 
 import java.util.*;
 
+import vo.adVo.AdVo;
 import vo.deptVo.DeptVo;
 import vo.fileVo.FileManageVo;
+import vo.sealImage.SealImageVo;
 
 public class UserVo {
 	private int id;//用户id
@@ -15,6 +17,8 @@ public class UserVo {
 	private DeptVo dept;//多对一中一方的部门对象
 	private Set<FileManageVo> fileVo=new HashSet<FileManageVo>();//一对多中多方的文件对象
 	private String status;//用户状态,1：正常,0：注销
+	private Set<AdVo> ad=new HashSet<AdVo>();
+	private Set<SealImageVo> sv=new HashSet<SealImageVo>();
 	
 	public int getId() {
 		return id;
@@ -71,6 +75,20 @@ public class UserVo {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public Set<AdVo> getAd() {
+		return ad;
+	}
+	public void setAd(Set<AdVo> ad) {
+		this.ad = ad;
+	}
+	
+	public Set<SealImageVo> getSv() {
+		return sv;
+	}
+	public void setSv(Set<SealImageVo> sv) {
+		this.sv = sv;
 	}
 	public UserVo() {
 		super();

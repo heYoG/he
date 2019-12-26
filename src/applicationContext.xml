@@ -39,8 +39,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">true</prop>
-				<prop key="show_sql">true</prop>
-				<prop key="format_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
 			</props>
 		</property>
 		<!-- hibernate映射文件,不能是其它名称 -->
@@ -50,6 +50,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<value>vo/userVo/AuthorityVo.hbm.xml</value>
 				<value>vo/deptVo/DeptVo.hbm.xml</value>
 				<value>vo/fileVo/FileManageVo.hbm.xml</value>
+				<value>vo/adVo/AdVo.hbm.xml</value>
+				<value>vo/sealImage/SealImageVo.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

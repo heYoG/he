@@ -165,8 +165,6 @@ function refuse(userID){//审批不通过
 				<span style="text-align: center; font-size: 15pt; color: red"><h3>没有待审批用户</h3></span>
 			</c:otherwise>
 		</c:choose>
-
-
 	</center>
 </body>
 </html>

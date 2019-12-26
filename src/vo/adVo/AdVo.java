@@ -2,6 +2,8 @@ package vo.adVo;
 
 import java.sql.Timestamp;
 
+import vo.userVo.UserVo;
+
 
 /*广告javabean*/
 public class AdVo {
@@ -12,6 +14,7 @@ public class AdVo {
 	private Timestamp uploadtime;
 	private String operator;
 	private int user_id;
+	private UserVo user;
 	
 	public AdVo() {
 		super();
@@ -71,6 +74,14 @@ public class AdVo {
 
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
+	}
+
+	public UserVo getUser() {
+		return user;
+	}
+
+	public void setUser(UserVo user) {
+		this.user = user;
 	}
 	
 }

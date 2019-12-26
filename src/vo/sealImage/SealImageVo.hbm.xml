@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.sealImage.SealImageVo" table="sealImage">
+		<id name="imgId" type="java.lang.Integer">
+			<column name="imgId"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="originalName" type="java.lang.String">
+			<column name="originalName"></column>
+		</property>
+		<property name="saveName" type="java.lang.String">
+			<column name="saveName"></column>
+		</property>
+		<property name="imgSize" type="java.lang.Long">
+			<column name="imgSize"></column>
+		</property>
+		<property name="uploadtime" type="java.sql.Timestamp">
+			<column name="uploadtime"></column>
+		</property>
+		<property name="operator" type="java.lang.String">
+			<column name="operator"></column>
+		</property>
+		<property name="imgData" type="java.sql.Blob">
+			<column name="imgData"></column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="status"></column>
+		</property>
+		<many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"></many-to-one>
+	</class>
+</hibernate-mapping>

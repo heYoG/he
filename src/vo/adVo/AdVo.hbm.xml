@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.adVo.AdVo" table="adtable"><!-- 映射类及对应表 -->
+		<!-- 属性及对应表字段和属性类型,类型可不写，能自动判别 -->
+		<id name="id" type="java.lang.Integer">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="adName" type="java.lang.String">
+			<column name="adName"></column>
+		</property>
+		<property name="saveName" type="java.lang.String">
+			<column name="saveName"></column>
+		</property>
+		<property name="adSize" type="java.lang.Long">
+			<column name="adSize"></column>
+		</property>
+		<property name="uploadtime" type="java.sql.Timestamp">
+			<column name="uploadtime"></column>
+		</property>
+		<property name="operator" type="java.lang.String">
+			<column name="operator"></column>
+		</property>
+		<!-- 广告-用户,从主表多对一对应关系 -->
+		<many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"></many-to-one>
+	</class>
+</hibernate-mapping>

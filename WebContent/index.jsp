@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>struts2&hibernate整合</title>
+<title>struts2&hibernate&spring整合</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/user/login.js"></script>
 <link rel="stylesheet" type="text/css" href="css/menuCss.css">
 <script type="text/javascript">
