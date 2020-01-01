@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- spring bean的dao层，连接数据库 -->
+<beans>
+	<bean id="sealImageDao" class="dao.sealImageDao.impl.SealImageDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+</beans>	

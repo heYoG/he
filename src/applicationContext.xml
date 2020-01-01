@@ -7,8 +7,14 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- 组件扫描包 -->
-	<context:component-scan base-package="vo"></context:component-scan>
+	<context:component-scan base-package="action"></context:component-scan>
+	<context:component-scan base-package="conn"></context:component-scan>
+	<context:component-scan base-package="controllers"></context:component-scan>
+	<context:component-scan base-package="dao"></context:component-scan>
+	<context:component-scan base-package="hibernate"></context:component-scan>
+	<context:component-scan base-package="service"></context:component-scan>
 	<context:component-scan base-package="util"></context:component-scan>
+	<context:component-scan base-package="vo"></context:component-scan>
 	
 	<!-- 使用dbcp数据源及数据库连接配置 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -28,6 +34,14 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="password">
 			<value>root</value>
 		</property>
+		<!-- 连接池启动时的初始值 -->
+		<property name="initialSize" value="50"></property>
+		<!-- 连接池最大活跃连接数 -->
+		<property name="maxActive" value="60"></property>
+		<!-- 连接数最大空闲连接数 -->
+		<property name="maxIdle" value="10"></property>
+		<!-- 连接池最小空闲连接数 -->
+		<property name="minIdle" value="5"></property>
 	</bean>
 	
 	<!-- 集成hibernate框架配置，将SessionFactory交给了Spring来管理，property中的name必须与底层一致 -->
@@ -43,7 +57,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<prop key="hibernate.format_sql">true</prop>
 			</props>
 		</property>
-		<!-- hibernate映射文件,不能是其它名称 -->
+		<!-- hibernate映射文件配置,name不能是其它名称 -->
 		<property name="mappingResources">
 			<list>
 				<value>vo/userVo/UserVo.hbm.xml</value>
@@ -67,5 +81,5 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	</bean>
 	
 	<!-- tx标签采用声明式事务(defaultTransactionManager),使用annotation定义事务，设置true表示使用spring中的代理——开启事务注解功能 -->
-	<tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/>
+	<!-- <tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/> -->
 </beans>

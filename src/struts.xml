@@ -42,6 +42,12 @@
 		<result name="deptList">/jsp/dept/deptList.jsp</result>
 		<result name="error">/jsp/errorsPage.jsp</result>
 	</action>
+	<!-- 印模action,jsp:sealImage!+方法名调用 -->
+	<action name="sealImage" class="controllers.springCtrl_config.SealImageAction">
+		<result name="addNewSealImage">/jsp/sealImage/newSealImage.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
+		<result name="sealImageManage">/jsp/sealImage/sealImageManage.jsp</result>
+	</action>
 </package>
 <!-- 上传文件大小 -->
 <constant name="struts.multipart.maxSize" value="10240000"/>

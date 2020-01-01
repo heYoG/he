@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 获取spring管理的bean所在类注入 -->
+	<bean class="util.MyApplicationContext"></bean>
+	<!-- service中的bean -->
+	<bean id="sealImageService" class="service.sealImageService.impl.SealImageServiceImpl">
+		<property name="sdi" ref="sealImageDao"></property>
+	</bean>
+</beans>

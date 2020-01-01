@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.mysql.jdbc.Util;
-
 public class PageUtil{
 	
 	/**

@@ -5,6 +5,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * 普通类,归集所有分散属性
+ * @author Administrator
+ *
+ */
 public class CommenClass{
 	private int totalCount;//总记录数
 	private int currentPage;//当前页
@@ -14,10 +19,10 @@ public class CommenClass{
 	private List<Integer> itemList;//页数
 	private int start;//起始位置
 	private int end;//结束位置
-	private String type;//查询类型，0：已删除，1：正常
+	private String type;//查询类型，0：注销，1：正常
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
-	public static final String NORMAL_RETURN="0000";
-	public static final String FILENOTFOUNDEXCEPTION="0001";
+	public static final String NORMAL_RETURN="0000";//程序正常
+	public static final String FILENOTFOUNDEXCEPTION="0001";//要下载文件不存在
 	
 	
 	public int getTotalCount() {

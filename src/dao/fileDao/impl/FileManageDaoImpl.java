@@ -25,7 +25,7 @@ public class FileManageDaoImpl extends BaseDao implements IFileManageDao<FileMan
 		String sql="select id,myFile,UploadTime,operator,status from "+TableManager.FILETABLE+" where id=?";
 		ResultSet rs = executeQuery(sql,1,new Object[]{id});//参数1代表要设置占位符参数
 		try {
-			while (rs.next()) {
+			while (rs.next()) {//属于业务层,应该写在service中
 				vo.setId(rs.getInt("id"));
 				vo.setMyFile(rs.getString("myFile"));
 				vo.setUploadTime(rs.getTimestamp("uploadTime"));

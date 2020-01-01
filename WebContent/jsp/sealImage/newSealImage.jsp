@@ -32,14 +32,15 @@ td {
 				document.getElementById("sealImgID").value='';
 				return false;
 			}
-			location.href="";
+			sealImageForm.action="sealImage!newSealImage.action";
+			sealImageForm.submit();
 		});
 	})
 </script>
 </head>
 <body>
 	<center>
-		<form action="" method="post" name="adForm">
+		<form action="" method="post" name="sealImageForm" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>选择印模图片<input type="file" name="sealImgFile" id="sealImgID"></td>

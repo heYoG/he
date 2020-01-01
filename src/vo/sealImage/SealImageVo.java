@@ -5,6 +5,11 @@ import java.sql.Timestamp;
 
 import vo.userVo.UserVo;
 
+/**
+ * 印模javabean，使用spring IOC配置文件方式
+ * @author Administrator
+ *
+ */
 public class SealImageVo {
 	private int imgId;//印模id
 	private String originalName;//印模原名称
@@ -12,7 +17,6 @@ public class SealImageVo {
 	private long imgSize;//图片大小(byte)
 	private Timestamp uploadtime;//图片上传时间
 	private String operator;//操作人员
-	private int user_id;//从表外键,对应主表userTable的id
 	private Blob imgData;//印模数据
 	private int status;//印模状态 0:已注销；1:正常；2:待审批
 	private UserVo user;
@@ -52,12 +56,6 @@ public class SealImageVo {
 	}
 	public void setOperator(String operator) {
 		this.operator = operator;
-	}
-	public int getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
 	}
 	public Blob getImgData() {
 		return imgData;

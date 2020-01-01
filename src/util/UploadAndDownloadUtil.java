@@ -16,7 +16,7 @@ import org.apache.commons.io.FileUtils;
 
 
 /**
- * 文件的上传下载
+ * struts2文件的上传、下载
  * @author Administrator
  *
  */

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTA BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- javabean注入 -->
+<beans>
+	<!-- action中的javabean调用依赖注入 -->
+	<bean id="SIVo" class="vo.sealImage.SealImageVo"></bean>
+	<bean id="commenClass" class="util.CommenClass"></bean>
+</beans>
