@@ -23,7 +23,7 @@ public class CommenClass{
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
 	public static final String NORMAL_RETURN="0000";//程序正常
 	public static final String FILENOTFOUNDEXCEPTION="0001";//要下载文件不存在
-	
+	public static final String DELETESEALIMAGEEXCEPTION="0002";//删除印模失败
 	
 	public int getTotalCount() {
 		return totalCount;

@@ -73,7 +73,7 @@
 			<span onclick="doAction(6,'../../images/menu/tree_minus.gif','../../images/menu/tree_plus.gif','../../images/menu/tree_plus.gif')"><img alt="" src="<%=request.getContextPath()%>/images/menu/tree_plus.gif" id="img6">印模管理</span>
 			<ul style="display:none" id="u6">
 				<li><a href="../sealImage/newSealImage.jsp" target="showPageName">印模申请</a></li>
-				<li><a href="javascript:void(0)" target="showPageName">印模审批</a></li>
+				<li><a href="sealImage!approveSealImage.action" target="showPageName">印模审批</a></li>
 				<li><a href="sealImage.action" target="showPageName">印模管理</a></li>
 			</ul>
 		</li>

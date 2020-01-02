@@ -47,6 +47,7 @@
 		<result name="addNewSealImage">/jsp/sealImage/newSealImage.jsp</result>
 		<result name="error">/jsp/errorsPage.jsp</result>
 		<result name="sealImageManage">/jsp/sealImage/sealImageManage.jsp</result>
+		<result name="sealImageApprove">/jsp/sealImage/sealImageApprove.jsp</result>
 	</action>
 </package>
 <!-- 上传文件大小 -->

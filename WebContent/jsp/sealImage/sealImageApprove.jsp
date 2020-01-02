@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>印模管理</title>
+<title>印模审批</title>
 <script type="text/javascript" src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
 <script type="text/javascript"
 	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
@@ -53,26 +53,13 @@ a:link {
 }
 </style>
 <script type="text/javascript">
-	var delRet="${deleteError}";
-	if(delRet!=""){
-		alert("删除印模失败!");
-		window.history.go(-1);//返回上一页
+	function agree(imgID){
+		if(confirm("确定同意申请吗?"))
+			location.href="sealImage!approveSealImage.action?status=1&id="+imgID;
 	}
 	
-	function active(imgID){
-		if(confirm("确定激活该印模吗?"))
-			location.href="sealImage.action?status=1&id="+imgID;
-	}
-	
-	function cancel(imgID){
-		if(confirm("确定注销该印模吗?"))
-			location.href="sealImage.action?status=0&id="+imgID;
-	}
-
-	function del(imgID){
-		if(confirm("确定删除此印模吗?")){
-			location.href="sealImage!deleteSealImage.action?id="+imgID;
-		}
+	function refuse(imgID){
+		alert("暂不支持此操作!");
 	}
 	
 	function sum(totalPage){//跳转页面
@@ -89,7 +76,7 @@ a:link {
 			document.getElementById("jumpPage").value='';
 			return false;
 		}
-		location="sealImage.action?currentPage="+jumpPage;
+		location="sealImage!approveSealImage.action?currentPage="+jumpPage+"&status=2";
 	}
 
 </script>
@@ -98,7 +85,7 @@ a:link {
 	<center>
 		<c:choose>
 			<c:when test="${sealImageList=='[]'}">
-				<span style="text-align: center; font-size: 15pt; color: red">此处空空如也</span>
+				<span style="text-align: center; font-size: 15pt; color: red">没有待审批印模</span>
 			</c:when>
 			<c:otherwise>
 				<table>
@@ -120,13 +107,10 @@ a:link {
 							<td>${si.imgSize }</td>
 							<td>${si.uploadtime }</td>
 							<td>${si.operator }</td>
-							<td><c:if test="${si.status==0 }">已注销</c:if> <c:if
-									test="${si.status==1 }">正常</c:if></td>
-							<td nowrap="nowrap"><c:if test="${si.status==0 }">
-									<a href="javascript:void(0)" onclick="active(${si.imgid})">激活</a>
-								</c:if><c:if test="${si.status==1 }">
-									<a href="javascript:void(0)" onclick="cancel(${si.imgid})">注销</a>
-								</c:if>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="del(${si.imgid})">删除</a></td>
+							<td><c:if test="${si.status==2 }">待审批</c:if></td>
+							<td nowrap="nowrap"><a href="javascript:void(0)"
+								onclick="agree(${si.imgid})">同意</a>&nbsp;&nbsp;<a
+								href="javascript:void(0)" onclick="refuse(${si.imgid})">拒绝</a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -135,7 +119,7 @@ a:link {
 					<c:choose>
 						<c:when test="${pageData.currentPage!=1}">
 							<a
-								href="sealImage.action?currentPage=${pageData.currentPage-1}&status=0,1&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
+								href="sealImage!approveSealImage.action?currentPage=${pageData.currentPage-1}&status=0,1&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
 								type="button" name="previousPage" value="上一页"></a>
 						</c:when>
 						<c:otherwise>
@@ -153,7 +137,8 @@ a:link {
 								<!-- 禁止点击当前页 -->
 							</c:when>
 							<c:otherwise>
-								<a href="fileManage.action?currentPage=${p}&status=0,1">${p}</a>
+								<a
+									href="sealImage!approveSealImage.action?currentPage=${p}&status=0,1">${p}</a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -162,7 +147,7 @@ a:link {
 						<c:when test="${pageData.currentPage!=pageData.totalPage }">
 							<!-- 即不为最后一页 -->
 							<a
-								href="fileManage.action?currentPage=${pageData.currentPage+1}&status=0,1&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
+								href="sealImage!approveSealImage.action?currentPage=${pageData.currentPage+1}&status=0,1&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 								type="button" name="nextPage" value="下一页"></a>
 						</c:when>
 						<c:otherwise>

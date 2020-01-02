@@ -68,6 +68,7 @@ public class FileManagerAction extends ActionSupport{
 		
 		long length = myFile.length();//文件大小(bytes)
 		String filePath = UploadAndDownloadUtil.uploadFile(myFile,getMyFileFileName());//文件保存路径
+//		System.out.println("保存文件路径:"+filePath);
 		String date = format.format(System.currentTimeMillis());//上传时间
 		int status=1;//状态,默认正常可用
 		fm.setMyFile(filePath);

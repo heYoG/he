@@ -21,14 +21,17 @@ public class SealImageDaoImpl extends BaseDaoJDBC implements ISealImageDao<SealI
 		String sql = "insert into " + TableManager.SEALIMAGE + " values(null,'" + sv.getOriginalName() + "','"
 				+ sv.getSaveName() + "'," + sv.getImgSize() + ",'" + sv.getUploadtime() + "','" + uv.getUserNo() + "',"
 				+ uv.getId() + ",null,2)";// 默认为待审批状态
+		if(sql.contains("\\")){//解决插入数据库自动去除转义字符\问题
+			sql=sql.replace("\\","\\\\");//将\转为\\
+		}		
 //		System.out.println("sql:"+sql);
 		return update(sql);
 	}
 
 	@Override
 	public int deleteSealImage(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql="delete from "+TableManager.SEALIMAGE+" where imgid="+id;
+		return update(sql);
 	}
 
 	@Override
@@ -38,9 +41,9 @@ public class SealImageDaoImpl extends BaseDaoJDBC implements ISealImageDao<SealI
 	}
 
 	@Override
-	public int updateSealImage(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateSealImage(String id,String status) {
+		String sql="update "+TableManager.SEALIMAGE+" set status="+status+" where imgid="+id;
+		return update(sql);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class SealImageDaoImpl extends BaseDaoJDBC implements ISealImageDao<SealI
 
 	@Override
 	public List<SealImageVo> pageSelectSealImage(CommenClass g,String status) {
-		String sql = "select*from " + TableManager.SEALIMAGE + " where status!="+status+" limit " + (g.getCurrentPage() - 1) * g.getPageSize()
+		String sql = "select*from " + TableManager.SEALIMAGE + " where status in("+status+") limit " + (g.getCurrentPage() - 1) * g.getPageSize()
 				+ "," + g.getPageSize();
 		List<SealImageVo> list = queryForList(sql);
 		return list;
@@ -59,8 +62,7 @@ public class SealImageDaoImpl extends BaseDaoJDBC implements ISealImageDao<SealI
 
 	@Override
 	public int getSealImageCount(String status) {
-		String sql="select count(imgId) from "+TableManager.SEALIMAGE+" where status!="+status;
-//		System.out.println("countSql:"+sql);
+		String sql="select count(imgId) from "+TableManager.SEALIMAGE+" where status in("+status+")";
 		return queryForInt(sql);
 	}
 

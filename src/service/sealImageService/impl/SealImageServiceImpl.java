@@ -4,11 +4,13 @@ import java.util.List;
 
 import dao.sealImageDao.impl.SealImageDaoImpl;
 import service.sealImageService.api.ISealImageService;
+import util.BaseDao;
 import util.CommenClass;
+import util.TableManager;
 import vo.sealImage.SealImageVo;
 import vo.userVo.UserVo;
 
-public class SealImageServiceImpl implements ISealImageService<SealImageVo, CommenClass,UserVo> {
+public class SealImageServiceImpl extends BaseDao implements ISealImageService<SealImageVo, CommenClass,UserVo> {
 	private SealImageDaoImpl sdi;
 	
 	public SealImageDaoImpl getSdi() {
@@ -27,8 +29,7 @@ public class SealImageServiceImpl implements ISealImageService<SealImageVo, Comm
 
 	@Override
 	public int deleteSealImage(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sdi.deleteSealImage(id);
 	}
 
 	@Override
@@ -38,9 +39,8 @@ public class SealImageServiceImpl implements ISealImageService<SealImageVo, Comm
 	}
 
 	@Override
-	public int updateSealImage(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateSealImage(String id,String status) {
+		return sdi.updateSealImage(id, status);
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class SealImageServiceImpl implements ISealImageService<SealImageVo, Comm
 
 	@Override
 	public int getSealImageCount(String status) {
+		
 		return sdi.getSealImageCount(status);
 	}
 
-	
 }

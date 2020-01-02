@@ -37,7 +37,6 @@ public class SealImageAction extends ActionSupport{
 	public String execute() {
 		request= ServletActionContext.getRequest();
 		cc=(CommenClass) MyApplicationContext.getContext().getBean("commenClass");
-		siv=(SealImageVo) MyApplicationContext.getContext().getBean("SIVo");//获取bean
 		ssi=(SealImageServiceImpl) MyApplicationContext.getContext().getBean("sealImageService");//获取bean
 		HttpSession session=request.getSession(false);
 		if(session!=null)
@@ -46,10 +45,17 @@ public class SealImageAction extends ActionSupport{
 			request.setAttribute("user", "outtime");
 			return ERROR;
 		}
-		int imageCount = ssi.getSealImageCount("2");
+		String status = request.getParameter("status");//
+		int imageCount = ssi.getSealImageCount("0,1");//固定查询注销和正常印模
+		String imgID=request.getParameter("id");
 		cc.setTotalCount(imageCount);
 		cc = PageUtil.pageMethod(cc, request);
-		List<SealImageVo> pageList = ssi.pageSelectSealImage(cc,"2");
+		if(status!=null)
+		if(status.equals("0"))//注销印模
+			ssi.updateSealImage(imgID, status);
+		else//激活印模
+			ssi.updateSealImage(imgID, status);
+		List<SealImageVo> pageList = ssi.pageSelectSealImage(cc,"0,1");//返回印模管理页面
 		request.setAttribute("pageData", cc);
 		request.setAttribute("sealImageList", pageList);
 		return "sealImageManage";
@@ -88,6 +94,66 @@ public class SealImageAction extends ActionSupport{
 		return "addNewSealImage";
 	}
 
+	/**
+	 * 	印模审批
+	 * @return
+	 */
+	public String approveSealImage() {
+		request= ServletActionContext.getRequest();
+		cc=(CommenClass) MyApplicationContext.getContext().getBean("commenClass");
+		ssi=(SealImageServiceImpl) MyApplicationContext.getContext().getBean("sealImageService");//获取bean
+		HttpSession session=request.getSession(false);
+		if(session!=null)
+			userVo = (UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		if (userVo == null) {// 系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		String status = request.getParameter("status");//状态,jsp直接传多个参数值(如status=0,1)
+		String imgID = request.getParameter("id");
+		int imageCount = ssi.getSealImageCount("2");//固定查询待审批状态的印模
+		cc.setTotalCount(imageCount);
+		cc = PageUtil.pageMethod(cc, request);
+		if(status!=null)
+		if(status.equals("1"))//印模审批通过
+			ssi.updateSealImage(imgID, status);
+		List<SealImageVo> pageList = ssi.pageSelectSealImage(cc,"2");//返回印模审批页面
+		request.setAttribute("pageData", cc);
+		request.setAttribute("sealImageList", pageList);
+		return "sealImageApprove";
+	}
+	
+	/**
+	 * 删除印模
+	 * @return
+	 */
+	public String deleteSealImage() {
+		request= ServletActionContext.getRequest();
+		cc=(CommenClass) MyApplicationContext.getContext().getBean("commenClass");
+		ssi=(SealImageServiceImpl) MyApplicationContext.getContext().getBean("sealImageService");//获取bean
+		HttpSession session=request.getSession(false);
+		if(session!=null)
+			userVo = (UserVo) session.getAttribute(CommenClass.CURRENTUSERSESSION);
+		if (userVo == null) {// 系统登录过期
+			request.setAttribute("user", "outtime");
+			return ERROR;
+		}
+		int imageCount = ssi.getSealImageCount("0,1");//固定查询注销和正常印模
+		String imgID=request.getParameter("id");//要删除印模id
+		cc.setTotalCount(imageCount);//总记录
+		cc = PageUtil.pageMethod(cc, request);//返回分页数据
+		int delRet = ssi.deleteSealImage(Integer.parseInt(imgID));
+		if(delRet>0) {
+			System.out.println("删除印模成功!");
+			List<SealImageVo> pageList = ssi.pageSelectSealImage(cc,"0,1");//返回印模管理页面
+			request.setAttribute("pageData", cc);
+			request.setAttribute("sealImageList", pageList);
+		}else {
+			System.out.println("删除印模失败!");
+			request.setAttribute("deleteError",CommenClass.DELETESEALIMAGEEXCEPTION);
+		}
+		return "sealImageManage";
+	}
 	
 	public SealImageVo getSiv() {
 		return siv;
