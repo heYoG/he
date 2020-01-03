@@ -35,13 +35,13 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			<value>root</value>
 		</property>
 		<!-- 连接池启动时的初始值 -->
-		<property name="initialSize" value="50"></property>
+		<property name="initialSize" value="5"></property>
 		<!-- 连接池最大活跃连接数 -->
-		<property name="maxActive" value="60"></property>
+		<property name="maxActive" value="12"></property>
 		<!-- 连接数最大空闲连接数 -->
-		<property name="maxIdle" value="10"></property>
+		<property name="maxIdle" value="5"></property>
 		<!-- 连接池最小空闲连接数 -->
-		<property name="minIdle" value="5"></property>
+		<property name="minIdle" value="2"></property>
 	</bean>
 	
 	<!-- 集成hibernate框架配置，将SessionFactory交给了Spring来管理，property中的name必须与底层一致 -->

@@ -73,7 +73,7 @@ th, td {
 	}
 	
 	
-	function sum(totalPage){//页码跳转
+	function sum(totalPage,type){//页码跳转
 		var jumpPage=$("#jumpPage").val().trim();
 		if(jumpPage==''){
 			alert("请输入要跳转页码!");
@@ -87,7 +87,7 @@ th, td {
 			document.getElementById("jumpPage").value='';
 			return false;
 		}
-		location="login!userInfo.action?currentPage="+jumpPage+"&type=1";
+		location="login!userInfo.action?currentPage="+jumpPage+"&type="+type;
 	}
 	
 	function setSelect(){//设置下拉列表
@@ -210,7 +210,7 @@ th, td {
 				</c:otherwise>
 			</c:choose>
 			页&nbsp;&nbsp;跳到第<input type="text" size="4" id="jumpPage">页&nbsp;<input
-				type="button" id="jumpBt" onclick="sum(${pageData.totalPage})"
+				type="button" id="jumpBt" onclick="sum(${pageData.totalPage},${pageData.type})"
 				value="确定">&nbsp;&nbsp;&nbsp;
 		</div>
 	</center>

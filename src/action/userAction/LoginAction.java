@@ -86,7 +86,6 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		String type = request.getParameter("type");
 		type=type==null?"1":type;
 		long count = userDaoImpl.getCount(type);
-		type=type==null?"1":type;
 		cc.setType(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
@@ -161,7 +160,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		return "userInfo";//在用户管理中修改失败
 	}
 	
-	/*虚拟删除用户*/
+	/*已注销用户*/
 	public String delUser() {
 		UserVo userVo=null;
 		HttpSession session = request.getSession(false);

@@ -59,7 +59,7 @@ function sum(totalPage){//页码跳转
 		document.getElementById("jumpPage").value='';
 		return false;
 	}
-	location="login!userInfo.action?currentPage="+jumpPage;
+	location="login!approveUser.action?currentPage="+jumpPage;
 }
 
 function agree(userID){//通过审批
