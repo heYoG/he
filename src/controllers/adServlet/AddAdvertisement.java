@@ -38,7 +38,7 @@ public class AddAdvertisement extends HttpServlet {
 	AdVo adVo=new AdVo();
 	AdDaoImpl adDaoImpl=new AdDaoImpl();
 	UserVo userVo=null;
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
@@ -120,6 +120,11 @@ public class AddAdvertisement extends HttpServlet {
 		}
 		
 		return 1;
+	}
+	
+	@Override
+	public void destroy() {//销毁服务
+		super.destroy();//调用自有接口
 	}
 	
 	public File getMyFile() {

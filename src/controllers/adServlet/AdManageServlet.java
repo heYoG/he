@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.sun.xml.internal.ws.Closeable;
+
 import dao.adDao.impl.AdDaoImpl;
 import util.CommenClass;
 import util.PageUtil;
@@ -27,10 +29,10 @@ public class AdManageServlet implements Servlet {
 	private AdDaoImpl adi=new AdDaoImpl();
 	private CommenClass cc=new CommenClass();
 	private UserVo userVo=null;
+	
 	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-
+	public void destroy() {//销毁服务
+		adi.close();//关闭连接
 	}
 
 	@Override

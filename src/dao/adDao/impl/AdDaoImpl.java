@@ -10,7 +10,6 @@ import util.BaseDao;
 import util.CommenClass;
 import util.TableManager;
 import vo.adVo.AdVo;
-import vo.userVo.UserVo;
 
 public class AdDaoImpl extends BaseDao implements IAdDao {
 
@@ -46,7 +45,7 @@ public class AdDaoImpl extends BaseDao implements IAdDao {
 	}
 
 	@Override
-	public int getAdCount() {
+	public int getAdCount() {//此处连接不能先于分页查询前关闭
 		String sql = null;
 		ResultSet rs = null;
 		int ret=0;

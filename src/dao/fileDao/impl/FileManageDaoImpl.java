@@ -104,7 +104,8 @@ public class FileManageDaoImpl extends BaseDao implements IFileManageDao<FileMan
 	@Override
 	public int updateFileStatus(String ids,int batchFiles) {
 		sessionCls=new SessionClass();
-		Session session = sessionCls.getOpenedSession();
+//		Session session = sessionCls.getOpenedSession();
+		Session session=SessionClass.openSession;
 		Transaction transaction = session.beginTransaction();
 		String hql="update "+FileManageVo.class.getSimpleName()+" set status=1 where 1=1";
 		if(batchFiles==0)//单个恢复
