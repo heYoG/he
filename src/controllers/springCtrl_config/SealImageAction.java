@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import service.sealImageService.impl.SealImageServiceImpl;
+import test.spring.ApplicationContext_init;
 import util.CommenClass;
 import util.MyApplicationContext;
 import util.PageUtil;

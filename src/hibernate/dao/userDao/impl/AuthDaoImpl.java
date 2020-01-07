@@ -29,13 +29,13 @@ public class AuthDaoImpl extends SessionClass implements IAuthDao {
 			Object... obj) {//分页查询
 		List<AuthorityVo> list=new ArrayList<AuthorityVo>();
 		String sql="from "+entity.getClass().getSimpleName();
-//		Session session = getOpenedSession();
-		Session session=SessionClass.openSession;
+		Session session = getOpenedSession();
+//		Session session=SessionClass.openSession;
 		Query createQuery = session.createQuery(sql);
 		createQuery.setFirstResult((currentPage-1)*pageSize);
 		createQuery.setMaxResults(pageSize);
 		list = createQuery.list();
-//		session.close();
+		session.close();
 		return list;
 	}
 

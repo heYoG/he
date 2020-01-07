@@ -21,6 +21,7 @@
 	<!-- 用户权限action,jsp:auth_method调用action的方法 -->
 	<action name="auth_*" class="action.userAction.AuthorityAction" method="{1}">
 		<result name="authList">/jsp/auth/authList.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
 	</action>
 	<!-- 文件管理action -->
 	<action name="fileManage" class="action.fileAction.FileManagerAction">

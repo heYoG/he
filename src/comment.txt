@@ -1,0 +1,13 @@
+1.使用到servlet、struts2、spring、hibernate
+
+2.struts和springMVC功能类似,因此不集成到一起
+
+3.连接数据库方式
+3.1 自定义连接数据库
+way1=conn.ConnectDB
+
+3.2 使用hibernate连接数据库
+way2=hibernate.cfg.xml
+
+4.当引入spring框架后用spring替代hibernate连接数据库
+

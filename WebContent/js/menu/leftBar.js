@@ -14,6 +14,8 @@ function doAction(index,src1,src2){
 			document.getElementById('img5').src=src1;
 		else if(index=='6')
 			document.getElementById('img6').src=src1;
+		else if(index=='7')
+			document.getElementById('img7').src=src1;
 	}else{
 		obj.style.display='none';
 		if(index=='1')
@@ -28,5 +30,7 @@ function doAction(index,src1,src2){
 			document.getElementById('img5').src=src2;
 		else if(index=='6')
 			document.getElementById('img6').src=src2;
+		else if(index=='7')
+			document.getElementById('img7').src=src2;
 	}
 }

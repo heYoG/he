@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.stereotype.Component;
+
 /**
  * 普通类,归集所有分散属性
  * @author Administrator
@@ -25,6 +27,13 @@ public class CommenClass{
 	public static final String FILENOTFOUNDEXCEPTION="0001";//要下载文件不存在
 	public static final String DELETESEALIMAGEEXCEPTION="0002";//删除印模失败
 	
+	public CommenClass() {
+		System.out.println("初始化commen类...");
+	}
+	@Override
+	public String toString() {
+		return "已重写toString";
+	}
 	public int getTotalCount() {
 		return totalCount;
 	}
@@ -95,7 +104,5 @@ public class CommenClass{
 		}
 		return value;
 	}
-	
-	
 	
 }

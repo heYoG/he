@@ -6,16 +6,10 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<!-- 组件扫描包 -->
-	<context:component-scan base-package="action"></context:component-scan>
-	<context:component-scan base-package="conn"></context:component-scan>
-	<context:component-scan base-package="controllers"></context:component-scan>
-	<context:component-scan base-package="dao"></context:component-scan>
-	<context:component-scan base-package="hibernate"></context:component-scan>
-	<context:component-scan base-package="service"></context:component-scan>
-	<context:component-scan base-package="util"></context:component-scan>
-	<context:component-scan base-package="vo"></context:component-scan>
-	
+	<!-- 开启注解扫描 -->
+	<context:component-scan base-package="test"></context:component-scan>
+	<!-- 引入外部配置 -->
+	<!--<import resource="classpath:applicationContext_Vo.xml"/>-->
 	<!-- 使用dbcp数据源及数据库连接配置 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<!-- 驱动 -->
@@ -43,7 +37,24 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<!-- 连接池最小空闲连接数 -->
 		<property name="minIdle" value="2"></property>
 		<!-- 连接最大等待时间ms -->
-		<property name="maxWait" value="20000"></property>
+		<property name="maxWait" value="60000"></property>
+		
+		<!-- 定时验证连接有效性,即刷新连接,避免长时间不连接mysql的连接失效而client不知道导致连接异常 -->
+		<!-- 定时对线程池中的链接进行validateObject校验，对无效的链接进行关闭后,会调用ensureMinIdle，
+		适当建立链接保证最小的minIdle连接数,默认false -->
+		<property name="testWhileIdle" value="true"></property>
+		<!--  true时每次借出链接都要检查，影响性能 ,默认true-->
+		<property name="testOnBorrow" value="false"></property>
+		<!-- 链接归还时验证,当很久才归还连接已失效,所以设为false,不验证,默认false -->
+		<property name="testOnReturn" value="false"></property>
+		<!-- 验证连接的sql -->
+		<property name="validationQuery" value="select 1"></property>
+		<!-- 多久验证/刷新一次,单位ms,应小于mysql默认的8小时(28800s) -->
+		<property name="timeBetweenEvictionRunsMillis" value="28000000"></property>
+		<!-- 每次验证的连接数,最好与maxActive一致,检查当前所有有效连接 -->
+		<property name="numTestsPerEvictionRun" value="12"></property>
+		<!-- 连接池中连接可空闲时间,超时则被逐出连接池,单位ms,默认30m -->
+		<property name="minEvictableIdleTimeMillis" value="1800000"></property>
 	</bean>
 	
 	<!-- 集成hibernate框架配置，将SessionFactory交给了Spring来管理，property中的name必须与底层一致 -->
