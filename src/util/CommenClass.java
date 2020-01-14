@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author Administrator
  *
  */
+@Component
 public class CommenClass{
 	private int totalCount;//总记录数
 	private int currentPage;//当前页
@@ -21,19 +22,14 @@ public class CommenClass{
 	private List<Integer> itemList;//页数
 	private int start;//起始位置
 	private int end;//结束位置
-	private String type;//查询类型，0：注销，1：正常
+	private String type;//查询类型，0：注销/收件箱，1：正常/发送箱, 2：草稿箱 3：已删除邮件
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
 	public static final String NORMAL_RETURN="0000";//程序正常
 	public static final String FILENOTFOUNDEXCEPTION="0001";//要下载文件不存在
 	public static final String DELETESEALIMAGEEXCEPTION="0002";//删除印模失败
+	public static final String SAVEDATA_EXCEPTION="0003";//保存数据异常
+	public static final String DELETEEMAIL_FAIL="0004";//删除邮件失败
 	
-	public CommenClass() {
-		System.out.println("初始化commen类...");
-	}
-	@Override
-	public String toString() {
-		return "已重写toString";
-	}
 	public int getTotalCount() {
 		return totalCount;
 	}

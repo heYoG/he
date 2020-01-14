@@ -1,4 +1,4 @@
-package test.spring;
+package test;
 
 import org.hibernate.SessionFactory;
 import org.junit.Test;

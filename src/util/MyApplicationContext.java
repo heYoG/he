@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * 获取spring管理的bean
+ * 	配置文件方式获取spring管理的bean,需要在容器中加载当前类
  * @author Administrator
  *
  */

@@ -6,10 +6,15 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<!-- 开启注解扫描 -->
-	<context:component-scan base-package="test"></context:component-scan>
-	<!-- 引入外部配置 -->
-	<!--<import resource="classpath:applicationContext_Vo.xml"/>-->
+	<!-- 开启注解扫描,所有用到注解的文件包都要扫描 -->
+	<context:component-scan base-package="util"></context:component-scan>
+	<context:component-scan base-package="vo.emailVo"></context:component-scan>
+	<context:component-scan base-package="hibernate"></context:component-scan>
+	<context:component-scan base-package="controllers.springCtrl_annotation"></context:component-scan>
+	<!-- 测试模块 -->
+	<context:component-scan base-package="action.test"></context:component-scan>
+	<!-- 引入外部配置,注解实现获取上下文接口时取配置文件bean需导入bean所在容器 -->
+	<!--<import resource="classpath:applicationContext.xml"/>-->
 	<!-- 使用dbcp数据源及数据库连接配置 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<!-- 驱动 -->
@@ -49,8 +54,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="testOnReturn" value="false"></property>
 		<!-- 验证连接的sql -->
 		<property name="validationQuery" value="select 1"></property>
-		<!-- 多久验证/刷新一次,单位ms,应小于mysql默认的8小时(28800s) -->
-		<property name="timeBetweenEvictionRunsMillis" value="28000000"></property>
+		<!-- 多久验证/刷新一次(10分钟),单位ms,应小于mysql默认的8小时(28800s) -->
+		<property name="timeBetweenEvictionRunsMillis" value="600000"></property>
 		<!-- 每次验证的连接数,最好与maxActive一致,检查当前所有有效连接 -->
 		<property name="numTestsPerEvictionRun" value="12"></property>
 		<!-- 连接池中连接可空闲时间,超时则被逐出连接池,单位ms,默认30m -->
@@ -64,9 +69,13 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<!-- hibernate基本属性 -->
 		<property name="hibernateProperties">
 			<props>
+				<!-- mysql方言 -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">true</prop>
+				<!-- hibernate自动生成数据表 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 显示 hibernate sql -->
 				<prop key="hibernate.show_sql">true</prop>
+				<!-- 格式化hibernate输出sql -->
 				<prop key="hibernate.format_sql">true</prop>
 			</props>
 		</property>
@@ -78,7 +87,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<value>vo/deptVo/DeptVo.hbm.xml</value>
 				<value>vo/fileVo/FileManageVo.hbm.xml</value>
 				<value>vo/adVo/AdVo.hbm.xml</value>
-				<value>vo/sealImage/SealImageVo.hbm.xml</value>
+				<value>vo/sealImageVo/SealImageVo.hbm.xml</value>
+				<value>vo/emailVo/EmailVo.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

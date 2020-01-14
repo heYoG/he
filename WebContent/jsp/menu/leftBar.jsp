@@ -9,20 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>菜单栏</title>
 <link rel="stylesheet" type="text/css" href="<%=path%>/css/menuCss.css">
+<script type="text/javascript" src="<%=path%>/js/jQuery/jquery-3.4.1.js"></script>
 <script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.js"></script>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="<%=path%>/js/jQuery_easyui/jquery.easyui.mobile.js"></script>
+	src="<%=path%>/js/jQuery/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="../../js/menu/leftBar.js"></script>
-<script type="text/javascript">
-	function fileRec() {
-		alert("此区域暂未开放,敬请期待...");
-	}
-</script>
 </head>
 <body>
 	<ul id="menuID"><!-- 后期修改成循环列出菜单 -->
@@ -65,11 +55,11 @@
 		</li>
 		<li><span onclick="doAction(7,'../../images/menu/tree_minus.gif','../../images/menu/tree_plus.gif')"><img alt="电子邮件" src="<%=request.getContextPath()%>/images/menu/tree_plus.gif" id="img7">邮件管理</span>
 			<ul style="display: none" id="u7">
-				<li>新建邮件</li>
+				<li><a href="<%=path%>/jsp/email/newEmail.jsp" target="showPageName">新建邮件</a></li>
 				<li>收件箱</li>
-				<li>发送箱</li>
+				<li><a href="emailAct!boxManage.action?type=1" target="showPageName">发件箱</a></li>
 				<li>草稿箱</li>
-				<li>已删除邮件</li>
+				<li><a href="emailAct!boxManage.action?type=3" target="showPageName">已删除邮件</a></li>
 			</ul>
 		</li>
 	</ul>

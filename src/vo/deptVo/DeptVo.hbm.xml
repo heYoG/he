@@ -3,7 +3,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="vo.deptVo.DeptVo" table="dept">
-		<id name="deptID">
+		<id name="deptID" type="java.lang.Integer">
 			<column name="deptID"></column>
 			<generator class="native"></generator>
 		</id>

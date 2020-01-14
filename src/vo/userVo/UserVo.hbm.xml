@@ -40,7 +40,12 @@
 		<!-- 用户-印模，一对多 -->
 		<set name="sv" lazy="false" inverse="true" cascade="delete">
 			<key column="user_id"></key>
-			<one-to-many class="vo.sealImage.SealImageVo"/>
+			<one-to-many class="vo.sealImageVo.SealImageVo"/>
+		</set>
+		<!-- 用户-邮件，一对多 -->
+		<set name="ev" lazy="false" inverse="true" cascade="delete">
+			<key column="user_id"></key>
+			<one-to-many class="vo.emailVo.EmailVo"/>
 		</set>
 	</class>
 </hibernate-mapping>

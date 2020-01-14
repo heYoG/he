@@ -12,4 +12,5 @@ public class TableManager {
 	public static String DEPT="DEPT";
 	public static String ADTABLE="ADTABLE";
 	public static String SEALIMAGE="SEALIMAGE";
+	public static String EMAIL_TABLE="EMAIL_TABLE";
 }

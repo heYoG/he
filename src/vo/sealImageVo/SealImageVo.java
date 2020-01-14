@@ -1,4 +1,4 @@
-package vo.sealImage;
+package vo.sealImageVo;
 
 import java.sql.Blob;
 import java.sql.Timestamp;

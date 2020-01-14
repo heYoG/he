@@ -6,7 +6,7 @@ import dao.sealImageDao.api.ISealImageDao;
 import util.BaseDaoJDBC;
 import util.CommenClass;
 import util.TableManager;
-import vo.sealImage.SealImageVo;
+import vo.sealImageVo.SealImageVo;
 import vo.userVo.UserVo;
 
 /**

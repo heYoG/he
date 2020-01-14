@@ -9,5 +9,6 @@ way1=conn.ConnectDB
 3.2 使用hibernate连接数据库
 way2=hibernate.cfg.xml
 
-4.当引入spring框架后用spring替代hibernate连接数据库
+3.3 spring容器设置数据源
+way3=applicationContext.xml
 

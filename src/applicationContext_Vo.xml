@@ -4,6 +4,6 @@
 <!-- javabean注入 -->
 <beans>
 	<!-- action中的javabean调用依赖注入 -->
-	<bean id="SIVo" class="vo.sealImage.SealImageVo"></bean>
+	<bean id="SIVo" class="vo.sealImageVo.SealImageVo"></bean>
 	<bean id="commenClass" class="util.CommenClass"></bean>
 </beans>

@@ -68,6 +68,7 @@ public class DeptAction extends ActionSupport implements ModelDriven<DeptVo>{
 		dv.setDeptName(deptName);
 		dv.setFlag(flag);
 		Serializable addDept = dept.addDept(dv);
+//		System.out.println("add dept return:"+addDept);
 		/*分页*/
 		long count = dept.getCount(dv);//获取记录总数
 		cc.setTotalCount((int)count);

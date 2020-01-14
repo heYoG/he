@@ -6,8 +6,7 @@ import dao.sealImageDao.impl.SealImageDaoImpl;
 import service.sealImageService.api.ISealImageService;
 import util.BaseDao;
 import util.CommenClass;
-import util.TableManager;
-import vo.sealImage.SealImageVo;
+import vo.sealImageVo.SealImageVo;
 import vo.userVo.UserVo;
 
 public class SealImageServiceImpl extends BaseDao implements ISealImageService<SealImageVo, CommenClass,UserVo> {

@@ -3,7 +3,7 @@
 <struts>
 <!-- 配置i18n -->
 <!-- <constant name="struts.custom.i18n.resources" value="resource"></constant>-->
-<package name="struts5 test" extends="struts-default">
+<package name="default" extends="struts-default">
 	<!--用户信息action,jsp:method.action调用action的方法  -->
 	<action name="login" class="action.userAction.LoginAction">
 		<result name="success">/jsp/mainPage.jsp</result>
@@ -49,6 +49,16 @@
 		<result name="error">/jsp/errorsPage.jsp</result>
 		<result name="sealImageManage">/jsp/sealImage/sealImageManage.jsp</result>
 		<result name="sealImageApprove">/jsp/sealImage/sealImageApprove.jsp</result>
+	</action>
+	<!-- 邮件action,class用注解方式 -->
+	<action name="emailAct" class="emailAction">
+		<result name="newEmail">/jsp/email/newEmail.jsp</result>
+		<result name="boxManage">/jsp/email/boxManage.jsp</result>
+		<result name="error">/jsp/errorsPage.jsp</result>
+	</action>
+	<!-- 测试模块 -->
+	<action name="testAct" class="driverAct">
+		<result name="test">/test/test.jsp</result>
 	</action>
 </package>
 <!-- 上传文件大小 -->

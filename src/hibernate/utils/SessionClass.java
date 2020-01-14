@@ -40,9 +40,9 @@ public class SessionClass {//使用hibernate.cfg.xml配置文件
 	 * 	调用后不再在方法中关闭,连接释放交由配置文件进行
 	 * 	单例，限制并发量
 	 */
-	static {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-	    SessionFactory sessionFactory = (SessionFactory)applicationContext.getBean(SessionFactory.class);
-	    openSession = sessionFactory.openSession();
-	}
+//	static {
+//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+//	    SessionFactory sessionFactory = (SessionFactory)applicationContext.getBean(SessionFactory.class);
+//	    openSession = sessionFactory.openSession();
+//	}
 }

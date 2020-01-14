@@ -4,8 +4,9 @@ import java.util.*;
 
 import vo.adVo.AdVo;
 import vo.deptVo.DeptVo;
+import vo.emailVo.EmailVo;
 import vo.fileVo.FileManageVo;
-import vo.sealImage.SealImageVo;
+import vo.sealImageVo.SealImageVo;
 
 public class UserVo {
 	private int id;//用户id
@@ -17,8 +18,9 @@ public class UserVo {
 	private DeptVo dept;//多对一中一方的部门对象
 	private Set<FileManageVo> fileVo=new HashSet<FileManageVo>();//一对多中多方的文件对象
 	private String status;//用户状态,1：正常,0：注销
-	private Set<AdVo> ad=new HashSet<AdVo>();
-	private Set<SealImageVo> sv=new HashSet<SealImageVo>();
+	private Set<AdVo> ad=new HashSet<AdVo>();//广告
+	private Set<SealImageVo> sv=new HashSet<SealImageVo>();//印模
+	private Set<EmailVo> ev=new HashSet<EmailVo>();//邮件
 	
 	public int getId() {
 		return id;
@@ -89,6 +91,13 @@ public class UserVo {
 	}
 	public void setSv(Set<SealImageVo> sv) {
 		this.sv = sv;
+	}
+	
+	public Set<EmailVo> getEv() {
+		return ev;
+	}
+	public void setEv(Set<EmailVo> ev) {
+		this.ev = ev;
 	}
 	public UserVo() {
 		super();

@@ -41,6 +41,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	DeptDaoImpl<DeptVo> dt=new DeptDaoImpl();
 	CommenClass cc=new CommenClass();//实例化工具类
 	
+	/*登录*/
 	public String execute() throws InterruptedException{
 		HttpSession session = request.getSession();
 		/*通过模型驱动获取输入值*/
