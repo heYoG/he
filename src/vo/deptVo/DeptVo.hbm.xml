@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="vo.deptVo.DeptVo" table="dept">
+	<class name="vo.deptVo.DeptVo" table="dept_table">
 		<id name="deptID" type="java.lang.Integer">
 			<column name="deptID"></column>
 			<generator class="native"></generator>

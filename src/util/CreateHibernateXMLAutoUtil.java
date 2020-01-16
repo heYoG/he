@@ -12,6 +12,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 import vo.emailVo.EmailVo;
+import vo.logVo.LogVo;
 import vo.userVo.UserVo;
 
 /**
@@ -26,7 +27,7 @@ public class CreateHibernateXMLAutoUtil {
 	 * @author lyl
 	 * @time 2016-1-13 下午03:48:20
 	 * @param cls POJO的类对象,多主
-	 * @param casCls	级联类,一方
+	 * @param casCls	级联类,一方,为空时flag可为任意值
 	 * @param identification1 数据库中主键对应的相应的POJO属性名
 	 * @param identification2 数据库中外键对应的相应的POJO属性名
 	 * @param tableName 数据库中的相应表名
@@ -52,7 +53,8 @@ public class CreateHibernateXMLAutoUtil {
 	    		 ElementClassIDColumn.addAttribute("name", identification1);
 	    		 Element ElementClassIDGenerator = ElementClassID.addElement("generator");
 	    	     ElementClassIDGenerator.addAttribute("class", "native");
-	    	 }else if(field.getType().getSimpleName().equals(casCls.getSimpleName())) {//级联关系映射
+	    	 }else if(casCls!=null) {//级联关系映射
+	    		 if(field.getType().getSimpleName().equals(casCls.getSimpleName()))
 	    		 if(flag==0) {
 	    			 Element elementCas = elementClass.addElement("set");
 	    			 elementCas.addAttribute("name", field.getName());
@@ -125,6 +127,9 @@ public class CreateHibernateXMLAutoUtil {
 	 */
 	public static void main(String[] args) {
 		/*生成邮件模块映射文件*/
-		CreateHibernateXMLAutoUtil.createHibernatePOJOXML(EmailVo.class, "id", "email_table",UserVo.class,"user_id",1);
+//		CreateHibernateXMLAutoUtil.createHibernatePOJOXML(EmailVo.class, "id", "email_table",UserVo.class,"user_id",1);
+		
+		/*日志记录模块*/
+		CreateHibernateXMLAutoUtil.createHibernatePOJOXML(LogVo.class, "id", "log_table", null, null, 0);
 	}
 }

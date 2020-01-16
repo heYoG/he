@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	xsi:schemaLocation=
+"http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
@@ -14,7 +15,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<!-- 测试模块 -->
 	<context:component-scan base-package="action.test"></context:component-scan>
 	<!-- 引入外部配置,注解实现获取上下文接口时取配置文件bean需导入bean所在容器 -->
-	<!--<import resource="classpath:applicationContext.xml"/>-->
+	<!--<import resource="classpath:applicationContext_Vo.xml"/>-->
+<!-- 	<import resource="classpath:applicationContext_service.xml"/> -->
 	<!-- 使用dbcp数据源及数据库连接配置 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<!-- 驱动 -->
@@ -89,6 +91,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<value>vo/adVo/AdVo.hbm.xml</value>
 				<value>vo/sealImageVo/SealImageVo.hbm.xml</value>
 				<value>vo/emailVo/EmailVo.hbm.xml</value>
+				<value>vo/logVo/LogVo.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -103,6 +106,18 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	<!-- tx标签采用声明式事务(defaultTransactionManager),使用annotation定义事务，设置true表示使用spring中的代理——开启事务注解功能 -->
+	<!-- tx标签采用声明式事务(defaultTransactionManager),使用annotation定义事务，设置true表示使用spring中的代理(cglib动态代理)——默认使用jdk动态代理 -->
 	<!-- <tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/> -->
+	
+	<!-- AOP配置,此处会再次加载切点页面一次 -->
+	<aop:config>
+		<aop:pointcut expression="execution( * dao.sealImageDao.impl.SealImageDaoImpl.* (..))" id="treatPointcut"/><!-- 切入点 -->
+		<!-- <aop:pointcut expression="execution( * test.aop.PointcutClass.*(..))" id="treatPointcut"/> -->
+		<aop:aspect ref="commenAop"><!-- 切面 -->
+		<aop:around method="writeLog" pointcut-ref="treatPointcut"/><!-- 通知类型-环绕通知  -->
+		<!-- <aop:before method="writeLog" pointcut-ref="treatPointcut"/>前置通知 -->
+		</aop:aspect>
+	</aop:config>
+	<!-- 默认false,jdk动态代理;为true时启用cglib动态代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 </beans>

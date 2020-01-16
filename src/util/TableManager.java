@@ -6,11 +6,11 @@ package util;
  *
  */
 public class TableManager {
-	public static String USERTABLE="USERTABLE";
-	public static String AUTHORITY="AUTHORITY";
-	public static String FILETABLE="FILETABLE";
-	public static String DEPT="DEPT";
-	public static String ADTABLE="ADTABLE";
-	public static String SEALIMAGE="SEALIMAGE";
+	public static String USERTABLE="USER_TABLE";
+	public static String AUTHORITY="AUTHORITY_TABLE";
+	public static String FILETABLE="FILE_TABLE";
+	public static String DEPT="DEPT_TABLE";
+	public static String ADTABLE="AD_TABLE";
+	public static String SEALIMAGE="SEALIMAGE_TABLE";
 	public static String EMAIL_TABLE="EMAIL_TABLE";
 }

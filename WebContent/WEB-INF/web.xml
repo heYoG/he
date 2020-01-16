@@ -32,7 +32,8 @@
   </jsp-config>
   <!-- spring配置文件 -->
   <context-param>
-  	<param-name>contextConfigLocation</param-name>
+  	<!-- 使用context配置加载spring配置文件 -->
+  	  <param-name>contextConfigLocation</param-name>
   	<param-value>
   		classpath:applicationContext.xml,
   		classpath:applicationContext_dao.xml,
@@ -41,6 +42,7 @@
   		classpath:applicationContext_Vo.xml</param-value>
   </context-param>
   <listener>
+  	<!-- context启动spring容器 -->
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 </web-app>

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="vo.userVo.AuthorityVo" table="authority">
+	<class name="vo.userVo.AuthorityVo" table="authority_table">
 		<id name="id" type="java.lang.Integer">
 			<column name="id"></column>
 			<generator class="native"></generator>

@@ -63,7 +63,8 @@ public class SealImageDaoImpl extends BaseDaoJDBC implements ISealImageDao<SealI
 	@Override
 	public int getSealImageCount(String status) {
 		String sql="select count(imgId) from "+TableManager.SEALIMAGE+" where status in("+status+")";
-		return queryForInt(sql);
+		int forInt = queryForInt(sql);
+		return forInt;
 	}
 
 }

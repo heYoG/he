@@ -3,6 +3,7 @@
 "http://www.springframework.org/dtd/spring-beans.dtd">
 <!-- spring bean的dao层，连接数据库 -->
 <beans>
+	<!-- 印模dao层,使用JdbcTemplate,需引入数据源 -->
 	<bean id="sealImageDao" class="dao.sealImageDao.impl.SealImageDaoImpl">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>

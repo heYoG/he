@@ -6,4 +6,9 @@
 	<!-- action中的javabean调用依赖注入 -->
 	<bean id="SIVo" class="vo.sealImageVo.SealImageVo"></bean>
 	<bean id="commenClass" class="util.CommenClass"></bean>
+	<!-- 测试aop类 -->
+	 <!-- <bean id="aspector" class="test.aop.AspectClass"></bean>切面 -->
+<!-- 	<bean id="pointcut" class="test.aop.PointcutClass"></bean>切入点 -->
+	<!-- aop实际使用类(配置方式) -->
+	<bean id="log" class="vo.logVo.LogVo"></bean>
 </beans>

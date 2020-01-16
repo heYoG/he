@@ -8,4 +8,6 @@
 	<bean id="sealImageService" class="service.sealImageService.impl.SealImageServiceImpl">
 		<property name="sdi" ref="sealImageDao"></property>
 	</bean>
+	<!-- aop service层 ,使用hibernate，sessionFactory已引用数据源,可不再配置-->
+	<bean id="commenAop" class="aop.CommenAop"></bean><!-- 泛型不需要导入<T> -->
 </beans>
