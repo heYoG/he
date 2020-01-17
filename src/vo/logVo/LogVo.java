@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 public class LogVo {
 	private int id;//主键,自增

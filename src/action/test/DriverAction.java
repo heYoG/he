@@ -6,6 +6,11 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import test.propertyDriven.DriverVo;
 
+/**
+ * 	测试属性驱动通过域获取属性值
+ * @author Administrator
+ *
+ */
 @Controller(value="driverAct")
 public class DriverAction extends ActionSupport {
 	/**

@@ -3,8 +3,6 @@ package test;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import aop.CommenAop;
 import service.sealImageService.impl.SealImageServiceImpl;
 import test.aop.PointcutClass;
 import util.CommenClass;

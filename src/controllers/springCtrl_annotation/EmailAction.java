@@ -15,6 +15,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -22,6 +23,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import hibernate.service.emailService.impl.EmailServiceImpl;
 import util.CommenClass;
+import util.MyApplicationContextAnnotion;
 import util.PageUtil;
 import util.UploadAndDownloadUtil;
 import vo.emailVo.EmailVo;
@@ -29,10 +31,7 @@ import vo.userVo.UserVo;
 
 @Controller(value="emailAction")//注解指定action值
 public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log=LogManager.getLogger(EmailAction.class.getName());
@@ -40,7 +39,7 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 	private EmailVo emailVo;//邮件实例变量
 	
 	@Autowired//按类型注入或@Resource(name="emailService")-name为EmailServiceImpl中的@Service注解值
-	private EmailServiceImpl emailServiceimp;//服务层
+	private EmailServiceImpl emailServiceImp;//服务层
 	
 	@Autowired
 	private CommenClass cc;//通用类变量
@@ -74,7 +73,7 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 				savePath= UploadAndDownloadUtil.uploadFile(accessoryFile, accessoryFileFileName);//返回文件保存路径
 			emailVo.setAccessory(savePath);
 			emailVo.setType(1);//标识1表示发送邮件
-			Serializable saveRet = emailServiceimp.newEmail(emailVo);//保存数据
+			Serializable saveRet = emailServiceImp.newEmail(emailVo);//保存数据
 			if(!saveRet.equals(0)) {
 				log.info("邮件发送成功");
 				request.setAttribute("saveEmailData",CommenClass.NORMAL_RETURN);				
@@ -100,12 +99,12 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 			return ERROR;
 		}
 		String type = request.getParameter("type");//确定查询类型
-		long emailCount = emailServiceimp.getEmailCount(type);
+		long emailCount = emailServiceImp.getEmailCount(type);
 		cc.setTotalCount((int) emailCount);
 		cc.setType(type);
 		cc = PageUtil.pageMethod(cc, request);
 		List<EmailVo> listPage = new ArrayList<EmailVo>();
-		listPage = emailServiceimp.emailPageList(emailVo, cc, type);
+		listPage = emailServiceImp.emailPageList(emailVo, cc, type);
 		request.setAttribute("emailList", listPage);
 		request.setAttribute("pageData", cc);
 		return "boxManage";//发件箱页面
@@ -127,7 +126,7 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 		}
 		String deleteID = request.getParameter("id");
 		String type=request.getParameter("type");
-		int update = emailServiceimp.update(emailVo, Integer.parseInt(deleteID));
+		int update = emailServiceImp.update(emailVo, Integer.parseInt(deleteID));
 		if(update>0) {
 			log.info("删除邮件成功!");
 			request.setAttribute("deleteRet", CommenClass.NORMAL_RETURN);
@@ -135,11 +134,11 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 			log.info("删除邮件失败!");
 			request.setAttribute("deleteRet", CommenClass.DELETEEMAIL_FAIL);
 		}
-		long emailCount = emailServiceimp.getEmailCount(type);// 发件箱记录数
+		long emailCount = emailServiceImp.getEmailCount(type);// 发件箱记录数
 		cc.setTotalCount((int) emailCount);
 		cc = PageUtil.pageMethod(cc, request);
 		List<EmailVo> listPage = new ArrayList<EmailVo>();
-		listPage = emailServiceimp.emailPageList(emailVo, cc, type);
+		listPage = emailServiceImp.emailPageList(emailVo, cc, type);
 		request.setAttribute("emailList", listPage);
 		request.setAttribute("pageData", cc);
 		return "boxManage";//返回发件箱页面
@@ -161,7 +160,7 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 		}
 		String deleteID = request.getParameter("id");
 		String type=request.getParameter("type");
-		int update = emailServiceimp.deleteEmail(emailVo, Integer.parseInt(deleteID));
+		int update = emailServiceImp.deleteEmail(emailVo, Integer.parseInt(deleteID));
 		if(update>0) {
 			log.info("彻底删除邮件成功!");
 			request.setAttribute("deleteRet", CommenClass.NORMAL_RETURN);
@@ -169,11 +168,11 @@ public class EmailAction extends ActionSupport implements ModelDriven<EmailVo> {
 			log.info("彻底删除邮件失败!");
 			request.setAttribute("deleteRet", CommenClass.DELETEEMAIL_FAIL);
 		}
-		long emailCount = emailServiceimp.getEmailCount(type);// 发件箱记录数
+		long emailCount = emailServiceImp.getEmailCount(type);// 发件箱记录数
 		cc.setTotalCount((int) emailCount);
 		cc = PageUtil.pageMethod(cc, request);
 		List<EmailVo> listPage = new ArrayList<EmailVo>();
-		listPage = emailServiceimp.emailPageList(emailVo, cc, type);
+		listPage = emailServiceImp.emailPageList(emailVo, cc, type);
 		request.setAttribute("emailList", listPage);
 		request.setAttribute("pageData", cc);
 		return "boxManage";//返回发件箱页面
