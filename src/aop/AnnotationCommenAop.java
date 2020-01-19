@@ -4,13 +4,15 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import hibernate.utils.SessionClass;
@@ -26,7 +28,8 @@ import vo.logVo.LogVo;
 @Component//声明为bean组件，必须
 public class AnnotationCommenAop extends SessionClass {
 	
-	static Logger log=LoggerFactory.getLogger(ConfigCommenAop.class);
+//	static Logger log=LoggerFactory.getLogger(ConfigCommenAop.class);
+	static Logger log=LogManager.getLogger(AnnotationCommenAop.class.getName());
 	
 	/*注解式环绕通知保存操作日志*/
 	@Around("execution(* hibernate.service.emailService.impl.EmailServiceImpl.* (..))")//切面表达式声明切入点
@@ -34,8 +37,8 @@ public class AnnotationCommenAop extends SessionClass {
 		/*通过spring容器配置的aop,必须获取spring管理的bean去调用方法aop才有效*/
 		LogVo logVo = MyApplicationContext.getContext().getBean("log",LogVo.class);
 		Session session = getOpenedSession();
-//		log.info("开始保存操作日志...");//需要配置log4j日志才能在控制台打印出来
-		System.out.println("开始保存操作日志...");
+		log.info("开始保存操作日志...");//需要配置log4j日志才能在控制台打印出来
+//		System.out.println("开始保存操作日志...");
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		long operateTime =System.currentTimeMillis();
 		String format = simpleDateFormat.format(operateTime);
@@ -49,17 +52,17 @@ public class AnnotationCommenAop extends SessionClass {
 			e.printStackTrace();
 		}
 		String methodName = pro.getSignature().getName();//操作方法
-		Object target = pro.getTarget();
 		logVo.setTheme(methodName);
 		Transaction beginTransaction = session.beginTransaction();
 		Serializable save = session.save(logVo);
 		beginTransaction.commit();
 		session.close();
 		if(!save.equals("0"))
-//			log.info("保存操作日志成功.");
-			System.out.println("保存操作日志成功.");
+			log.info("保存操作日志成功.");
+//			System.out.println("保存操作日志成功.");
 		else
-			System.out.println("保存操作日志失败.");
+			log.info("保存日志失败.");
+//			System.out.println("保存操作日志失败.");
 		return proceed;
 	}
 	
