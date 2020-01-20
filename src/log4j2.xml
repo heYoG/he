@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 文件名默认 -->
 <configuration status="INFO" monitorInterval="30">
+	<properties>
+		<!-- 自定义常量,${变量名}引用 -->
+		<property name="testPath">D:/eclipsePros/ssh/test</property>
+		<property name="rollingPath">D:\eclipsePros\ssh\log</property>
+	</properties>
 	<appenders>
 		<!-- 控制台日志输出,默认DEBUG,target默认SYSTEM_OUT,name任定 -->
 		<console name="Console" target="SYSTEM_OUT">
@@ -10,13 +15,13 @@
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
 		</console>
 		<!-- 输出日志到指定目录,默认DEBUG ,name任定,fileName:日志保存目录(项目根目录)，append:是否追加生成日志,适用于测试-->
-		<File name="test" fileName="log/test.log" append="false">
+		<File name="test" fileName="${testPath}\test.log" append="true">
 			<ThresholdFilter level="all" onMatch="accept" onMismatch="deny"/>
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
 		</File>
 		<!-- 日志超出指定大小时自动按要求格式创建新日志文件,旧文件按要求规档 -->
 		<!-- fileName:初始生成日志名(项目根目录,没有自动创建),filePattern:新生成日志目录和文件名(项目根目录,没有自动创建),创建日期文件夹要用$${date:...},%i:整数计数器-从1开始 -->
-		<RollingFile name="rollingFile" fileName="log/ssh.log" filePattern="log/$${date:yyyy-MM}/%d{yyyy-MM-dd}_%i.log">
+		<RollingFile name="rollingFile" fileName="${rollingPath}/ssh.log" filePattern="${rollingPath}/$${date:yyyy-MM}/%d{yyyy-MM-dd}_%i.log">
 			<ThresholdFilter level="info" onMatch="accept" onMismatch="deny"/>
 			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
 			<Policies>
@@ -38,7 +43,7 @@
 	<loggers><!-- 日志输出,必有，否则无法输出前面配置好的日志 -->
 		<!--指定输出目录下的日志,及级别，可用于屏蔽某些没必要的输出日志，
 		name:指定类或类所在包;level:可输出日志的级别 -->
-		<!-- <logger name="" level=""></logger> -->
+		<!-- <logger name="org.springframework" level="WARN"></logger> -->
 		<!-- 指定项目根日志,level:可输出日志级别;appender-ref:输出到哪个appender(前面已配置节点),各节点级别以各自设置为准 -->
 		<root level="all">
 			<appender-ref ref="Console"/>

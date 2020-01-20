@@ -11,8 +11,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import hibernate.utils.SessionClass;
@@ -28,7 +26,6 @@ import vo.logVo.LogVo;
 @Component//声明为bean组件，必须
 public class AnnotationCommenAop extends SessionClass {
 	
-//	static Logger log=LoggerFactory.getLogger(ConfigCommenAop.class);
 	static Logger log=LogManager.getLogger(AnnotationCommenAop.class.getName());
 	
 	/*注解式环绕通知保存操作日志*/
@@ -68,7 +65,6 @@ public class AnnotationCommenAop extends SessionClass {
 	
 	public AnnotationCommenAop () {
 		super();
-//		log.info("切面已初始化...");
-		System.out.println("注解式切面已初始化...");
+		log.info("注解式切面已初始化...");
 	}
 }

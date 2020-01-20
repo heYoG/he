@@ -2,9 +2,9 @@ package vo.logVo;
 
 import java.sql.Timestamp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class LogVo {
 	private int id;//主键,自增
@@ -12,11 +12,10 @@ public class LogVo {
 	private Timestamp operateTime;//操作时间
 	private int status;//操作结果状态	0:失败，1:成功
 	
-	static Logger log=LoggerFactory.getLogger(LogVo.class);
+	static Logger log=LogManager.getLogger(LogVo.class.getName());
 	public LogVo() {
 		super();
-//		log.info("日志实例已初始化...");
-		System.out.println("日志实例已初始化...");
+		log.info("日志实例已初始化...");
 	}
 	
 	public int getId() {
