@@ -121,7 +121,7 @@ function refuse(userID){//审批不通过
 					<c:choose>
 						<c:when test="${pageData.currentPage!=1}">
 							<a
-								href="login!userInfo.action?currentPage=${pageData.currentPage-1}&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
+								href="login!approveUser.action?currentPage=${pageData.currentPage-1}&nextOrPre=previous&start=${pageData.start}&end=${pageData.end}"><input
 								type="button" name="previousPage" value="上一页"></a>
 						</c:when>
 						<c:otherwise>
@@ -139,7 +139,7 @@ function refuse(userID){//审批不通过
 								<!-- 禁止点击当前页 -->
 							</c:when>
 							<c:otherwise>
-								<a href="login!userInfo.action?currentPage=${p}">${p}</a>
+								<a href="login!approveUser.action?currentPage=${p}">${p}</a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -148,7 +148,7 @@ function refuse(userID){//审批不通过
 						<c:when test="${pageData.currentPage!=pageData.totalPage }">
 							<!-- 即不为最后一页 -->
 							<a
-								href="login!userInfo.action?currentPage=${pageData.currentPage+1}&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
+								href="login!approveUser.action?currentPage=${pageData.currentPage+1}&nextOrPre=next&start=${pageData.start}&end=${pageData.end}"><input
 								type="button" name="nextPage" value="下一页"></a>
 						</c:when>
 						<c:otherwise>

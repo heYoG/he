@@ -33,7 +33,7 @@ public class UserDaoImplHib<T> extends SessionClass implements IUserDao<T> {
 		Session session = getOpenedSession();
 //		Session session=SessionClass.openSession;
 		Transaction transaction = session.beginTransaction();
-		String sql="insert into "+TableManager.USERTABLE+" values(null,?,?,?,?,2,?,2)";//默认为普通用户、待审批
+		String sql="insert into "+TableManager.USERTABLE+" values(null,?,?,?,?,2,2,?)";//默认为普通用户、待审批
 		SQLQuery sqlQuery = session.createSQLQuery(sql);
 		sqlQuery.setString(0, entity.getUserNo());
 		sqlQuery.setString(1, entity.getPwd());

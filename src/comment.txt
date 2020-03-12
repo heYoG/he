@@ -12,3 +12,4 @@ way2=hibernate.cfg.xml
 3.3 spring容器设置数据源
 way3=applicationContext.xml
 
+4.使用log4j2管理日志

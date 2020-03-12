@@ -46,7 +46,7 @@
 </style>
 </head>
 <body>
-	<center>
+	<center>											
 		<form action="" method="post" name="newEmailForm" enctype="multipart/form-data">
 			<table>											
 				<tr><td style="padding-left:28px">To:&nbsp;&nbsp;<input type="text" name="addressee" id="addresseeID" placeholder="收件人"></td></tr>

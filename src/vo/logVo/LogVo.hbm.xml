@@ -16,5 +16,6 @@
     <property name="status" type="int">
       <column name="status"/>
     </property>
+    <many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"></many-to-one>
   </class>
 </hibernate-mapping>

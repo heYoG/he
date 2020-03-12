@@ -1,5 +1,7 @@
 package util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyApplicationContextAnnotion implements ApplicationContextAware {
 	private static ApplicationContext app;
+	private static Logger log=LogManager.getLogger(MyApplicationContextAnnotion.class.getName());
 
 	@Override
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
@@ -23,6 +26,6 @@ public class MyApplicationContextAnnotion implements ApplicationContextAware {
 	}
 
 	public MyApplicationContextAnnotion() {
-		System.out.println("获取上下文工具类初始化成功!");
+		log.info("获取上下文工具类初始化成功!");
 	}
 }

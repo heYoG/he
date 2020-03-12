@@ -6,6 +6,7 @@ import vo.adVo.AdVo;
 import vo.deptVo.DeptVo;
 import vo.emailVo.EmailVo;
 import vo.fileVo.FileManageVo;
+import vo.logVo.LogVo;
 import vo.sealImageVo.SealImageVo;
 
 public class UserVo {
@@ -21,6 +22,7 @@ public class UserVo {
 	private Set<AdVo> ad=new HashSet<AdVo>();//广告
 	private Set<SealImageVo> sv=new HashSet<SealImageVo>();//印模
 	private Set<EmailVo> ev=new HashSet<EmailVo>();//邮件
+	private Set<LogVo> log=new HashSet<LogVo>();//日志
 	
 	public int getId() {
 		return id;
@@ -98,6 +100,13 @@ public class UserVo {
 	}
 	public void setEv(Set<EmailVo> ev) {
 		this.ev = ev;
+	}
+	
+	public Set<LogVo> getLog() {
+		return log;
+	}
+	public void setLog(Set<LogVo> log) {
+		this.log = log;
 	}
 	public UserVo() {
 		super();

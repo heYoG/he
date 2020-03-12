@@ -37,15 +37,20 @@
 			<key column="user_id"></key>
 			<one-to-many class="vo.adVo.AdVo"/>
 		</set>
-		<!-- 用户-印模，一对多 -->
+		<!-- 用户-印模，一对多 ,级联删除-->
 		<set name="sv" lazy="false" inverse="true" cascade="delete">
 			<key column="user_id"></key>
 			<one-to-many class="vo.sealImageVo.SealImageVo"/>
 		</set>
-		<!-- 用户-邮件，一对多 -->
+		<!-- 用户-邮件，一对多 ,级联删除-->
 		<set name="ev" lazy="false" inverse="true" cascade="delete">
 			<key column="user_id"></key>
 			<one-to-many class="vo.emailVo.EmailVo"/>
+		</set>
+		<!-- 用户-日志，一对多,级联删除 -->
+		<set name="log" lazy="false" inverse="true" cascade="delete">
+			<key column="user_id"></key>
+			<one-to-many class="vo.logVo.LogVo"/>
 		</set>
 	</class>
 </hibernate-mapping>

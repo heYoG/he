@@ -282,7 +282,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 			JsonConfig jsonConfig = new JsonConfig();
 			
 			/*去除级联关系,String数组包含所有要去除的属性,不管是什么类型的属性;要写在一起，不能分开写多个setExcludes*/
-			jsonConfig.setExcludes(new String[] {"av","dept","fileVo"});
+			jsonConfig.setExcludes(new String[] {"av","dept","fileVo","ad","sv","ev"});
 			JSONArray js = new JSONArray();
 			String ret=null;
 			if(list.size()>0)
