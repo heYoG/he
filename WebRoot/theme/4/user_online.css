@@ -1,0 +1,20 @@
+.bodycolor{background: #FCC9E2;}
+#body{
+   font-size:9pt;
+   width:195px;
+}
+
+#bottom{
+   height:10px;
+}
+
+.moduleContainer{
+   background: #FFFFFF;
+   border:1px #F4B7D6 solid;
+   overflow-x:auto;
+   overflow-y:hidden;
+   width:100%;
+}
+.moduleContainer table{
+   border:0px;
+}

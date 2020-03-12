@@ -1,0 +1,6 @@
+2020-03-06 at 15:53:42 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 154 main - 加密前的字符串:scott
+2020-03-06 at 15:53:42 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 157 main - 加密后的字符串:C30660CF55719868
+2020-03-06 at 15:53:42 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 160 main - 解密后的字符串:scott
+2020-03-06 at 15:55:45 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 154 main - 加密前的字符串:root
+2020-03-06 at 15:55:45 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 157 main - 加密后的字符串:5310B9828C145D3D
+2020-03-06 at 15:55:45 CST INFO  com.dj.seal.util.encrypt.ThreeDESUtils 160 main - 解密后的字符串:root

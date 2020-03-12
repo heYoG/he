@@ -1,0 +1,58 @@
+.container{
+    width: 99%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #DDD;
+    margin-top: 10px;
+}
+
+.chooseForm{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.col-padding-3 {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.remove-padding-l {
+    padding-left: 0!important;
+}
+
+.remove-padding-r {
+    padding-right: 0!important;
+}
+
+
+.container .block-header{
+    border-bottom: 1px solid #DDD;
+}
+
+#business-pie{
+    min-width: 300px;
+    height: 400px;
+    max-width: 500px;
+    margin: 10px 0px 0px 0px;
+}
+
+#business-c{
+    min-width:300px;
+    max-width: 90%;
+    height:400px;
+    margin: 10px 0px 0px 0px;
+}
+
+#business-l1{
+    min-width:300px;
+    max-width: 90%;
+    height:400px;
+    margin: 10px 0px 0px 0px;
+}
+
+#business-l2{
+    min-width:300px;
+    max-width: 90%;
+    height:400px;
+    margin: 10px 0px 0px 0px;
+}

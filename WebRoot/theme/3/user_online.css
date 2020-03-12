@@ -1,0 +1,21 @@
+.bodycolor {font-size:9pt; background: #E7F1F8; background-image:none;margin: 0px; padding: 0px;}
+
+#body{
+   font-size:9pt;
+}
+
+#bottom{
+   height:10px;
+}
+
+.moduleContainer{
+   background: #FFFFFF;
+   border:1px #b8d1e2 solid;
+   overflow-x:auto;
+   overflow-y:hidden;
+   width:100%;
+   border-top:0px;
+}
+.moduleContainer table{
+   border:0px;
+}

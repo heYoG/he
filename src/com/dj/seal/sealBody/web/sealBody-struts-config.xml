@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<!-- 印章管理formbean（oyxy）-->
+		<form-bean name="sealForm"
+			type="com.dj.seal.sealBody.web.form.SealBodyForm">
+		</form-bean>
+		<form-bean name="importSealForm"
+			type="com.dj.seal.sealBody.web.form.ImportSealForm">
+		</form-bean>
+	</form-beans>
+	<action-mappings>
+	<!-- 印章管理页面-->
+	<action path="/sealShowmanage"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success"
+				path="/general/seal_body/manage/sealBodyList.jsp">
+			</forward>
+		</action>
+	<!-- 印章查询页面-->
+	<action path="/sealManage"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="query"
+				path="/general/seal_body/manage/query/query.jsp">
+			</forward>
+		</action>
+    <!-- 导入印章数据-->
+	<action path="/importSeal"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="importSealForm" >
+			<forward name="success"
+				path="/general/seal_body/manage/importSeal.jsp">
+			</forward>
+			<forward name="index"
+				path="/general/seal_body/manage/result.jsp">
+			</forward>
+		</action>
+		<!--查询印章管理子模块中显示印章列表的action（yc）-->
+		<action path="/sealShow"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealForm">
+			<forward name="successSer" path="/general/seal_body/query/seal_listSer.jsp"></forward>
+		</action>
+			<!-- 印模查询权限（oyxy）-->
+		<action path="/tempAppselect"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_body/query/index.jsp">
+			</forward>
+		</action>
+		
+
+	<!--跳转到印章权限设置的action（yc）-->
+		<action path="/sealSetGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="/general/seal_body/set_priv/set_priv.jsp"></forward>
+			</action>
+	    <!--显示用户列表的模式窗口的action（yc）-->
+		<action path="/sealSetUser"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="/general/seal_body/set_priv/user_list.jsp"></forward>
+		</action>
+		<!--显示角色列表的模式窗口的action（yc）-->
+		<action path="/sealSetRole"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="/general/seal_body/set_priv/role_list.jsp"></forward>
+		</action>
+		<!--显示角色列表的模式窗口的action（yc）-->
+		<action path="/addRoleUser"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success" path="/sealShowmanage.do?type=All"></forward>
+		</action>
+		<!-- 得到设置证书时 证书列表 -->
+		<action path="/cerModeList" 
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success" path="/general/seal_body/manage/cert_list.jsp"></forward>
+		</action>
+		<!-- 印章绑定证书 -->
+		<action path="/sealBind"
+		type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success" path="/sealShowmanage.do?type=All"></forward>
+			</action>
+		<!--显示可用印章列表的action（yc）-->
+		<action path="/tempAppuse"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="index" path="/general/seal_body/manage/index.jsp"></forward>
+			<forward name="success" path="/general/seal_body/manage/usesealList.jsp"></forward>
+		</action>
+		
+		<!-- 我的可用印章列表的action（yc）-->
+		<action path="/mytempAppuse"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" >
+			<forward name="success" path="/general/seal_body/manage/myusesealList.jsp"></forward>
+		</action>
+		<!--印章编辑的的action向导（yc）-->
+		<action path="/sealEditGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="/general/seal_body/manage/seal_edit.jsp"></forward>
+		</action>
+		<!--印章生命周期的action向导（yc）-->
+		<action path="/getInfoSeal"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="/general/seal_body/manage/get_info.jsp"></forward>
+		</action>
+		<!-- 跳转到添加印章页面的action（yc）-->
+		<action path="/sealBodyAdd"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" >
+			<forward name="success" path="/general/seal_template/manage/makeSeal.jsp"></forward>
+		</action>
+		<!--提交新制印章的action（yc）-->
+		<action path="/sealBodySave"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="sealBodyForm">
+			<forward name="success" path="tempManage.do"></forward>
+		</action>
+	</action-mappings>
+</struts-config>
+

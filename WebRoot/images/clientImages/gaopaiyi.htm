@@ -1,0 +1,512 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title> 拍照 </title>
+<style>
+ 		body{ 
+ 			margin:0px; 
+ 			font-family:"微软雅黑","雅黑"; 
+ 		} 
+ 		
+ 		.btn{ 
+    BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 16px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#cecfde); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid 
+    } 
+    .btn1_mouseout{ 
+    height:35px;BORDER-RIGHT: #9f9fa0 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #9f9fa0 1px solid; PADDING-LEFT: 2px; font-weight: bold;FONT-SIZE: 16px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#f3f3f3, EndColorStr=#d9d9d9); BORDER-LEFT: #9f9fa0 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #9f9fa0 1px solid 
+    } 
+    .btn1_mouseover{ 
+    height:35px;BORDER-RIGHT: #7EBF4F 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7EBF4F 1px solid; PADDING-LEFT: 2px; font-weight: bold;FONT-SIZE: 16px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#8dda00, EndColorStr=#639800); BORDER-LEFT: #7EBF4F 1px solid; CURSOR: hand; COLOR: #FFFFFF; PADDING-TOP: 2px; BORDER-BOTTOM: #7EBF4F 1px solid 
+    } 
+    .btn1_mousedown 
+    { 
+    height:35px;BORDER-RIGHT: #FFE400 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #FFE400 1px solid; PADDING-LEFT: 2px; font-weight: bold;FONT-SIZE: 16px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#CC3300, EndColorStr=#CC3300); BORDER-LEFT: #FFE400 1px solid; CURSOR: hand; COLOR: #FFFFFF; PADDING-TOP: 2px; BORDER-BOTTOM: #FFE400 1px solid 
+    } 
+    .btn1_mouseup{ 
+    height:35px;BORDER-RIGHT: #7EBF4F 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7EBF4F 1px solid; PADDING-LEFT: 2px; font-weight: bold;FONT-SIZE: 16px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#8dda00, EndColorStr=#639800); BORDER-LEFT: #7EBF4F 1px solid; CURSOR: hand; COLOR: #FFFFFF; PADDING-TOP: 2px; BORDER-BOTTOM: #7EBF4F 1px solid 
+    } 
+ 		
+</style>
+
+<script language="JavaScript">
+<!--
+function SetRotateWeb(angle) { 	
+	testocx.setRotate(angle);
+	SealCapBox.disabled     = 0;
+	//MessageCtrl.value="旋转成功。";
+}
+
+function PandaCapPlay(){
+	testocx.StopPreview();
+	testocx.ManualToAuto();
+	testocx.PandaCapturePlay();
+}
+
+function jsStartPreviewProc() { 
+	try
+	{ 	
+		testocx.StopPreview();
+		ret=testocx.StartPreviewProc();	
+	}
+	catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}
+	if (ret==0)
+	{
+		//ok
+		setRotate90.disabled	= 0;
+		setRotate270.disabled	= 0;
+		SealCapBox.disabled     = 0;
+		ConfigBox.disabled		= 0;
+	} else {
+		SelectBox.disabled      = 0;
+		setRotate90.disabled	= 1;
+		setRotate270.disabled	= 1;
+		SealCapBox.disabled     = 0;	//1;
+		PreviewBox.disabled     = 1;	//0;
+		ConfigBox.disabled	= 1;
+	}
+}
+
+function Merge(){
+	try
+	{ 	
+		ret=testocx.MergeImage();
+	}
+	catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}
+	
+	txtTraceBox.disabled    = 0;	
+	//MessageCtrl.value="返回值:"+ret;
+	if(ret==0) 
+	{		
+		//MessageCtrl.value       = "操作成功。";
+		FileNameCtrl.value      = "保存在本地文件名:"+testocx.cPicName;
+		var sel = document.getElementById('s3');
+		for(var x=sel.length-1;x>=0;x--)
+		{
+			sel.options[x].removeNode(true);
+		}
+		var format  = document.getElementById('s4').value;
+		var inum = testocx.RefreshImgList(format);
+		var cstr="";
+		for (i=0; i<inum; i++)
+		{
+			cstr = testocx.GetImgNameByIdx(i);				
+			if (cstr!="")
+			{
+		     		var opt = document.createElement("OPTION"); 
+		    	 	sel.options.add(opt);
+		     		opt.innerText = cstr;
+		     		opt.value = i;
+			}
+		}
+	} else {
+		//MessageCtrl.value       ="操作失败。";
+	}
+}
+
+function SealCapWeb() { 
+	testocx.customSavePath = customTrace.value;
+	testocx.customImgName = customName.value;
+	try
+	{
+//		var format  = document.getElementById('s4').value;
+		var format  = "jpg";
+		var DPI  = document.getElementById('s5').value;
+//	   var color  = document.getElementById('s6').value;
+		var angle  = document.getElementById('s7').value;
+		testocx.pDPI=DPI;
+		testocx.nColorSpace=0;
+//		testocx.nRotateAngle=0;
+//		testocx.nColorSpace=color;    //设置图片的色彩
+		testocx.nRotateAngle=angle;   //设置图片的旋转角度
+		ret=testocx.SealCap(format);
+		var inum = testocx.RefreshImgList(format);		
+		if(ret!=0){
+			alert("拍照失败,请确认是否已连接好高拍仪！");
+			return false;
+		}
+	}catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}
+	window.returnValue="success";
+	self.close();
+}
+
+
+
+
+function SendSealWeb() { 
+	
+	if (txtTrace.value=="")
+	{
+		//MessageCtrl.value=" 请先输入URL！";
+		return;
+	}
+
+	if (checkbox1.checked==true)
+	{
+		testocx.bUploadDel=true;
+	}
+	else
+	{
+		testocx.bUploadDel=false;
+	}
+	
+	try
+	{ 	
+		txtTraceBox.disabled    = 1;
+		ret=testocx.SendSeal(txtTrace.value);
+	}
+	catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}
+	
+	txtTraceBox.disabled    = 0;
+	if(ret==1) {
+		var sel = document.getElementById('s3');
+		for(var x=sel.length-1;x>=0;x--)
+		{
+			sel.options[x].removeNode(true);
+		}
+		var format  = document.getElementById('s4').value;
+		var inum = testocx.RefreshImgList(format);
+		var cstr="";
+		for (i=0; i<inum; i++)
+		{
+			cstr = testocx.GetImgNameByIdx(i);				
+			if (cstr!="")
+			{
+		     		var opt = document.createElement("OPTION"); 
+		    	 	sel.options.add(opt);
+		     		opt.innerText = cstr;
+		     		opt.value = i;
+			}
+		}
+		FileNameCtrl.value="本地文件名:"    +testocx.cPicName;
+		//MessageCtrl.value ="操作成功。";
+	}else {
+		//MessageCtrl.value ="操作失败。";
+	}
+}
+
+function JsRefreshDevList() {
+	testocx.WriteLog = true;
+	var sel = document.getElementById('s1');
+	var inum = testocx.RefreshDevList();
+	var i=0;
+	var cstr=""; 
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetDevNameByIdx(i);				
+		if (cstr!="")
+		{
+		     var opt = document.createElement("OPTION"); 
+		     sel.options.add(opt);
+		     opt.innerText = cstr;
+		     opt.value = i;
+			 if (cstr == "主摄像头(2M)")
+			{
+				opt.selected = true;
+				testocx.SetDevNameSel(i);
+			}
+		}
+	}
+}
+
+function JsSelDevName() { 
+	
+	//MessageCtrl.value ="";
+	
+	try
+	{ 
+		var ret=0;
+		var i;
+		
+		testocx.StopPreview();
+		
+		i  = document.getElementById('s1').value;  
+		ret= testocx.SetDevNameSel(i);
+		var sel = document.getElementById('s2');
+		for(var x=sel.length-1;x>=0;x--)
+		{
+			sel.options[x].removeNode(true);
+		}
+		JsRefreshResolution();
+		PandaCapPlay();
+		
+	}
+	catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}	
+}
+
+function JsSelResolution() { 
+	
+	//MessageCtrl.value ="";
+	
+	try
+	{ 
+		var ret=0;
+		var i;
+		
+		testocx.StopPreview();
+		
+		i  = document.getElementById('s2').value;  
+		ret= testocx.SetResolution(i);
+		
+	}
+	catch(e)
+	{
+		window.alert(e);	//"加载DLL错误！");
+	}	
+}
+
+function JsRefreshResolution(){
+	var sel = document.getElementById('s2');
+	var i  = document.getElementById('s1').value;
+	var inum = testocx.RefreshResolution(i); 
+	var cstr="";
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetResolutionByIdx(i);				
+		if (cstr!="")
+		{
+		     var opt = document.createElement("OPTION"); 
+		     sel.options.add(opt);
+		     opt.innerText = cstr;
+		     opt.value = i;
+		}
+	}
+}
+
+function ConfigCamera(){
+	
+	ret=testocx.ConfigCameraFilter();	
+}
+
+function AddWaterMark(){
+	ret=testocx.AddWaterMark();
+}
+
+function RecordVideo(){
+	ret=testocx.VideoRecord("D:\\");
+}
+
+var ImgIdx = -1;
+function JsSelImgName(){
+	ImgIdx  = document.getElementById('s3').value;
+}
+
+function jsDeleteImg(){
+	if (ImgIdx >= 0)  
+		ret= testocx.DeleteImg(ImgIdx);
+	var sel = document.getElementById('s3');
+	for(var x=sel.length-1;x>=0;x--)
+	{
+		sel.options[x].removeNode(true);
+	}
+	var format  = document.getElementById('s4').value;
+	var inum = testocx.RefreshImgList(format);
+	var cstr="";
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetImgNameByIdx(i);				
+		if (cstr!="")
+		{
+		     var opt = document.createElement("OPTION"); 
+		     sel.options.add(opt);
+		     opt.innerText = cstr;
+		     opt.value = i;
+		}
+	}
+}
+
+function JsSelFormat(){
+	var sel = document.getElementById('s3');
+	for(var x=sel.length-1;x>=0;x--)
+	{
+		sel.options[x].removeNode(true);
+	}
+	var format  = document.getElementById('s4').value;
+	var inum = testocx.RefreshImgList("format");
+	var cstr="";
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetImgNameByIdx(i);				
+		if (cstr!="")
+		{
+		     var opt = document.createElement("OPTION"); 
+		     sel.options.add(opt);
+		     opt.innerText = cstr;
+		     opt.value = i;
+		}
+	}
+}
+
+function jsScreenCut(){
+	testocx.ScreenCut();
+}
+
+function jsTifTool(){
+	testocx.TifTool();
+}
+
+function jsMtoA(){
+	testocx.ManualToAuto();
+}
+
+function jsDisCrop(){
+	testocx.DisableCrop();
+}
+
+function ImgToBase64(){
+	testocx.markdown = true;
+	ret = testocx.GetBase64String(testocx.cPicName);
+	if (ret==true)
+	{
+		//MessageCtrl.value ="转换成功，字符串保存在Temp目录的日志文件SealCapNtWebLog.txt中。";
+	}
+}
+
+function jsDeleteImgByName(){
+	ret = testocx.DeleteImgByName(DeleteImgName.value);
+	if (ret == 0)
+	{
+		//MessageCtrl.value ="删除成功。";
+	}
+	else
+	{
+		//MessageCtrl.value ="文件不存在。";
+	}
+}
+
+function jsSelLocalImg(){
+	ret = testocx.SelectLocalImgs();
+	var sel = document.getElementById('s6');
+	for(var x=sel.length-1;x>=0;x--)
+	{
+		sel.options[x].removeNode(true);
+	}
+	var inum = testocx.RefreshLocalImg();
+	var cstr="";
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetLocalImgName(i);				
+		if (cstr!="")
+		{
+		     	var opt = document.createElement("OPTION"); 
+		     	sel.options.add(opt);
+		     	opt.innerText = cstr;
+		     	opt.value = i;
+		}
+	}
+}
+
+var LocalImgIdx = -1;
+function JsLocalImgName(){
+	LocalImgIdx  = document.getElementById('s6').value;
+}
+
+function jsUploadLocalImg(){
+	if (txtTrace.value=="")
+	{
+		//MessageCtrl.value=" 请先输入URL！";
+		return;
+	}
+	testocx.bShowMsgBox=false;
+	ret = testocx.UploadLocalImg(txtTrace.value);
+	//MessageCtrl.value="函数返回值："+ret+"  服务器返回:"+testocx.HttpResponse;
+}
+
+function jsRemoveLocalImg(){
+	if (LocalImgIdx >= 0)  
+		ret= testocx.RemoveLocalImg(LocalImgIdx);
+	var sel = document.getElementById('s6');
+	for(var x=sel.length-1;x>=0;x--)
+	{
+		sel.options[x].removeNode(true);
+	}
+	var inum = testocx.RefreshLocalImg();
+	var cstr="";
+	for (i=0; i<inum; i++)
+	{
+		cstr = testocx.GetLocalImgName(i);				
+		if (cstr!="")
+		{
+		     var opt = document.createElement("OPTION"); 
+		     sel.options.add(opt);
+		     opt.innerText = cstr;
+		     opt.value = i;
+		}
+	}
+}
+//-->
+</script>
+
+</head>
+
+
+<body  onload = "JsRefreshDevList();JsRefreshResolution();PandaCapPlay();">
+<table>
+	<tr>
+		<td align="center">
+				<object classid="clsid:1C68DF21-EFEC-4623-85E5-0C369B95F15E" width=600 height=400 hspace="3" vspace="3" id="testocx" codebase="SealCapNtWeb.cab#version=1,5,0,0">
+				<img align="center" src="" width=600 height=400 hspace="3" vspace="3" />
+				</object>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" height="50">
+				请选择摄像头：
+			  <select name="SelectBox" size="1" id="s1" onChange="JsSelDevName()">
+			</select>
+			
+			请选择分辨率：
+			  <select name="SelectResolutionBox" size="1" id="s2" onChange="JsSelResolution()">
+			</select>
+			
+			
+			请选择图片输出DPI：
+			  <select name="SelectDPIBox" size="1" id="s5">
+			  <option value=0 selected="selected">默认值</option>  
+			  <option value=72>72</option>  
+			  <option value=200>200</option>
+			  <option value=300>300</option>
+			</select>
+			图片旋转角度：
+		  <select name="SelectAngleBox" size="1" id="s7">
+			  <option value="0" selected="selected">不旋转</option>  
+			  <option value="90">顺时针旋转90度</option>  
+			  <option value="180">倒置180度</option>
+			  <option value="270">逆时针旋转90度</option>
+			</select>
+		</td>
+	</tr>
+	<tr style="display:none">
+		<td>
+		  <input  type="button" id="PreviewBox"  name="PreviewBox" value="普通预览(可旋转视频)" onClick="jsStartPreviewProc()">
+  		<input type="button" id="setRotate90" name="setRotate90" value="顺时针方向旋转90°" disabled onClick="SetRotateWeb(90)">
+ 		 	<input type="button" id="setRotate270" name="setRotate270" value="逆时针方向旋转90°" disabled onClick="SetRotateWeb(360-90)">
+		</td>
+	</tr>
+	<tr>
+		<td align="center" height="50">
+				  <input style="display:none" class='btn1_mouseout' onMouseOver="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" onmousedown="this.className='btn1_mousedown'" onmouseup="this.className='btn1_mouseup'" type="button"  name="PreviewBox" value="普通预览(可旋转视频)" onClick="jsStartPreviewProc()">
+				  <input class='btn1_mouseout' onMouseOver="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" onmousedown="this.className='btn1_mousedown'" onmouseup="this.className='btn1_mouseup'"  name="SealCapBox" type="button"  onClick="SealCapWeb()" value=" 拍照 ">
+				  <input type="hidden" id=customTrace  name=customTraceBox value="c:\">
+				  <input type="hidden" id=customName  name=customNameBox value="gaopaiyi">
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
+	

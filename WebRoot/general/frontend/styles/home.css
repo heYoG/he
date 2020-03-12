@@ -1,0 +1,260 @@
+.cluster-content {
+    margin: 8px;
+}
+.cluster-card {
+    width: 540px;
+    height: 350px;
+    margin: 20px;
+    background: #fcfcfc;
+    position: relative;
+    border: 1px solid #2c97e8;
+    border-radius: 2px;
+    -webkit-transition: all ease .35s;
+    -moz-transition: all ease .35s;
+    -ms-transition: all ease .35s;
+    -o-transition: all ease .35s;
+    transition: all ease .35s;
+}
+.cluster-card:hover {
+    -webkit-box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+    -moz-box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+    box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+}
+.cluster-card .cluster-options {
+    position: absolute;
+    left: 10px;
+    top: 13px;
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+}
+.cluster-card .cluster-options i.toggle-dropdown {
+    position: absolute;
+    left: 0;
+    font-size: 1.8rem;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.cluster-card .cluster-name {
+    color: #ffffff !important;
+    text-align:center;
+    height: 40px;
+    line-height: 40px;
+    background: #2c97e8;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+.cluster-card .cluster-instances {
+    height: 40px;
+    line-height: 40px;
+    color: #337ab7;
+}
+.cluster-card .cluster-instances > span {
+    width: 25%;
+    text-indent: 10px;
+    float: left;
+}
+.cluster-card .cluster-instances .instances-count,
+.cluster-card .cluster-instances .opened-instances-count,
+.cluster-card .cluster-instances .closed-instances-count,
+.cluster-card .cluster-instances .error-instances-count {
+    min-width: 20px;
+    margin-right: 2px;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-indent: 0;
+    cursor: pointer;
+}
+.cluster-card .cluster-info {
+    border: 1px solid transparent;
+    border-top-color: #dbdbdb;
+}
+.cluster-card .cluster-info .cluster-info-charts {
+    height: 267px;
+    width: 400px;
+    margin: 0 auto;
+}
+.instance-cards {
+    text-align: left;
+    padding: 0 0 20px 0;
+}
+.instance-cards .instance-card {
+    display: inline-block;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 1px 2px 5px rgba(180, 180, 180, .75);
+    -moz-box-shadow: 1px 2px 5px rgba(180, 180, 180, .75);
+    box-shadow: 1px 2px 5px rgba(180, 180, 180, .75);
+    width: 319px;
+    height: 208px;
+    position: relative;
+    margin: 20px 0 0 10px;
+    overflow: hidden;
+    background-color: #FFF;
+    border: 1px solid #c9ccd0;
+    vertical-align: top;
+    font-size: 12px;
+}
+.instance-cards .instance-card.instance-add {
+    cursor: pointer;
+    color: #d2d2d2;
+    position: relative;
+}
+.instance-cards .instance-card.instance-add:hover {
+    color: #97c9e5;
+}
+.instance-cards .instance-card.instance-add .instance-add-wrapper {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -54px;
+    height: 108px;
+    width: 100%;
+}
+.instance-cards .instance-card.instance-add .instance-add-wrapper .plus {
+    font-size: 135px;
+    line-height: 70px;
+    margin-bottom: 10px;
+}
+.instance-cards .instance-card.instance-add .instance-add-wrapper .word {
+    font-size: 24px;
+}
+.instance-cards .instance-card + .instance-card {
+    margin-left: 10px;
+}
+.instance-cards .instance-card:hover {
+    border-color: #2c97e8;
+    -webkit-box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+    -moz-box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+    box-shadow: 0 0 12px rgba(12, 148, 222, .8);
+}
+.instance-cards .instance-card.instance-info .up {
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+    width: 100%;
+    height: 117px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #f5f5f5;
+}
+.instance-cards .instance-card.instance-info .up .instance-name {
+    text-align: center;
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    width: 106px;
+    overflow: hidden;
+    font-size: 14px;
+    color: #969696;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(180, 180, 180, .75);
+    -moz-box-shadow: 0 0 5px rgba(180, 180, 180, .75);
+    box-shadow: 0 0 5px rgba(180, 180, 180, .75);
+    -webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    -ms-transition: all ease .3s;
+    -o-transition: all ease .3s;
+    transition: all ease .3s;
+}
+.instance-cards .instance-card.instance-info .up .instance-name:hover {
+    -webkit-box-shadow: 0 0 5px rgba(12, 148, 222, .8);
+    -moz-box-shadow: 0 0 5px rgba(12, 148, 222, .8);
+    box-shadow: 0 0 5px rgba(12, 148, 222, .8);
+    color: #0c94de;
+}
+.instance-cards .instance-card.instance-info .up .instance-name img {
+    width: 32px;
+    height: 32px;
+    display: block;
+    margin: 0 auto 7px;
+}
+.instance-cards .instance-card.instance-info .up .instance-name .instance-name-span,
+.instance-cards .instance-card.instance-info .up .instance-name .instance-name-span .name,
+.instance-cards .instance-card.instance-info .up .instance-name .instance-name-span .system {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+}
+.instance-card.instance-info .up .instance-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 168px;
+    height: 97px;
+    font-size: 14px;
+    color: #969696;
+}
+.instance-card.instance-info .up .instance-actions .instance-action {
+    position: relative;
+    padding: 10px 0 0;
+}
+.instance-card .up .instance-actions .instance-action .instance-action-title {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 70px;
+    text-align: center;
+}
+.instance-card .up .instance-actions .instance-action .instance-action-title.instance-action-info {
+    font-size: 12px;
+    text-align: left;
+}
+.instance-card .up .instance-actions .instance-action .instance-action-title > span {
+    display: block;
+    white-space: nowrap;
+}
+.instance-card .up .instance-actions .instance-action .instance-status .instance-status-text {
+    margin-left: 4px;
+}
+.instance-card .up .instance-actions .instance-action .instance-action-btns {
+    margin-left: 80px;
+}
+.instance-card .up .instance-actions .instance-action .instance-action-info + .instance-action-btns a {
+    position: relative;
+    top: 14px;
+}
+.instance-card.instance-info .up .instance-actions .instance-action button {
+    padding: 0;
+    font-size: 12px;
+}
+.instance-card.instance-info .up .instance-actions .instance-action .instance-status-btns button {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.instance-cards .instance-card.instance-info .down {
+    width: 100%;
+    padding: 20px 0 34px;
+    color: #8c8c8c;
+}
+.instance-cards .instance-card.instance-info .down .instance-data {
+    float: left;
+    width: 33%;
+    height: 36px;
+    -ms-word-break: normal;
+    word-break: normal;
+    vertical-align: top;
+    text-align: center;
+}
+.instance-cards .instance-card.instance-info .down .instance-data p {
+    overflow: hidden;
+}
+.instance-cards .instance-card.instance-info .down .instance-data .instance-data-name {
+    color: #bbb;
+    margin-bottom: 15px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.instance-cards .instance-card.instance-info .down .instance-data .instance-data-amount {
+    margin: 0;
+    font-weight: 700;
+    overflow: hidden;
+}

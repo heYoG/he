@@ -1,0 +1,32 @@
+
+.color{color:green;}
+#color1{color:blue;}
+#sidebar p{
+	font-style: italic;
+	color:red;
+	text-align: left;
+	margin-top: 0.5em;
+	}
+#sidebar h2 {
+	font-size: 1em;
+	font-weight: normal;
+	color:blue;
+	font-style: italic;
+	margin: 0;
+	line-height: 1.5;
+	text-align: left;
+	}
+.center{text-align: center}
+
+.biaoge td{
+	color: #f60;
+	background: #666;}
+	
+	td.fancy {
+	color: #f60;
+	background: #666;
+	}
+p {text-indent: -5em; padding-left: 5em;}
+h1 {text-transform: uppercase}
+a {text-decoration: none;}
+a:visited {text-decoration: underline overline;}

@@ -1,0 +1,15 @@
+#body{
+   border-top:none;
+   font-size:9pt;
+}
+.moduleContainer{
+   background: #FFFFFF;
+   border:1px #718A9B solid;
+   border-top:none;
+   overflow-x:auto;
+   overflow-y:hidden;
+   width:100%;
+}
+.moduleContainer table{
+   border:none;
+}

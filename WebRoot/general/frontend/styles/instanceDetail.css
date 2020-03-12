@@ -1,0 +1,41 @@
+.instance-detail-content {
+    margin: 8px;
+}
+.instance-detail-content .modal-content, .instance-detail-content .form-control {
+    border-radius: 0;
+}
+.instance-detail-charts .instance-basic-charts {
+    border: 1px solid #E1E6EB;
+}
+.instance-detail-charts .instance-basic-charts .instance-icon {
+    height: 130px;
+    width: 130px;
+    float: left;
+    text-align: center;
+}
+.instance-detail-charts .instance-basic-charts .instance-icon img {
+    width: 100px;
+    height: 100px;
+    margin: 15px auto;
+}
+.instance-detail-charts .instance-basic-charts .instance-basics {
+    margin-left: 20px;
+    float: left;
+}
+.instance-detail-charts .instance-basic-charts .instance-basics li {
+    line-height: 30px;
+}
+.instance-detail-charts .instance-monitor-charts .module-header button {
+    width: 70px;
+    text-align: center;
+    margin-right: 15px;
+    border: 1px solid #4280cb;
+}
+#changeBasicModal textarea {
+    resize: none;
+}
+.statistics-charts {
+    min-width: 310px;
+    height: 300px;
+    margin: 0 auto;
+}

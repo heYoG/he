@@ -1,0 +1,19 @@
+2016-11-25 at 10:44:24 CST INFO  xmlUtil.xml.XMLNote 120 main - 
+-returnData
+   errorCode:0
+   errorMsg:
+  -batch
+     objType:1
+     uniqueCode:103
+     operType:1
+    -dept
+       uniCode:103
+       fullName:合作方
+       deptName:合作方
+       isCorp:0
+       showNum:0
+      -deptParent
+         uniCode:1
+      -deptCorp
+         uniCode:1
+2016-11-25 at 10:44:24 CST INFO  xmlUtil.xml.XMLNote 121 main - file:/E:/Workspaces/Seal(SVN)/WebRoot/WEB-INF/classes/

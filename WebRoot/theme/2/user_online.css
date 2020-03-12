@@ -1,0 +1,40 @@
+
+#body{
+   background: #70A4CF;
+   border-left:1px #246191 solid;
+   border-right:1px #246191 solid;
+   padding: 5px 5px 10px 5px;
+   font-size:9pt;
+}
+
+#bottom{
+   height:55px;
+}
+#bottom_left{
+   float:left;
+   width:45%;
+   height:100%;
+   background: url("menu_bottom_bg_left.png") no-repeat left top;
+}
+#bottom_center{
+   float:left;
+   height:100%;
+   background: url("menu_bottom_bg_center.png") no-repeat center top;
+}
+#bottom_right{
+   float:left;
+   width:45%;
+   height:100%;
+   background: url("menu_bottom_bg_right.png") no-repeat right top;
+}
+
+.moduleContainer{
+   border:1px #246191 solid;
+   background: #FFFFFF;
+   overflow-x:auto;
+   overflow-y:hidden;
+   width:100%;
+}
+.moduleContainer table{
+   border:0px;
+}

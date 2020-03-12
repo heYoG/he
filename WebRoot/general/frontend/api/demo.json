@@ -1,0 +1,22 @@
+{
+    "id": "19273824",
+    "name": "点聚集群",
+    "instances": [
+        {
+            "id": "12838342","model":"戴尔R720", "name": "ubuntu", "system": "Ubuntu", "systemVersion": "14.04", "systemBits": 64, "CPU": 1, "memory": 1, "broadband": 10, "broadbandWay": "按使用流量", "status": 1, "publicIP": "121.42.153.224", "intranetIP": "192.168.15.10", "port": 24651, "area": "中心机房2机柜1号",  "description": "青岛的很便宜！11111111111111111111111111111111111111111111111111111111", "serviceUrl": "ubuntu-jadegong.tenxapp.com:24651", "createdAt": "2015-10-10T15:42:32.566+08:00", "updatedAt": "2015-10-10T15:42:32.566+08:00",
+            "statistics": { "monthTraffic": 12323847, "monthVisitTimes": 109, "monthRequest": 1000 }
+        },
+        {
+            "id": "28374923","model":"戴尔R720", "name": "arch", "system": "ArchLinux", "systemVersion": "7", "systemBits": 64, "CPU": 4, "memory": 4, "broadband": 20, "broadbandWay": "按使用流量", "status": 1, "publicIP": "121.42.153.224", "intranetIP": "192.168.15.10", "port": 22, "area": "中心机房2机柜2号", "description": "老机器",  "serviceUrl": null, "createdAt": "2015-09-17T12:29:52.053+08:00", "updatedAt": "2015-09-17T12:29:52.053+08:00",
+            "statistics": { "monthTraffic": 11982374, "monthVisitTimes": 87, "monthRequest": 997 }
+        },
+        {
+            "id": "38275354", "model":"浪潮英信X8460M3", "name": "debian", "system": "Debian", "systemVersion": "8.1", "systemBits": 64, "CPU": 8, "memory": 8, "broadband": 10, "broadbandWay": "按使用流量", "status": 0, "publicIP": "121.42.153.224", "intranetIP": "192.168.15.10", "port": 22, "area": "中心机房2机柜3号", "description": "新机器",  "serviceUrl": null, "createdAt": "2015-10-25T12:01:35.053+08:00", "updatedAt": "2015-10-25T12:01:35.053+08:00",
+            "statistics": { "monthTraffic": 15438247, "monthVisitTimes": 114, "monthRequest": 1231 }
+        },
+        {
+            "id": "23874239", "model":"浪潮英信X8460M3", "name": "Suse", "system": "OpenSuse", "systemVersion": "13.1", "systemBits": 64, "CPU": 1, "memory": 2, "broadband": 3, "broadbandWay": "按使用流量", "status": -1, "publicIP": "121.42.153.224", "intranetIP": "192.168.15.10", "port": 22, "area": "中心机房2机柜3号", "description": "很便宜",  "serviceUrl": null, "createdAt": "2015-10-23T13:22:16.566+08:00", "updatedAt": "2015-10-23T13:22:16.566+08:00",
+            "statistics": { "monthTraffic": 14083758, "monthVisitTimes": 98, "monthRequest": 1212 }
+        }
+    ]
+}

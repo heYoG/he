@@ -1,0 +1,47 @@
+2018-08-13 at 15:25:23 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:25:23 CST ERROR com.dj.seal.util.file.FtpUtil 141 uploadManyFile - Could not parse response code.
+Server Reply: Protocol mismatch.
+2018-08-13 at 15:25:23 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - Connection closed without indication.
+2018-08-13 at 15:26:39 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:26:39 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-13 at 15:26:39 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-13 at 15:28:00 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:28:00 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-13 at 15:28:00 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-13 at 15:30:24 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:30:24 CST ERROR com.dj.seal.util.file.FtpUtil 141 uploadManyFile - Could not parse response code.
+Server Reply: Protocol mismatch.
+2018-08-13 at 15:30:24 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - Connection closed without indication.
+2018-08-13 at 15:30:44 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:30:44 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-13 at 15:30:44 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-13 at 15:38:29 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-13 at 15:38:29 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-13 at 15:38:29 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-13 at 16:04:28 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Welcome message: SSH-2.0-OpenSSH_4.3
+
+2018-08-13 at 16:04:28 CST INFO  com.dj.seal.util.file.FtpClientUtil 674 main - 返回信息：false
+2018-08-13 at 16:07:18 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:07:18 CST INFO  com.dj.seal.util.file.FtpClientUtil 679 main - 返回信息：false
+2018-08-13 at 16:07:29 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:07:29 CST INFO  com.dj.seal.util.file.FtpClientUtil 679 main - 返回信息：false
+2018-08-13 at 16:15:53 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:15:54 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:15:54 CST INFO  com.dj.seal.util.file.FtpClientUtil 680 main - 返回信息：false
+2018-08-13 at 16:16:02 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:16:03 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:16:03 CST INFO  com.dj.seal.util.file.FtpClientUtil 680 main - 返回信息：false
+2018-08-13 at 16:16:29 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:16:30 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:16:30 CST INFO  com.dj.seal.util.file.FtpClientUtil 681 main - 返回信息：false
+2018-08-13 at 16:17:03 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:17:04 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:17:04 CST INFO  com.dj.seal.util.file.FtpClientUtil 682 main - 返回信息：false
+2018-08-13 at 16:17:53 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:17:54 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Connection refused: connect
+2018-08-13 at 16:17:54 CST INFO  com.dj.seal.util.file.FtpClientUtil 681 main - 返回信息：false
+2018-08-13 at 16:20:22 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Welcome message: SSH-2.0-OpenSSH_4.3
+
+2018-08-13 at 16:22:22 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Welcome message: SSH-2.0-OpenSSH_4.3
+
+2018-08-13 at 16:22:22 CST INFO  com.dj.seal.util.file.FtpClientUtil 680 main - 返回信息：false

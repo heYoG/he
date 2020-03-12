@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 批量导入部门和用户service,spring的控制反转(ioc) -->
+	<bean id="udau_srv"
+		class="com.dj.seal.organise.service.impl.UploadDeptAndUserService">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 导出稽核数据 -->
+	<bean id="CheckBankService" class="com.dj.seal.origunJob.job.CheckJob">
+		<property name="record_srv">
+			<ref bean="nshRecordService" />
+		</property>
+	</bean>
+	<bean id="CreateTableService" class="com.dj.hotelApi.util.CreateTable"></bean>
+
+	<bean id="loginForm" class="com.dj.seal.organise.web.form.LoginForm">
+	</bean>
+	<bean id="deptForm" class="com.dj.seal.organise.web.form.DeptForm">
+	</bean>
+	<bean id="roleForm" class="com.dj.seal.organise.web.form.RoleForm">
+	</bean>
+	<bean id="unitForm" class="com.dj.seal.organise.web.form.UnitForm">
+	</bean>
+	<bean id="userForm" class="com.dj.seal.organise.web.form.UserForm">
+	</bean>
+	<bean id="srvSeal" class="srvSeal.SrvSealUtil"></bean>
+	<bean id="FPersonInfo" class="com.dj.seal.personInfo.web.form.PersonForm" />
+	<bean id="FPsd" class="com.dj.seal.personInfo.web.form.PsdForm" />
+	<bean id="tempForm" class="com.dj.seal.sealTemplate.web.form.SealTempForm"></bean>
+
+	<bean name="sealForm" class="com.dj.seal.sealBody.web.form.SealBodyForm">
+	</bean>
+
+	<bean name="sealForm" class="com.dj.seal.sealBody.web.form.SealBodyForm">
+	</bean>
+	<bean name="certForm" class="com.dj.seal.cert.web.form.CertForm"></bean>
+	<bean id="PostFileService" class="com.dj.seal.util.file.PostFIle"></bean>
+	<bean id="license" class="com.dj.seal.util.License">
+		<property name="user">
+			<ref bean="IUserService" />
+		</property>
+		<property name="sealtemp">
+			<ref bean="ISealTempService" />
+		</property>
+	</bean>
+	<bean id="licenseService" class="com.dj.seal.license.service.impl.LicenseServiceImpl">
+		<property name="license_dao">
+			<ref bean="licenseDao" />
+		</property>
+	</bean>
+	<bean class="com.dj.seal.util.spring.MyApplicationContextUtil"></bean>
+	<!-- 组织结构模块_用户（） -->
+	<bean id="IUserService" class="com.dj.seal.organise.service.impl.UserService">
+		<property name="su_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+		<property name="user_dept_dao">
+			<ref bean="ISysUserDeptDao" />
+		</property>
+		<property name="user_role_dao">
+			<ref bean="ISysUserRoleDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="unit_dao">
+			<ref bean="ISysUnitDao" />
+		</property>
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+	</bean>
+	<!-- 系统管理模块的service层的注入 -->
+	<bean id="ISystemService" class="com.dj.seal.system.service.impl.SystemServiceImpl">
+		<property name="isy">
+			<ref bean="ISystemDao" />
+		</property>
+	</bean>
+	<!-- 桌面快捷菜单模块的service层的注入 -->
+	<bean id="ITableModuleService" class="com.dj.seal.system.service.impl.TableModuleServiceImpl">
+		<property name="modu_dao">
+			<ref bean="ITableModuleDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_权限（） -->
+	<bean id="ISysFuncService" class="com.dj.seal.organise.service.impl.SysFuncService">
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+		<property name="su_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="sf_dao">
+			<ref bean="ISysFuncDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="isy">
+			<ref bean="ISystemDao" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_单位（） -->
+	<bean id="ISysUnitService" class="com.dj.seal.organise.service.impl.SysUnitService">
+		<property name="isud">
+			<ref bean="ISysUnitDao" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_部门（） -->
+	<bean id="ISysDeptService" class="com.dj.seal.organise.service.impl.SysDeptService">
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+		<property name="user_dept_dao">
+			<ref bean="ISysUserDeptDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleService" />
+		</property>
+		<property name="unit_dao">
+			<ref bean="ISysUnitDao" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_角色（） -->
+	<bean id="ISysRoleService" class="com.dj.seal.organise.service.impl.SysRoleService">
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="user_role_dao">
+			<ref bean="ISysUserRoleDao" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+		<property name="unit_dao">
+			<ref bean="ISysUnitDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+
+	</bean>
+
+	<!-- 数据备份（author：lzl） -->
+	<bean id="IBackupService" class="com.dj.seal.sysmgr.service.impl.BackupService">
+		<property name="backup_dao">
+			<ref bean="IBackupDao" />
+		</property>
+	</bean>
+
+	<!-- 印模申请列表模块的service层的注入 -->
+	<bean id="ISealTempService"
+		class="com.dj.seal.sealTemplate.service.impl.SealTemplateServiceImpl">
+		<property name="dao">
+			<ref bean="ISealTemplateDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="func_srv">
+			<ref bean="ISysFuncService" />
+		</property>
+	</bean>
+	<!-- 印章管理模块的service层的注入 -->
+	<bean id="ISealBodyService" class="com.dj.seal.sealBody.service.impl.SealBodyServiceImpl">
+		<property name="seal_dao">
+			<ref bean="ISealBodyDao" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="base_dao">
+			<ref bean="IBaseDao" />
+		</property>
+	</bean>
+	<!-- 日志管理模块的service层的注入 -->
+	<bean id="logSysService" class="com.dj.seal.log.service.impl.LogSysServiceImpl">
+		<property name="log_dao">
+			<ref bean="logSysDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!-- 评价日志管理模块的service层的注入 -->
+	<bean id="feedLogSysService" class="com.dj.seal.log.service.impl.FeedLogSysServiceImpl">
+		<property name="flog_dao">
+			<ref bean="feedLogSysDao" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!-- 证书管理模块的service层的注入 -->
+	<bean id="CertService" class="com.dj.seal.cert.service.impl.CertSrv">
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+		<property name="seal_dao">
+			<ref bean="ISealBodyDao" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+	</bean>
+
+	<!-- 文档管理模块的service层的注入 -->
+	<bean id="DocService" class="com.dj.seal.doc.service.impl.DocServiceImpl">
+		<property name="docDao">
+			<ref bean="docDao" />
+		</property>
+	</bean>
+	<!-- 报表 -->
+	<bean id="ReportService" class="com.dj.seal.highcharts.service.impl.ChartServiceImpl">
+		<property name="record_dao">
+			<ref bean="recordDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="model_dao">
+			<ref bean="modelFileDao" />
+		</property>
+	</bean>
+	<!-- Seallog盖章打印日志的service层的注入 -->
+	<bean id="SealLogService" class="com.dj.seal.sealLog.service.impl.SealLogService">
+		<property name="sealLog_dao">
+			<ref bean="sealLogDao" />
+		</property>
+	</bean>
+	<!--Huizhilog盖章打印日志的service层的注入 -->
+	<bean id="HuizhiLogService" class="com.dj.seal.huizhilog.service.impl.HuizhiLogService">
+		<property name="huizhiLog_dao">
+			<ref bean="huizhiLogDao" />
+		</property>
+	</bean>
+	<!-- 文档打印设置模块的service层的注入 -->
+	<bean id="docPrint_service" class="com.dj.seal.docPrint.service.impl.DocPrintServiceImpl">
+		<property name="docPrint_dao">
+			<ref bean="docPrintDao" />
+		</property>
+		<property name="user_service">
+			<ref bean="IUserService" />
+		</property>
+		<property name="role_service">
+			<ref bean="ISysRoleService" />
+		</property>
+	</bean>
+	<!-- 应用系统模块的service层的注入 -->
+	<bean id="appSysService" class="com.dj.seal.appSystem.service.impl.AppSysServiceImpl">
+		<property name="app_dao">
+			<ref bean="appSysDao" />
+		</property>
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+	</bean>
+	<!--得到盖章规则信息的注入 -->
+	<bean id="objRuelList" class="serv.rules.GetRuleList">
+		<property name="sealbody_srv">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="rule_dao">
+			<ref bean="gaiZhangRuleDao" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+	</bean>
+	<!-- 文档管理模块service层的注入(实际这个模块是不存在的) -->
+	<bean id="docService" class="com.dj.seal.doc.service.impl.DocServiceImpl">
+		<property name="docDao">
+			<ref bean="docDao" />
+		</property>
+	</bean>
+	<!-- 电子对账系统响应层注入 -->
+	<bean id="EleAccountCheck" class="com.dj.seal.util.socket.sealPictureOfCheckAccountSys.EleInternationalAccountResponse">
+	<property name="base_dao">
+	<ref bean="IBaseDao"/>
+	</property>
+	</bean>
+</beans>

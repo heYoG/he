@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 批量导入部门和用户service,springMVC/前后端连接操作 -->
+	<bean name="/uploadDeptAndUser"
+		class="com.dj.seal.organise.web.action.UploadDeptAndUserAction">
+		<property name="udau_srv">
+			<ref bean="udau_srv" />
+		</property>
+	</bean>
+	<!-- 注入登录的action -->
+	<bean name="/login" class="com.dj.seal.organise.web.action.LoginAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="func_srv">
+			<ref bean="ISysFuncService" />
+		</property>
+		<property name="sys_srv">
+			<ref bean="ISystemService" />
+		</property>
+		<property name="modu_srv">
+			<ref bean="ITableModuleService" />
+		</property>
+		<property name="loginForm">
+			<ref bean="loginForm" />
+		</property>
+		<property name="sys_unit">
+			<ref bean="ISysUnitService" />
+		</property>
+		<property name="role_srv">
+			<ref bean="ISysRoleService"/>
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService"/>
+		</property>
+	</bean>
+	<!-- 部门管理的action（oyxy） -->
+	<bean name="/manageDept" class="com.dj.seal.organise.web.action.DeptManageAction">
+	</bean>
+	<!-- 部门信息显示的action（oyxy） -->
+	<bean name="/showDept" class="com.dj.seal.organise.web.action.DeptShowAction">
+		<property name="unit_srv">
+			<ref bean="ISysUnitService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 新增部门的action（oyxy） -->
+	<bean name="/addDept" class="com.dj.seal.organise.web.action.DeptAddAction">
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="deptForm">
+			<ref bean="deptForm" />
+		</property>
+	</bean>
+	<!-- 更新部门的action（oyxy） -->
+	<bean name="/updateDept" class="com.dj.seal.organise.web.action.DeptUpdateAction">
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="deptForm">
+			<ref bean="deptForm" />
+		</property>
+	</bean>
+	<!-- 删除部门的action（oyxy） -->
+	<bean name="/deleteDept" class="com.dj.seal.organise.web.action.DeptDeleteAction">
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 新增角色的action（oyxy） -->
+	<bean name="/roleAdd" class="com.dj.seal.organise.web.action.RoleAddAction">
+		<property name="role_srv">
+			<ref bean="ISysRoleService" />
+		</property>
+	</bean>
+	<!--用户注销的action（yc） -->
+	<bean name="/logout" class="com.dj.seal.organise.web.action.LogoutAction">
+	</bean>
+	<!-- 新增用户的向导action代理 -->
+	<bean name="/addUser" class="com.dj.seal.organise.web.action.UserAddAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 注册用户的向导action代理 -->
+	<bean name="/regUser" class="com.dj.seal.organise.web.action.UserRegAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!--根据盖章用户查询所拥有的历史证书action -->
+	<bean name="/serUserCert" class="com.dj.seal.organise.web.action.SerUserCertAction">
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+	</bean>
+	<!-- 用户新增菜单的向导action代理 -->
+	<bean name="/frameuser" class="com.dj.seal.organise.web.action.frameUserAction">
+	</bean>
+	<!-- 创建用户列表的向导action代理 -->
+	<bean name="/userList" class="com.dj.seal.organise.web.action.UserShowAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 进入角色列表模式窗口action -->
+	<bean name="/roleModeList" class="com.dj.seal.organise.web.action.RoleModeListAction">
+		<property name="role_srv">
+			<ref bean="ISysRoleService" />
+		</property>
+	</bean>
+
+	<!-- 数据备份页面 （author：lzl） -->
+	<bean name="/backupManage" class="com.dj.seal.sysmgr.web.action.BackupManageAction">
+		<property name="backup_srv">
+			<ref bean="IBackupService" />
+		</property>
+	</bean>
+
+	<!-- 普通用户列表的向导action代理 -->
+	<bean name="/serUserlist" class="com.dj.seal.organise.web.action.SerUserAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 普通用户列表的向导action代理 -->
+	<bean name="/serUser" class="com.dj.seal.organise.web.action.SerUserForAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 普通用户管理列表的向导action代理 -->
+	<bean name="/serUserManager" class="com.dj.seal.organise.web.action.SerUserManagerAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 普通用户审批列表的向导action代理 -->
+	<!-- <bean name="/serUserApprove" class="com.dj.seal.organise.web.action.SerUserApproveAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean> -->
+
+	<!-- 注销用户的向导action代理 -->
+	<bean name="/zhuxiaoUser" class="com.dj.seal.organise.web.action.zhuxiaoAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 编辑用户的向导action代理(yc) -->
+	<bean name="/editUser" class="com.dj.seal.organise.web.action.EditUserAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="role_srv">
+			<ref bean="ISysRoleService" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 激活用户的向导action代理(yc) -->
+	<bean name="/JihuoUser" class="com.dj.seal.organise.web.action.JihuoUserAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="role_srv">
+			<ref bean="ISysRoleService" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 删除用户的向导action代理(yc) -->
+	<bean name="/deleteUser" class="com.dj.seal.organise.web.action.DeleteUserAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 编辑用户的向导action代理(yc) -->
+	<bean name="/updateSysUser" class="com.dj.seal.organise.web.action.UpdateUserAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="su_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+	<!-- 得到用户角色列表的向导action代理(yc) -->
+	<bean name="/ListRole" class="com.dj.seal.organise.web.action.ShowRoleAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+	</bean>
+
+	<!-- 进入印模申请action -->
+	<bean name="/tempRegGuide" class="com.dj.seal.sealTemplate.web.action.SealTempRegGuide">
+	</bean>
+	<!-- 印模申请列表action -->
+	<bean name="/tempRegList"
+		class="com.dj.seal.sealTemplate.web.action.SealTempListAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+	</bean>
+
+
+	<bean name="/tempAppGuide"
+		class="com.dj.seal.sealTemplate.web.action.SealTempApproveGuide">
+	</bean>
+	<!-- 审批印模进入申请列表页面 -->
+	<bean name="/tempAppList"
+		class="com.dj.seal.sealTemplate.web.action.SealTempAppListAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+	</bean>
+	<!-- 审批印模申请 -->
+	<bean name="/tempApp"
+		class="com.dj.seal.sealTemplate.web.action.SealTempApproveAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="tempForm">
+			<ref bean="tempForm" />
+		</property>
+	</bean>
+	<!-- 印模审批记录 -->
+	<bean name="/tempAppHis"
+		class="com.dj.seal.sealTemplate.web.action.SealTempAppHisAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+	</bean>
+	<!-- 印模新增 -->
+	<bean name="/sealTempAdd" class="com.dj.seal.sealTemplate.web.action.SealTempAddAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="tempForm">
+			<ref bean="tempForm" />
+		</property>
+	</bean>
+	<!-- 印模管理查询（oyxy） -->
+	<bean name="/tempManage"
+		class="com.dj.seal.sealTemplate.web.action.SealTempManageQueryAction">
+	</bean>
+	<!-- 印模管理（oyxy） -->
+	<bean name="/tempManageList"
+		class="com.dj.seal.sealTemplate.web.action.SealTempManageListAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="tempForm">
+			<ref bean="tempForm" />
+		</property>
+	</bean>
+
+	<!-- 印章查询权限 -->
+	<bean name="/tempAppselect" class="com.dj.seal.sealBody.web.action.SearchSealAction">
+	</bean>
+	<!-- 导入印章数据 -->
+	<bean name="/importSeal" class="com.dj.seal.sealBody.web.action.ExportSealAction">
+	</bean>
+	<!--查询印章管理子模块中显示印章列表的action代理（yc） -->
+	<bean name="/sealShow" class="com.dj.seal.sealBody.web.action.SealShowAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="unit_srv">
+			<ref bean="ISysUnitService" />
+		</property>
+		<property name="sealForm">
+			<ref bean="sealForm" />
+		</property>
+
+	</bean>
+	<!-- 印章生命周期的action向导代理 -->
+	<bean name="/getInfoSeal" class="com.dj.seal.sealBody.web.action.GetInfoSealAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!--印章管理的action代理（yc） -->
+	<bean name="/sealShowmanage" class="com.dj.seal.sealBody.web.action.SealBodymanageAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="sealForm">
+			<ref bean="sealForm" />
+		</property>
+	</bean>
+	<!--可用印章记录列表的action代理 <bean name="/tempAppuse" class="com.dj.seal.sealbody.web.action.UseSealAction"> 
+		<property name="seal_body"> <ref bean="ISealBodyService" /> </property> <property 
+		name="user_srv"> <ref bean="IUserService" /> </property> <property name="dept_srv"> 
+		<ref bean="ISysDeptService" /> </property> <property name="unit_srv"> <ref 
+		bean="ISysUnitService" /> </property> </bean> -->
+
+
+	<!--印章查询的action代理（yc） -->
+	<bean name="/sealManage" class="com.dj.seal.sealBody.web.action.SealBodyQueryAction">
+	</bean>
+
+	<!-- 编辑印章的action向导代理 -->
+	<bean name="/sealEditGuide" class="com.dj.seal.sealBody.web.action.SealEditGuideAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="certF">
+			<ref bean="CertService" />
+		</property>
+	</bean>
+	<!--跳转到印章权限设置的action（yc） -->
+	<bean name="/sealSetGuide" class="com.dj.seal.sealBody.web.action.SealSetGuideAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!--显示用户列表的模式窗口的action代理（yc） -->
+	<bean name="/sealSetUser" class="com.dj.seal.sealBody.web.action.SealSetUserAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="unit_srv">
+			<ref bean="ISysUnitService" />
+		</property>
+	</bean>
+	<!--显示角色列表的模式窗口的action代理（yc） -->
+	<bean name="/sealSetRole" class="com.dj.seal.sealBody.web.action.SealSetRoleAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="role_srv">
+			<ref bean="ISysRoleService" />
+		</property>
+	</bean>
+	<!--添加角色用户的模式窗口的action代理（yc） -->
+	<bean name="/addRoleUser" class="com.dj.seal.sealBody.web.action.AddRoleUserAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+
+	<!-- 印模查询权限（oyxy） -->
+	<bean name="/searchTempGuide" class="com.dj.seal.sealTemplate.web.action.SearchGuide">
+	</bean>
+	<!-- 查询印模管理印模申请审批（oyxy） -->
+	<bean name="/tempSearchList"
+		class="com.dj.seal.sealTemplate.web.action.SearchSealTempListAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="tempForm">
+			<ref bean="tempForm" />
+		</property>
+	</bean>
+	<!--上传pdf文档 -->
+	<bean name="/certAdd" class="com.dj.seal.cert.web.action.NewCertAction">
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+	</bean>
+	<!--上传Pdf文档盖章 -->
+	<bean name="/uploadPdf" class="com.dj.seal.uploadPdf.web.action.UploadPdfAction">
+	</bean>
+	<!--上传Pdf文档验证 -->
+	<bean name="/vartifyPdf" class="com.dj.seal.uploadPdf.web.action.VartifyPdfAction">
+	</bean>
+	<!--修改证书 -->
+	<bean name="/certUpd" class="com.dj.seal.cert.web.action.EditCertAction">
+		<property name="cert_srv">
+			<ref bean="CertService" />
+		</property>
+	</bean>
+	<!--印章管理的action代理（yc） -->
+	<bean name="/sealShowmanage" class="com.dj.seal.sealBody.web.action.SealBodymanageAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="sealForm">
+			<ref bean="sealForm" />
+		</property>
+	</bean>
+	<!-- 得到设置证书时 证书列表 -->
+	<bean name="/cerModeList" class="com.dj.seal.sealBody.web.action.CerModeListAction">
+		<property name="cer_srv">
+			<ref bean="CertService" />
+		</property>
+		<property name="seal_srv">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!-- 印章绑定证书 -->
+	<bean name="/sealBind" class="com.dj.seal.sealBody.web.action.SealBindAction">
+		<property name="seal_srv">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!-- 得到我的印模列表 -->
+	<bean name="/mytempReg" class="com.dj.seal.sealTemplate.web.action.MyTempRegAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+	</bean>
+	<!--可用印章记录列表的action代理（yc） -->
+	<bean name="/tempAppuse" class="com.dj.seal.sealBody.web.action.UseSealAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+	</bean>
+	<!--我的可用印章记录列表的action代理（yc） -->
+	<bean name="/mytempAppuse" class="com.dj.seal.sealBody.web.action.MyUseSealAction">
+		<property name="seal_body">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="unit_srv">
+			<ref bean="ISysUnitService" />
+		</property>
+	</bean>
+	<!--文档查询action(wj) -->
+	<bean name="/docQuery" class="com.dj.seal.doc.web.action.DocQueryAction">
+		<property name="doc_service">
+			<ref bean="DocService" />
+		</property>
+	</bean>
+	<!-- 文档打印设置查询action -->
+	<bean name="/addDocPrint" class="com.dj.seal.docPrint.web.action.AddDocPrint">
+		<property name="docprint_Service">
+			<ref bean="docPrint_service" />
+		</property>
+	</bean>
+
+
+	<!-- 应用系统管理已添加列表 -->
+	<bean name="/appSystemList" class="com.dj.seal.appSystem.web.action.AppSystemAction">
+		<property name="appSystemService">
+			<ref bean="appSysService" />
+		</property>
+	</bean>
+	<!-- 清理数据信息的action（oyxy） <bean name="/cleanData" class="com.dj.seal.log.web.action.CleanDataAction"> 
+		</bean> -->
+	<!--跳转到添加印章页面的action代理（yc） -->
+	<bean name="/sealBodyAdd" class="com.dj.seal.sealBody.web.action.SealBodyAddAction">
+		<property name="seal_temp">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="dept_srv">
+			<ref bean="ISysDeptService" />
+		</property>
+		<property name="unit_srv">
+			<ref bean="ISysUnitService" />
+		</property>
+	</bean>
+	<!-- 跳转到印模拒绝修改页面的action(Hp) -->
+	<bean name="/sealTempEdit"
+		class="com.dj.seal.sealTemplate.web.action.SealTempEditAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+	</bean>
+	<!-- 更新印模申请记录 -->
+	<bean name="/updateTempReg"
+		class="com.dj.seal.sealTemplate.web.action.SealTempRegUpdateAction">
+		<property name="temp_srv">
+			<ref bean="ISealTempService" />
+		</property>
+		<property name="tempForm">
+			<ref bean="tempForm" />
+		</property>
+	</bean>
+	<!-- 显示审批信息action -->
+	<!-- <bean name="/showUser" class="com.dj.seal.organise.web.action.ShowUserAction">
+		<property name="userForm">
+			<ref bean="userForm" />
+		</property>
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+	</bean> -->
+</beans>

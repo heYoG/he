@@ -1,0 +1,30 @@
+<HTML>
+	<HEAD>
+		<TITLE>选择日期</TITLE>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META content="MSHTML 6.00.2900.2180" id="GENERATOR" name="GENERATOR">
+	</HEAD>
+	<BODY bgColor=#efefef onload=fload()>
+		<SCRIPT src="../js/date.js">
+</SCRIPT>
+
+		<SCRIPT>
+function fload(){
+  fPopCalendar(document.getElementById("txt1"), document.getElementById("txt1"));
+}
+
+function fkeydown()
+{
+  if(event.keyCode==27)
+  {
+ //   event.returnValue = null;
+  //  window.returnValue = null;
+    window.close ();
+  }
+}
+
+document.onkeydown=fkeydown;
+</SCRIPT>
+		<INPUT id="txt1" name="txt1" style="DISPLAY: none">
+	</BODY>
+</HTML>

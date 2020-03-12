@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+	<form-beans>
+		<!-- 应用系统formbean（oyxy）-->
+		<form-bean name="appSystemForm"
+			type="com.dj.seal.appSystem.web.form.AppSystemForm">
+		</form-bean>
+	</form-beans>
+
+	<action-mappings>
+
+		<!--**********************应用系统action（张彬雷）**************************************-->
+		<action path="/appSystemList"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success" path="/general/appSystem/serverlist.jsp">
+			</forward>
+		</action>
+		
+			<!--**********************应用系统action（张彬雷）**************************************-->
+		<action path="/addAppSystem"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="appSystemForm">
+			<!-- <forward name="success" path="/general/appSystem/serverlist.jsp">  -->
+			<forward name="success" redirect="true" path="/appSystemList.do">
+			</forward>
+		</action>
+	</action-mappings>
+
+</struts-config>
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- form开始 -->
+	<bean id="modelFileForm"
+		class="com.dj.seal.modelFile.form.ModelFileForm">
+	</bean>
+	<!-- form结束 -->
+	
+	<!-- DAO开始 -->
+	<bean id="modelFileDao"
+		class="com.dj.seal.modelFile.dao.impl.ModelFileDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- DAO结束 -->
+	
+	
+	<!-- Service开始 -->
+	<bean id="modelFileService"
+		class="com.dj.seal.modelFile.service.impl.ModelFileServiceImpl">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="modelFile_dao">
+			<ref bean="modelFileDao" />
+		</property>
+		<property name="dao">
+			<ref bean="IBaseDao" />
+		</property>
+		<property name="sealbody_srv">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="rule_dao">
+			<ref bean="gaiZhangRuleDao" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService"/>
+		</property>
+		<property name="version_srv">
+			<ref bean="versionService"/>
+		</property>
+		<property name="sysDepartmentDao">
+			<ref bean="ISysDepartmentDao"/>
+		</property>
+	</bean>
+	<!-- Service结束 -->
+<!-- 根据协议设置模版的引导action -->
+	<bean name="/xieyimodelshow"
+		class="com.dj.seal.modelFile.web.action.ModeListAction">
+		<property name="model_srv">
+			<ref bean="modelFileService" />
+		</property>
+	</bean>
+	
+
+</beans>

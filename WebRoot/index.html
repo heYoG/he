@@ -1,0 +1,93 @@
+<html>
+	<head>
+			<title>测试页面</title>
+			<script>
+				function viewPrint () {
+					var obj = document.getElementById("HWPostil");
+					obj.BeforeConvert("");
+					obj.WaitConverting(0);
+				}
+				function stopPrint(){
+						var obj = document.getElementById("HWPostil");
+						obj.AfterConvert();
+					}
+				
+				function handWrite() {
+						var obj = document.getElementById("HWPostil");
+						var ret = obj.DoPostil("签名确认",0,0,0,3000,3000,0);
+						alert(ret);
+				}	
+				
+				function uploadFile(){
+						var obj = document.getElementById("HWPostil");
+						//大环境  "tellerId":"008005"   "ceUserPS":"d64c14b5e5b90837cb0f46a3b9e6681f"
+						//小环境 "tellerId":"100358"    "ceUserPS":"0FC2BA02BA97AC23"
+						//验证环境 ceUserPS:412f0e8a953b3fa30b34d041b162a040
+						//彭山珠江村镇银行大环境 "tellerId":"690014"    "ceUserPS":"BCC37B8711BBC43B"
+						var jsonStr = '{"D_CUACNO":"622439610087269112","D_JIOYJE":"1.26","D_TRANDT":"20160208","caseSeqID":"Y2403030587000406","ceUserPS":"d64c14b5e5b90837cb0f46a3b9e6681f","orgUnit":"0587","sealFont":"签名确认","tellerId":"008005","tranAcctNo":"622439610087269112","tranAmount":"1.26","tranCode":"91301","voucherNO":"0175","voucherType":"0175","xPonint":"500","yPoint":"500","d_tranname":"测试交易"}';
+						var ret =  obj.Upload(jsonStr,264,0);
+						//alert(ret);
+					}
+				
+				function confirmModel(){
+						 var obj = document.getElementById("HWPostil");
+						 //var ret =  obj.CustomerConfirmation("45007",'{"tranName":"积存金开户","CstNm_Z":"张三","IdentTp_Z":"身份证","IdentNo_Z":"12345678912","BnkSetlAcctNo_Z":"000000000"}',0);
+						 //var ret =  obj.CustomerConfirmation("45008",'{"tranName":"积存金销户","CstNm_Z":"张三","IdentTp_Z":"身份证","IdentNo_Z":"12345678912","AccmltGldAcctNm_Z":"000000000","BnkSetlAcctNo_Z":"00000001"}',0);
+						 //var ret =  obj.CustomerConfirmation("45004",'{"tranName":"变更积存金关联账号","CstNm_Z":"张三","IdentTp_Z":"身份证","IdentNo_Z":"12345678912","AccmltGldAcctNm_Z":"000000000","NewBnkSetlAcctNo_Z":"000000001"}',0);
+						// var ret =  obj.CustomerConfirmation("45006",'{"tranName":"个人风险承受能力评估","CstNm_Z":"张三","IdentTp_Z":"身份证","IdentNo_Z":"12345678912","RskLvl_Z":"6级","RskExpStopDt_Z":"2017/08/21"}',0);
+						  //var ret =  obj.CustomerConfirmation("45003",'{"tranName":"主动积存","CstNm_Z":"张三","BnkSetlAcctNo_Z":"000000","PrcAmt_Z":"161.21","PrchLotLmt_Z":"100","CmsnAmt_Z":"1000","AccmltGldAmt_Z":"10000.945"}',0);
+						 //var ret =  obj.CustomerConfirmation("45002",'{"tranName":"赎回","CstNm_Z":"张三","BnkSetlAcctNo_Z":"000000","PrcAmt_Z":"161.21","SetlLotLmt_Z":"100","CmsnAmt_Z":"1000","AccmltGldAmt_Z":"10000.945"}',0);
+						 //var ret =  obj.CustomerConfirmation("45001",'{"tranName":"定期积存协议新增","CstNm_Z":"张三","BnkSetlAcctNo_Z":"000000","AgrmId_Z":"Z0015459334","AccmltGldAmt_Z":"100万","BuyplnRng_Z":"2017.08.03-2027.08.03","YesNoExnInd_Z":"2017.08.03-2037.08.03","SignForDt_Z":"2017.08.03","ExpDt_Z":"2018.08.9"}',0);
+						 //var ret =  obj.CustomerConfirmation("91104",'{"tranName":"个人存款业务（无纸化）","CUACNO":"123456789123456789","CUACNM":"93111测试","HUOBDH_Z":"93111测试","AMOUNT_Z":"93111测试","CUNQII_Z":"93111测试","SZHCFS_Z":"93111测试","RENAMT_Z":"93111测试","TXRENT_Z":"93111测试","TOACCT":"93111测试"}',0);
+						 //var ret =  obj.CustomerConfirmation("45198",'{"tranName":"个人存款业务（无纸化）","CUACNO":"123456789123456789","CUACNM":"45198测试"}',0);
+						 //var ret =  obj.CustomerConfirmation("91129",'{"tranName":"个人存款业务（无纸化）","KEHUZH":"123456789123456789","XINX11_ZH":"凭证挂失及密码挂失","XINX12_ZH":"凭证挂失及密码挂失"}',0);
+						 //var ret =  obj.CustomerConfirmation("45199",'{"tranName":"个人存款业务（无纸化）","KEHUZH":"12345678912345678","CUACNM":"45199测试","YDDIAH":"12345678912","SHBOHM_ZH":"中国建设银行股份有限公司广州番禺支行","HUOBDH_Z":"人民币","JIOYJE_Z":"5.000.00","PRODCD_Z":"个人存本取息","ACTERM_Z":"一年","ZHQUJG_Z":"1个月","TOACCT":"12345678912345678","GGTIPS":"啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊","XIOEFY":"啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊（120个字）"}',0);
+						 //var ret =  obj.CustomerConfirmation("91101",'{"GERZWM":"张大三","ZHJNZL_ZH":"身份证","ZHJHAO":"12345678912345678","YDDIAH":"12345678912","HUOBDH_ZH":"人民币","JIOYJE_ZH":"5.000.00","PRODCD_ZH":"个人存本取息","ACTERM_ZH":"一年","ZHQUJG_ZH":"1个月","TOACCT":"12345678912345678"}',0);
+						 //var ret =  obj.CustomerConfirmation("91115",'{"CUACNO":"1","CUACNM":"2","HUOBDH_Z":"人民币","JIOYJE_Z":"1000","tranName":"个人转账汇款","GGTIPS":"温馨提示：本人知晓资金划拨用途并非购买广州农商银行自主发行理财产品或代销产品，也并非经银行销售人员推介购买。"}',0);
+						 //var ret=obj.CustomerConfirmation("91304",'{"tranName":"待销毁凭证退回客户(电子化)","GERZWM":"张三","ZHJNZL_ZH":"身份证","ZHJHAO":"000001","PNGZZL_ZH":"未知","PNGZXH":"000002"}',0);
+						//var ret=obj.CustomerConfirmation("48121",'{"tranName":"个人客户信息变更","ClientName_Z":"张三","OldBankAcc_Z":"000001","Address_temp_Z":"Hotel","PostCode_temp_Z":"425500","Tel_temp_Z":"010-21000","Fax_temp_Z":"021-0000","Mobile_temp_Z":"15521019950","Email_temp_Z":"123456@qq.com","SendFreq_name_temp_Z":"100","BankAcc_Z":"000002","Address_Z":"Hotel","PostCode_Z":"425500","Tel_Z":"010-21000","Fax_Z":"021-0000","Mobile_Z":"15521019950","Email_Z":"123456@qq.com","SendFreq_name_Z":"1001"}',0);
+						 //var ret=obj.CustomerConfirmation("48116",'{"tranName":"个人理财产品申请购买","CUACNO_Z":"000001","CUACNM_Z":"张飒","PrdName_Z":"购买个人理财","PrdCode_Z":"HZ0025845","CurrType_temp_Z":"人民币","Amt_Z":"10000","PrdLifeCycle_Z":"100年","IncomeDate_temp_Z":"20170808","EndDate_temp_Z":"20180808","cycle_date_temp_Z":"20170815"}',0);
+						 //var ret=obj.CustomerConfirmation("48118",'{"tranName":"个人理财产品撤单","CUACNO_Z":"000001","ClientName_Z":"Mike","PrdName_Z":"撤单","PrdCode_Z":"HZ02153","CurrType_temp_Z":"美元","Amt_temp_Z":"100000","Vol_temp_Z":"100","CheDan_temp_Z":"12012"}',0);
+						 //var ret=obj.CustomerConfirmation("91303",'{"tranName":"TEST91303","KAHAO2":"122222222HsJ00","CUACNM":"Tom","DXHKZL_ZH":"代保管他行卡","FAKAHM":"汇丰银行"}',0);
+						 //var ret=obj.CustomerConfirmation("91301",'{"tranName":"TEST91301","CUACNO":"   012000","CUACNM":"李思思","PNGZZL_ZH":"代保管他行,....","HZHEYY_ZH":"损坏"}',0);
+						 //var ret =  obj.CustomerConfirmation("93113",'{"tranName":"柜台信用卡现金还款（电子化）","DJKHAO":"123456789123456789","ACTNAM":"张三","ZHHUYE_ZH":"100.00","AVABAL_ZH":"50.00","YIYOED_ZH":"1000.00","WEIYED_ZH":"900.00","JINEC3_ZH":"100.00","JINEC5_ZH":"100.00","HUNKRQ":"20170921","HUOBDH_ZH":"人民币","JIOYJE_ZH":"10000.00"}',0);
+						 //var ret =  obj.CustomerConfirmation("93114",'{"tranName":"柜台信用卡现金借款（电子化）","DJKHAO":"12345678912345678","ACTNAM":"91115测试","ZHHUYE_ZH":"100.00","AVABAL_ZH":"100.00","YIYOED_ZH":"1000.00","WEIYED_ZH":"1000.00","HUNKRQ":"2017-09-21","HUOBDH_ZH":"人民币","JIOYJE_ZH":"10000.0"}',0);
+						 //var ret =  obj.CustomerConfirmation("93115",'{"tranName":"柜台信用卡转账还款（电子化）","DJKHAO":"12345678912345678","ACTNAM":"93115测试","ZHHUYE_ZH":"100.00","AVABAL_ZH":"100.00","YIYOED_ZH":"1000.00","WEIYED_ZH":"1000.00","JINEC3_ZH":"1000.00","JINEC5_ZH":"921.00","HUNKRQ":"2017-09-21","ZIJNLY_ZH":"93115测试","MXBHAO":"12345678912345678","CUACNO":"123456789012HsT","ACTNAM2":"93115测试","HUOBDH_ZH":"人民币","JIOYJE_ZH":"10000.0"}',0);
+						 //var ret =  obj.CustomerConfirmation("93116",'{"tranName":"柜台信用卡转账借款（电子化）","DJKHAO":"12345678912345678","ACTNAM":"91115测试","ZHHUYE_ZH":"100.00","AVABAL_ZH":"100.00","YIYOED_ZH":"1000.00","WEIYED_ZH":"1000.00","HUNKRQ":"2017-09-21","CUACNO":"01234565789HS001","ZRZHMC":"李四","HUOBDH_ZH":"人民币","JIOYJE_ZH":"10000.0"}',0);
+						 //var ret=obj.CustomerConfirmation("91300",'{"tranName":"初始密码激活（电子化）","KEHUZH":"0123456789HZ001","CUACNM":"张三","YDDIAH":"13521268895","SFFYZM_ZH":"是"}',0);
+						 var ret=obj.CustomerConfirmation("91301",'{"tranName":"存单更换（电子化）","CUACNO":"0123456789HZ001","CUACNM":"张三","PNGZZL_ZH":"91301测试","HZHEYY_ZH":"丢失"}',0);
+						 //var ret=obj.CustomerConfirmation("91302",'{"tranName":"存折更换（电子化）","CUACNO":"0123456789HZ001","CUACNM":"张三","PNGZZL_ZH":"91302测试","HZHEYY_ZH":"丢失"}',0);						 
+						 //var ret=obj.CustomerConfirmation("91303",'{"tranName":"待销毁卡退回客户（电子化）","KAHAO2":"0123456789HZ001","CUACNM":"张三","DXHKZL_ZH":"91303测试","FAKAHM":"广州农商银行"}',0);
+						 //var ret=obj.CustomerConfirmation("91304",'{"tranName":"待销毁凭证退回客户（电子化）","GERZWM":"张三","ZHJNZL_ZH":"身份证","ZHJHAO":"012345678921354X","PNGZZL_ZH":"91304测试","PNGZXH":"001224578454S"}',0);
+						 //var ret=obj.CustomerConfirmation("91305",'{"tranName":"凭证密码CVN解锁（电子化）","KAHAOO":"0123456789HZ001","CUACNM":"张三","PNGZZL_ZH":"91305测试","PNGZXH":"000000012125","JIESLX_ZH":"91305测试"}',0);
+						 //var ret=obj.CustomerConfirmation("93117",'{"tranName":"个人理财产品赎回(电子化)","prod_code_Z":"0000000","CurrType_Z":"人民币","prod_name_Z":"93117测试","refer_nav_Z":"100212.12","plan_income_Z":"12345.210","prod_vol_Z":"10223152","r_vol_Z":"451554","s_vol_Z":"93117测试","rf_date_Z":"2017-08-28"}',0);
+						 //var ret=obj.CustomerConfirmation("93118",'{"tranName":"信用卡交易安全锁(电子化)","DJKHAO_Z":"0000000","ACTNAM_Z":"张三","DANBXE_Z":"1000亿","DANRXE_Z":"100000亿","CHECK_CSK_Z":"Y","CHECK_ATM_Z":"N","CHECK_WDH_Z":"N","CHECK_OUT_Z":"N"}',0);
+						 if(ret==-9)
+						 alert("无效路径,错误码:"+ret);
+					}	
+					
+				function setWidth(){
+						 var obj = document.getElementById("HWPostil");
+						 var ret=obj.SetValue("SET_PEN_WIDTH","4");
+						// alert(ret);
+					}
+			</script>
+	</head>
+	<body>
+			<div id = "topContent">
+					<input type="button" value = "确认模板" onclick = "confirmModel()"/>
+					<input type="button" value = "打印监控" onclick = "viewPrint()"/>
+					<input type = "button" value = "结束监控" onclick = "stopPrint()"/>
+					<input type = "button" value = "设置笔宽" onclick = "setWidth()"/>
+					<input type = "button" value = "手写签字" onclick = "handWrite()"/>
+					<input type = "button" value = "上传文件" onclick = "uploadFile()"/>
+			</div>
+			
+			<div id = "Content">
+				<OBJECT id=HWPostil classid=clsid:1E4BCB3E-34FE-4614-96DF-281A876C97E0 style='width:500px;height:500px'></OBJECT>
+			</div>
+			<!--<div id = "Content">
+				<OBJECT id=HWPostil classid=clsid:1E4BCB3E-34FE-4614-96DF-281A876C97E0 style='width:500px;height:500px'></OBJECT>
+			</div>-->
+	</body>
+</html>

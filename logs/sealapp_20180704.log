@@ -1,0 +1,2 @@
+2018-04-28 at 17:43:50 CST INFO  com.dj.seal.util.dao.ConstructSql 325 main - insert into t_hotelrecordroommerge(createtime,mergedate,roomno,guestname,filename,savefilename,cid) VALUES(null,'20190908',null,null,null,null,'1111')
+2018-04-28 at 17:43:50 CST INFO  com.dj.seal.util.dao.ConstructSql 326 main - insert into t_hotelrecordroommerge(createtime,mergedate,roomno,guestname,filename,savefilename,cid) VALUES(null,'20190908',null,null,null,null,'1111')

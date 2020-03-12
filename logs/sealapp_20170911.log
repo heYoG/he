@@ -1,0 +1,9 @@
+2017-09-11 at 19:18:59 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 254 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:20:56 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 254 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:29:04 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:29:23 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:30:10 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:31:03 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:31:28 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:32:24 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 255 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587
+2017-09-11 at 19:33:12 CST INFO  com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl 256 getDept - 查询sql:select C_ABC from T_AB where C_HXDEPTID=0587

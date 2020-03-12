@@ -1,0 +1,38 @@
+2018-08-07 at 18:02:33 CST ERROR com.dj.seal.util.file.FtpUtil 515 connectServer - Connection timed out: connect
+2018-08-07 at 18:02:33 CST INFO  com.dj.seal.util.file.FtpUtil 108 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:02:33 CST ERROR com.dj.seal.util.file.FtpUtil 138 uploadManyFile - null
+2018-08-07 at 18:02:33 CST ERROR com.dj.seal.util.file.FtpUtil 367 closeConnect - null
+2018-08-07 at 18:04:12 CST ERROR com.dj.seal.util.file.FtpUtil 516 connectServer - Connection refused: connect
+2018-08-07 at 18:04:12 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:04:12 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-07 at 18:04:12 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-07 at 18:06:35 CST ERROR com.dj.seal.util.file.FtpUtil 516 connectServer - Connection refused: connect
+2018-08-07 at 18:06:35 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:06:35 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-07 at 18:06:35 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-07 at 18:16:24 CST ERROR com.dj.seal.util.file.FtpUtil 521 connectServer - Could not parse response code.
+Server Reply: SSH-2.0-OpenSSH_4.3
+2018-08-07 at 18:16:24 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:16:24 CST ERROR com.dj.seal.util.file.FtpUtil 141 uploadManyFile - Could not parse response code.
+Server Reply: Protocol mismatch.
+2018-08-07 at 18:16:24 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - Connection closed without indication.
+2018-08-07 at 18:18:49 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:18:49 CST ERROR com.dj.seal.util.file.FtpUtil 141 uploadManyFile - Could not parse response code.
+Server Reply: Protocol mismatch.
+2018-08-07 at 18:18:49 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - Connection closed without indication.
+2018-08-07 at 18:27:57 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:27:57 CST ERROR com.dj.seal.util.file.FtpUtil 141 uploadManyFile - Could not parse response code.
+Server Reply: Protocol mismatch.
+2018-08-07 at 18:27:57 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - Connection closed without indication.
+2018-08-07 at 18:28:32 CST ERROR com.dj.seal.util.file.FtpClientUtil 58 open - Connection timed out: connect
+2018-08-07 at 18:28:32 CST INFO  com.dj.seal.util.file.FtpClientUtil 635 main - 返回信息：false
+2018-08-07 at 18:29:32 CST INFO  com.dj.seal.util.file.FtpUtil 109 uploadManyFile - \F:\xiangmu
+2018-08-07 at 18:29:32 CST ERROR com.dj.seal.util.file.FtpUtil 139 uploadManyFile - null
+2018-08-07 at 18:29:32 CST ERROR com.dj.seal.util.file.FtpUtil 368 closeConnect - null
+2018-08-07 at 18:33:09 CST ERROR com.dj.seal.util.file.FtpClientUtil 58 open - Connection timed out: connect
+2018-08-07 at 18:33:09 CST INFO  com.dj.seal.util.file.FtpClientUtil 636 main - 返回信息：false
+2018-08-08 at 11:23:41 CST ERROR com.dj.seal.util.file.FtpClientUtil 58 open - Connection refused: connect
+2018-08-08 at 11:23:41 CST INFO  com.dj.seal.util.file.FtpClientUtil 636 main - 返回信息：false
+2018-08-08 at 11:28:17 CST ERROR com.dj.seal.util.file.FtpClientUtil 60 open - Welcome message: SSH-2.0-OpenSSH_4.3
+
+2018-08-08 at 11:28:17 CST INFO  com.dj.seal.util.file.FtpClientUtil 675 main - 返回信息：false

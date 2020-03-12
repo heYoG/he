@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实例详细信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <link rel="stylesheet" href="styles/font-awesome.min.css"/>
+    <link rel="stylesheet" href="styles/bootstrap.min.css"/>
+    <link rel="stylesheet" href="styles/index.css"/>
+    <link rel="stylesheet" href="styles/instanceDetail.css"/>
+</head>
+<body>
+<div class="instance-detail-content row">
+    <div class="content-title">
+        <div class="console-instance-head clearfix">
+            <div class="pull-left">
+                <h2 class="instance-id">
+                    <span class="fa fa-server row-margin"></span>
+                    <span id="instanceDetailName"></span>
+                </h2>
+            </div>
+            <div class="pull-right" id="instanceDetailTitleBtns"></div>
+        </div>
+    </div>
+    <div class="instance-detail col-sm-4">
+        <div class="instance-basic">
+            <div class="module-header clearfix">
+                <span class="module-header-title">基本信息</span>
+
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-sm margin-right" data-toggle="modal"
+                            data-target="#changeBasicModal" data-backdrop="static">修改信息
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm margin-right" data-toggle="modal"
+                            data-target="#changePasswdModal" data-backdrop="static">重置密码
+                    </button>
+                </div>
+            </div>
+            <table class="instance-basic-table table-default-viewer"></table>
+        </div>
+        <div class="instance-configuration">
+            <div class="module-header clearfix">
+                <span class="module-header-title">配置信息</span>
+
+                <div class="pull-right" id="changeConfigurationBtn"></div>
+            </div>
+            <table class="instance-configuration-table table-default-viewer"></table>
+        </div>
+    </div>
+    <div class="instance-detail-charts col-sm-8">
+        <div class="instance-basic-charts margin-top clearfix"></div>
+        <div class="instance-monitor-charts">
+            <div class="module-header clearfix">
+                <span class="module-header-title">监控信息</span>
+
+                <div class="pull-right">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="updateMonitorCharts(this)">12小时
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default" onclick="updateMonitorCharts(this)">1天</button>
+                    <button type="button" class="btn btn-sm btn-default" onclick="updateMonitorCharts(this)">1周</button>
+                    <button type="button" class="btn btn-sm btn-default" onclick="updateMonitorCharts(this)">1月</button>
+                </div>
+            </div>
+            <div id="cpuUsageCharts" class="statistics-charts"></div>
+            <div id="memoryUsageCharts" class="statistics-charts"></div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeBasicModal" tabindex="-1" role="dialog" aria-labelledby="changeBasicModalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changeBasicModalTitle">修改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputBasicName" class="col-sm-3 col-sm-offset-1 control-label"><span
+                                    class="text-danger">* </span>实例名称：</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="inputBasicName" id="inputBasicName"
+                                       placeholder="实例名长度在2-50之间" maxlength="50" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBasicDescription" class="col-sm-3 col-sm-offset-1 control-label"><span
+                                    class="text-danger">* </span>实例描述：</label>
+
+                            <div class="col-sm-6">
+                                <textarea class="form-control" name="inputBasicDescription" id="inputBasicDescription"
+                                          placeholder="长度限制为2-256个字符" maxlength="256" rows="5" required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changePasswdModal" tabindex="-1" role="dialog" aria-labelledby="changePasswdModalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changePasswdModalTitle">重置密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputNewPwd" class="col-sm-3 control-label"><span class="text-danger">* </span>新密码：</label>
+
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" name="inputNewPwd" id="inputNewPwd"
+                                       placeholder="长度为6-20之间" maxlength="20" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputConfirmNewPwd" class="col-sm-3 control-label"><span
+                                    class="text-danger">* </span>确认新密码：</label>
+
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" name="inputConfirmNewPwd"
+                                       id="inputConfirmNewPwd" placeholder="" maxlength="20" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeConfigModal" tabindex="-1" role="dialog" aria-labelledby="changeConfigModalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changeConfigModalTitle">更改配置</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="scripts/instanceDetail.js"></script>
+</body>
+</html>

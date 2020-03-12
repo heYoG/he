@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+
+	<form-beans>
+		<form-bean name="personForm"
+			type="com.dj.seal.personInfo.web.form.PersonForm">
+		</form-bean>
+		<form-bean name="psdForm"
+			type="com.dj.seal.personInfo.web.form.PsdForm">
+		</form-bean>
+	</form-beans>
+
+	<action-mappings>
+		<!-- 控制面板模块入口（oyxy）-->
+		<action path="/personInfoIndex"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/person_info/index.jsp">
+			</forward>
+		</action>
+
+		<!-- 进入用户信息页面（oyxy）-->
+		<action path="/getPersonInfo"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/person_info/info.jsp">
+			</forward>
+		</action>
+
+		<!-- 修改用户信息（oyxy）-->
+		<action path="/personInfoUpdate"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="personForm">
+			<forward name="success"
+				path="/general/person_info/info.jsp">
+			</forward>
+		</action>
+
+		<!-- 修改密码向导（oyxy）-->
+		<action path="/updatePsdGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/person_info/password.jsp">
+			</forward>
+		</action>
+
+		<!-- 修改用户密码（oyxy）-->
+		<action path="/personPsdUpdate"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="psdForm">
+			<forward name="success"
+				path="/general/person_info/success.jsp">
+			</forward>
+		</action>
+		
+		<!-- 印模管理列表（oyxy）-->
+		<action path="/tempSearchList"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="successSer"
+				path="/general/seal_template/query/sealListSer.jsp">
+			</forward>
+			<forward name="successAll"
+				path="/general/seal_template/query/sealListAll.jsp">
+			</forward>
+			<forward name="successJIn"
+				path="/general/seal_template/query/sealListJIn.jsp">
+			</forward>
+		</action>
+	</action-mappings>
+
+</struts-config>
+

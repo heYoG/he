@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<!-- 新增印模formbean（oyxy）-->
+		<form-bean name="tempForm"
+			type="com.dj.seal.sealTemplate.web.form.SealTempForm">
+		</form-bean>
+	</form-beans>
+	<action-mappings>
+		<!-- 印模进入申请页面-->
+		<action path="/tempRegGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_template/apply/index.jsp">
+			</forward>
+		</action>
+		<!-- 创建人印模申请列表-->
+		<action path="/tempRegList"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_template/apply/sealList.jsp">
+			</forward>
+		</action>
+
+		<!-- 审批印模进入申请列表页面-->
+		<action path="/tempAppList"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_template/approve/sealList.jsp">
+			</forward>
+		</action>
+		<!-- 审批印模进入默认页面）-->
+		<action path="/tempAppGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="index"
+				path="/general/seal_template/approve/index.jsp">
+			</forward>
+			<forward name="bottom"
+				path="/tempAppList.do">
+			</forward>
+		</action>
+		<!-- 印模审批记录（oyxy）-->
+		<action path="/tempAppHis"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success"
+				path="/general/seal_template/approve/sealHistory.jsp">
+			</forward>
+		</action>
+
+		<!-- 新增印模申请列表（oyxy）-->
+		<action path="/sealTempAdd"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success"
+				path="/sealTempAdd.do?type=1">
+			</forward>
+			<forward name="index"
+				path="/general/seal_template/apply/newSeal.jsp">
+			</forward>
+			<forward name="indexCZ"
+				path="/general/seal_template/apply/newSealSD.jsp">
+			</forward>
+		</action>
+		<!-- 审批印模申请（oyxy）-->
+		<action path="/tempApp"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success" path="/tempAppList.do"></forward>
+		</action>
+
+			
+		<!-- 印模查询权限（oyxy）-->
+		<action path="/searchTempGuide"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_template/query/index.jsp">
+			</forward>
+		</action>
+
+	    <!-- 印模管理查询（oyxy）-->
+
+		<action path="/tempManage"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="query"
+				path="/general/seal_template/manage/query/query.jsp">
+			</forward>
+		</action>
+		 <!-- 印模管理（oyxy）-->
+		<action path="/tempManageList"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success"
+				path="/general/seal_template/manage/sealManageList.jsp">
+			</forward>
+		</action>
+
+
+
+		 <!-- 印模管理修改（oyxy）-->
+		<action path="/editTemp"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="update"
+				path="/tempManageList.do">
+			</forward>
+			<forward name="guide"
+				path="/general/seal_template/manage/edit_info.jsp">
+			</forward>
+		</action>
+		<!-- 得到我的印模列表（Hp） -->
+		<action path="/mytempReg" 
+		type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success" 
+				path="/general/seal_template/myTempList.jsp">
+			</forward>
+		</action>
+		
+		<!-- 跳转到印模拒绝修改页面的action(Hp) -->
+		<action path="/sealTempEdit"
+		type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="success"
+				path="/general/seal_template/apply/editSeal.jsp">
+			</forward>
+		</action>
+		
+		<!-- 更新印模申请记录（oyxy）-->
+		<action path="/updateTempReg"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="tempForm">
+			<forward name="success" path="/tempRegList.do"></forward>
+		</action>
+	</action-mappings>
+</struts-config>
+

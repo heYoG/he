@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- 控制面板模块入口（oyxy）-->
+	<bean name="/personInfoIndex"
+		class="com.dj.seal.personInfo.web.action.IndexAction">
+	</bean>
+
+	<!-- 进入用户信息页面（oyxy）-->
+	<bean name="/getPersonInfo"
+		class="com.dj.seal.personInfo.web.action.GetInfoAction">
+	</bean>
+
+	<!-- 修改用户信息（oyxy）-->
+	<bean name="/personInfoUpdate"
+		class="com.dj.seal.personInfo.web.action.UpdateInfoAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="user_form">
+			<ref bean="FPersonInfo" />
+		</property>
+	</bean>
+
+	<!-- 修改密码向导（oyxy）-->
+	<bean name="/updatePsdGuide"
+		class="com.dj.seal.personInfo.web.action.UpdatePsdGuide">
+	</bean>
+
+	<!-- 修改用户密码（oyxy）-->
+	<bean name="/personPsdUpdate"
+		class="com.dj.seal.personInfo.web.action.UpdatePsdAction">
+		<property name="user_srv">
+			<ref bean="IUserService" />
+		</property>
+		<property name="psd_form">
+			<ref bean="FPsd" />
+		</property>	
+	</bean>
+
+</beans>

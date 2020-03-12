@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- Oracle(20171208) dbcp-->  
+	 <bean id="propertyConfigurer"      
+        class="com.dj.seal.util.spring.EncryptPropertyPlaceholderConfigurer">       
+    	<property name="location" value="/WEB-INF/classes/database.properties"/>       
+	</bean>
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			 <value>${jdbc.password}</value> 
+		</property>
+		<property name="maxActive" value="30" /><!-- 最大活动连接数 -->
+		<property name="initialSize" value="10" /><!-- 初始化连接数 -->
+		<property name="maxWait" value="60000" /><!-- 连接等待最大时间 -->
+		<!-- <property name="maxIdle" value="5"/>最大空闲连接数 -->
+		<property name="testOnBorrow" value="false" /><!-- 是否每次从连接池去取连接时执行validationQuery,默认true -->
+		<property name="testWhileIdle" value="true" /><!-- 连接是否被空闲连接回收器检验,检测失败则连接被从池中移除 -->
+		<property name="validationQuery" value="select 1 from dual" /> <!-- 检测连接是否有效 -->
+	</bean> 
+	
+	<!-- MySql  dbcp-->
+		<!--<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+		<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+		<value>jdbc:mysql://127.0.0.1:3306/xedseal?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>
+		<property name="username">
+		<value>root</value>
+		</property>
+		<property name="password">
+		<value>123456</value>
+		</property>
+		<property name="maxActive" value="30" />
+		<property name="initialSize" value="10" />
+		<property name="maxWait" value="10000" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<property name="validationQuery" value="select 1 " />
+		</bean>  
+	-->
+	
+	<!-- oracle C3P0 -->
+	<!-- <bean id="propertyConfigurer"      
+        class="com.dj.seal.util.spring.EncryptPropertyPlaceholderConfigurer">       
+    	<property name="location" value="/WEB-INF/classes/database.properties"/>       
+	</bean>  
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" dependency-check="none"> close方法保证Spring容器关闭时数据源能够成功释放
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="30" />
+		<property name="initialPoolSize" value="10" />
+		<property name="maxIdleTime" value="60000" />
+		<property name="acquireIncrement" value="30" />连接池中连接耗尽时c3p0一次同时获取的连接数
+		<property name="testConnectionOnCheckin" value="true"/>是否检测连接的有效性
+		<property name="idleConnectionTestPeriod" value="3600"/>每1小时检测连接的有效性 ,防止8小时失效问题,连接失效重新从数据库获取
+		<property name="maxStatementsPerConnection" value="100"/>连接池单个连接 最大缓存statments数
+	</bean> -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!--每天晚上11点执行    -->  
+	<bean id="checkBankJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+		<ref bean="CheckBankService" />  
+		</property>
+		<property name="targetMethod">
+		<value>executes</value> 
+		</property>
+		<property name="concurrent" value="false"/> 
+	</bean>
+	
+	<bean id="saveCron"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref local="checkBankJob" />
+		</property>
+		<property name="cronExpression">
+		  <value>0 0 23 * * ?</value>
+		</property>
+	</bean>
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="saveCron" />
+			</list>
+		</property>
+	</bean>  
+</beans>

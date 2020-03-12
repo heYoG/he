@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>负载均衡管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <link rel="stylesheet" href="styles/font-awesome.min.css"/>
+    <link rel="stylesheet" href="styles/bootstrap.min.css"/>
+    <link rel="stylesheet" href="styles/index.css"/>
+    <link rel="stylesheet" href="styles/home.css"/>
+</head>
+<body>
+<div class="cluster-content">
+    <div class="content-title">
+        <div class="console-instance-head clearfix">
+            <div class="pull-left">
+                <h2 class="instance-id">
+                    <span class="fa fa-cloud row-margin text-info"></span>
+                    <span id="content-name">负载均衡集群管理</span>
+                </h2>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-default" onclick=""><i class="fa fa-refresh margin-right"></i>刷新</button>
+            </div>
+        </div>
+    </div>
+    <div class="cluster-detail">
+        <div class="module-header clearfix">
+            <span class="module-header-title">集群基本信息</span>
+
+            <div class="pull-right"></div>
+        </div>
+        <div class="cluster-card">
+            <div class="cluster-options dropdown">
+                <i id="clusterOptionsButton" class="fa fa-cog toggle-dropdown" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"></i>
+                <ul class="dropdown-menu" aria-labelledby="clusterOptionsButton">
+                    <li><a href="javascript:;">启动</a></li>
+                    <li><a href="javascript:;">关闭</a></li>
+                    <li><a href="javascript:;">重启</a></li>
+                    <li><a href="javascript:;">管理</a></li>
+                </ul>
+            </div>
+            <div class="cluster-name">点聚集群</div>
+            <div class="cluster-instances">
+                <span>主机：<a class="instances-count">4</a>台</span>
+                <span>开启：<a class="opened-instances-count">2</a>台</span>
+                <span>关闭：<a class="closed-instances-count">1</a>台</span>
+                <span>故障：<a class="error-instances-count">1</a>台</span>
+            </div>
+            <div class="cluster-info">
+                <div id="clusterInfoCharts" class="cluster-info-charts"></div>
+            </div>
+        </div>
+    </div>
+    <div class="cluster-instances-container">
+        <div class="module-header clearfix">
+            <span class="module-header-title">集群包含实例（<span class="cluster-instances-filter">所有</span>）</span>
+
+            <div class="pull-right"></div>
+        </div>
+        <div class="instance-cards-container">
+            <ul class="instance-cards">
+                <li class="instance-card instance-add" data-toggle="modal" data-target="#addInstanceModal">
+                    <div class="instance-add-wrapper">
+                        <div class="plus">+</div>
+                        <div class="word">添加主机</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addInstanceModal" tabindex="-1" role="dialog" aria-labelledby="addInstanceModalTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addInstanceModalTitle">添加主机</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="scripts/highcharts.js"></script>
+<script type="text/javascript" src="scripts/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<action-mappings>
+	<!-- 日志清理页面-->
+	<action path="/cleanData"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request">
+			<forward name="shoudong"
+				path="/general/log/clean_data/shoudong.jsp">
+			</forward>
+			<forward name="shoudong"
+				path="/general/log/clean_data/zidong.jsp">
+			</forward>
+			<forward name="index"
+				path="/general/log/clean_data/frame.jsp">
+			</forward>
+		</action>
+	</action-mappings>
+</struts-config>
+

@@ -1,0 +1,47 @@
+*{margin:0px;padding:0px;font-size:9pt;}
+.NodeDiv{
+}
+.NodeDiv img{
+   border:0px;
+}
+.NodeImg, .NodeExpandImg, .NodeLoadingImg{
+   border:0px;
+   cursor:pointer;
+}
+.NodeSpan{
+   padding-left:3px;
+}
+.NodeLink{
+   text-decoration:none;
+   height:20px;
+   line-height:20px;
+}
+.NodeContainer{
+   padding-left:16px;
+   display:none;
+}
+
+#bd{
+	scroll:no;
+	overflow:-Scroll;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+
+#mng_list{
+	height:100%;
+	width:100%;
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+
+#tree{
+	height:100%;
+	width:100%;
+	overflow-x:auto;
+	white-space:nowrap;   /* 强制不换行 */
+	text-overflow-x:ellipsis;	/* 文字隐藏后添加省略号 */
+	/* -o-text-overflow-x:ellipsis;  	适用于opera浏览器  */
+	overflow-y:auto;
+}

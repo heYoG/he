@@ -1,0 +1,1058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://serv" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://serv">
+    <wsdl:documentation>SealService</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://serv">
+            <xs:complexType name="Exception">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Exception">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="Exception" nillable="true" type="ns:Exception"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="baodanVarify">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="baodanVarifyResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="certList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="certListResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="docSeal">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="docSealResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="downloadDoc">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="downloadDocResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getClientIpResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getClientIp1Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeDoc">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeDocResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeDoc2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeDoc2Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSeal">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSealResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSealN1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSealN1Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSealN2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfSealN2Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfValue">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pdfValueResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealDoc">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealDocResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealList">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealListResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealNotice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealNoticeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="xmlStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sealStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="signHtml">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="docStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="signHtmlResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="varifyHtml">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="docStr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="signStr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="varifyHtmlResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="sealStatusRequest">
+        <wsdl:part name="parameters" element="ns:sealStatus"/>
+    </wsdl:message>
+    <wsdl:message name="sealStatusResponse">
+        <wsdl:part name="parameters" element="ns:sealStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="Exception">
+        <wsdl:part name="parameters" element="ns:Exception"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealN2Request">
+        <wsdl:part name="parameters" element="ns:pdfSealN2"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealN2Response">
+        <wsdl:part name="parameters" element="ns:pdfSealN2Response"/>
+    </wsdl:message>
+    <wsdl:message name="signHtmlRequest">
+        <wsdl:part name="parameters" element="ns:signHtml"/>
+    </wsdl:message>
+    <wsdl:message name="signHtmlResponse">
+        <wsdl:part name="parameters" element="ns:signHtmlResponse"/>
+    </wsdl:message>
+    <wsdl:message name="docSealRequest">
+        <wsdl:part name="parameters" element="ns:docSeal"/>
+    </wsdl:message>
+    <wsdl:message name="docSealResponse">
+        <wsdl:part name="parameters" element="ns:docSealResponse"/>
+    </wsdl:message>
+    <wsdl:message name="baodanVarifyRequest">
+        <wsdl:part name="parameters" element="ns:baodanVarify"/>
+    </wsdl:message>
+    <wsdl:message name="baodanVarifyResponse">
+        <wsdl:part name="parameters" element="ns:baodanVarifyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="sealDocRequest">
+        <wsdl:part name="parameters" element="ns:sealDoc"/>
+    </wsdl:message>
+    <wsdl:message name="sealDocResponse">
+        <wsdl:part name="parameters" element="ns:sealDocResponse"/>
+    </wsdl:message>
+    <wsdl:message name="sealListRequest">
+        <wsdl:part name="parameters" element="ns:sealList"/>
+    </wsdl:message>
+    <wsdl:message name="sealListResponse">
+        <wsdl:part name="parameters" element="ns:sealListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="makeDoc2Request">
+        <wsdl:part name="parameters" element="ns:makeDoc2"/>
+    </wsdl:message>
+    <wsdl:message name="makeDoc2Response">
+        <wsdl:part name="parameters" element="ns:makeDoc2Response"/>
+    </wsdl:message>
+    <wsdl:message name="getClientIp1Request"/>
+    <wsdl:message name="getClientIp1Response">
+        <wsdl:part name="parameters" element="ns:getClientIp1Response"/>
+    </wsdl:message>
+    <wsdl:message name="makeDocRequest">
+        <wsdl:part name="parameters" element="ns:makeDoc"/>
+    </wsdl:message>
+    <wsdl:message name="makeDocResponse">
+        <wsdl:part name="parameters" element="ns:makeDocResponse"/>
+    </wsdl:message>
+    <wsdl:message name="sealNoticeRequest">
+        <wsdl:part name="parameters" element="ns:sealNotice"/>
+    </wsdl:message>
+    <wsdl:message name="sealNoticeResponse">
+        <wsdl:part name="parameters" element="ns:sealNoticeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="pdfValueRequest">
+        <wsdl:part name="parameters" element="ns:pdfValue"/>
+    </wsdl:message>
+    <wsdl:message name="pdfValueResponse">
+        <wsdl:part name="parameters" element="ns:pdfValueResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getClientIpRequest"/>
+    <wsdl:message name="getClientIpResponse">
+        <wsdl:part name="parameters" element="ns:getClientIpResponse"/>
+    </wsdl:message>
+    <wsdl:message name="varifyHtmlRequest">
+        <wsdl:part name="parameters" element="ns:varifyHtml"/>
+    </wsdl:message>
+    <wsdl:message name="varifyHtmlResponse">
+        <wsdl:part name="parameters" element="ns:varifyHtmlResponse"/>
+    </wsdl:message>
+    <wsdl:message name="certListRequest">
+        <wsdl:part name="parameters" element="ns:certList"/>
+    </wsdl:message>
+    <wsdl:message name="certListResponse">
+        <wsdl:part name="parameters" element="ns:certListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealN1Request">
+        <wsdl:part name="parameters" element="ns:pdfSealN1"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealN1Response">
+        <wsdl:part name="parameters" element="ns:pdfSealN1Response"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealRequest">
+        <wsdl:part name="parameters" element="ns:pdfSeal"/>
+    </wsdl:message>
+    <wsdl:message name="pdfSealResponse">
+        <wsdl:part name="parameters" element="ns:pdfSealResponse"/>
+    </wsdl:message>
+    <wsdl:message name="downloadDocRequest">
+        <wsdl:part name="parameters" element="ns:downloadDoc"/>
+    </wsdl:message>
+    <wsdl:message name="downloadDocResponse">
+        <wsdl:part name="parameters" element="ns:downloadDocResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SealServicePortType">
+        <wsdl:operation name="sealStatus">
+            <wsdl:input message="ns:sealStatusRequest" wsaw:Action="urn:sealStatus"/>
+            <wsdl:output message="ns:sealStatusResponse" wsaw:Action="urn:sealStatusResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:sealStatusException"/>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN2">
+            <wsdl:input message="ns:pdfSealN2Request" wsaw:Action="urn:pdfSealN2"/>
+            <wsdl:output message="ns:pdfSealN2Response" wsaw:Action="urn:pdfSealN2Response"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:pdfSealN2Exception"/>
+        </wsdl:operation>
+        <wsdl:operation name="signHtml">
+            <wsdl:input message="ns:signHtmlRequest" wsaw:Action="urn:signHtml"/>
+            <wsdl:output message="ns:signHtmlResponse" wsaw:Action="urn:signHtmlResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:signHtmlException"/>
+        </wsdl:operation>
+        <wsdl:operation name="docSeal">
+            <wsdl:input message="ns:docSealRequest" wsaw:Action="urn:docSeal"/>
+            <wsdl:output message="ns:docSealResponse" wsaw:Action="urn:docSealResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:docSealException"/>
+        </wsdl:operation>
+        <wsdl:operation name="baodanVarify">
+            <wsdl:input message="ns:baodanVarifyRequest" wsaw:Action="urn:baodanVarify"/>
+            <wsdl:output message="ns:baodanVarifyResponse" wsaw:Action="urn:baodanVarifyResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:baodanVarifyException"/>
+        </wsdl:operation>
+        <wsdl:operation name="sealDoc">
+            <wsdl:input message="ns:sealDocRequest" wsaw:Action="urn:sealDoc"/>
+            <wsdl:output message="ns:sealDocResponse" wsaw:Action="urn:sealDocResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:sealDocException"/>
+        </wsdl:operation>
+        <wsdl:operation name="sealList">
+            <wsdl:input message="ns:sealListRequest" wsaw:Action="urn:sealList"/>
+            <wsdl:output message="ns:sealListResponse" wsaw:Action="urn:sealListResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:sealListException"/>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc2">
+            <wsdl:input message="ns:makeDoc2Request" wsaw:Action="urn:makeDoc2"/>
+            <wsdl:output message="ns:makeDoc2Response" wsaw:Action="urn:makeDoc2Response"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:makeDoc2Exception"/>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp1">
+            <wsdl:input message="ns:getClientIp1Request" wsaw:Action="urn:getClientIp1"/>
+            <wsdl:output message="ns:getClientIp1Response" wsaw:Action="urn:getClientIp1Response"/>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc">
+            <wsdl:input message="ns:makeDocRequest" wsaw:Action="urn:makeDoc"/>
+            <wsdl:output message="ns:makeDocResponse" wsaw:Action="urn:makeDocResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:makeDocException"/>
+        </wsdl:operation>
+        <wsdl:operation name="sealNotice">
+            <wsdl:input message="ns:sealNoticeRequest" wsaw:Action="urn:sealNotice"/>
+            <wsdl:output message="ns:sealNoticeResponse" wsaw:Action="urn:sealNoticeResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:sealNoticeException"/>
+        </wsdl:operation>
+        <wsdl:operation name="pdfValue">
+            <wsdl:input message="ns:pdfValueRequest" wsaw:Action="urn:pdfValue"/>
+            <wsdl:output message="ns:pdfValueResponse" wsaw:Action="urn:pdfValueResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:pdfValueException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp">
+            <wsdl:input message="ns:getClientIpRequest" wsaw:Action="urn:getClientIp"/>
+            <wsdl:output message="ns:getClientIpResponse" wsaw:Action="urn:getClientIpResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="varifyHtml">
+            <wsdl:input message="ns:varifyHtmlRequest" wsaw:Action="urn:varifyHtml"/>
+            <wsdl:output message="ns:varifyHtmlResponse" wsaw:Action="urn:varifyHtmlResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:varifyHtmlException"/>
+        </wsdl:operation>
+        <wsdl:operation name="certList">
+            <wsdl:input message="ns:certListRequest" wsaw:Action="urn:certList"/>
+            <wsdl:output message="ns:certListResponse" wsaw:Action="urn:certListResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:certListException"/>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN1">
+            <wsdl:input message="ns:pdfSealN1Request" wsaw:Action="urn:pdfSealN1"/>
+            <wsdl:output message="ns:pdfSealN1Response" wsaw:Action="urn:pdfSealN1Response"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:pdfSealN1Exception"/>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSeal">
+            <wsdl:input message="ns:pdfSealRequest" wsaw:Action="urn:pdfSeal"/>
+            <wsdl:output message="ns:pdfSealResponse" wsaw:Action="urn:pdfSealResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:pdfSealException"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadDoc">
+            <wsdl:input message="ns:downloadDocRequest" wsaw:Action="urn:downloadDoc"/>
+            <wsdl:output message="ns:downloadDocResponse" wsaw:Action="urn:downloadDocResponse"/>
+            <wsdl:fault message="ns:Exception" name="Exception" wsaw:Action="urn:downloadDocException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SealServiceSoap11Binding" type="ns:SealServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sealStatus">
+            <soap:operation soapAction="urn:sealStatus" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN2">
+            <soap:operation soapAction="urn:pdfSealN2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="docSeal">
+            <soap:operation soapAction="urn:docSeal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="signHtml">
+            <soap:operation soapAction="urn:signHtml" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="baodanVarify">
+            <soap:operation soapAction="urn:baodanVarify" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealDoc">
+            <soap:operation soapAction="urn:sealDoc" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealList">
+            <soap:operation soapAction="urn:sealList" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc2">
+            <soap:operation soapAction="urn:makeDoc2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp1">
+            <soap:operation soapAction="urn:getClientIp1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc">
+            <soap:operation soapAction="urn:makeDoc" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealNotice">
+            <soap:operation soapAction="urn:sealNotice" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp">
+            <soap:operation soapAction="urn:getClientIp" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfValue">
+            <soap:operation soapAction="urn:pdfValue" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="varifyHtml">
+            <soap:operation soapAction="urn:varifyHtml" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="certList">
+            <soap:operation soapAction="urn:certList" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN1">
+            <soap:operation soapAction="urn:pdfSealN1" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSeal">
+            <soap:operation soapAction="urn:pdfSeal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="downloadDoc">
+            <soap:operation soapAction="urn:downloadDoc" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SealServiceSoap12Binding" type="ns:SealServicePortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sealStatus">
+            <soap12:operation soapAction="urn:sealStatus" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN2">
+            <soap12:operation soapAction="urn:pdfSealN2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="docSeal">
+            <soap12:operation soapAction="urn:docSeal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="signHtml">
+            <soap12:operation soapAction="urn:signHtml" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="baodanVarify">
+            <soap12:operation soapAction="urn:baodanVarify" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealDoc">
+            <soap12:operation soapAction="urn:sealDoc" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealList">
+            <soap12:operation soapAction="urn:sealList" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc2">
+            <soap12:operation soapAction="urn:makeDoc2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp1">
+            <soap12:operation soapAction="urn:getClientIp1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc">
+            <soap12:operation soapAction="urn:makeDoc" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="sealNotice">
+            <soap12:operation soapAction="urn:sealNotice" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp">
+            <soap12:operation soapAction="urn:getClientIp" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfValue">
+            <soap12:operation soapAction="urn:pdfValue" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="varifyHtml">
+            <soap12:operation soapAction="urn:varifyHtml" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="certList">
+            <soap12:operation soapAction="urn:certList" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN1">
+            <soap12:operation soapAction="urn:pdfSealN1" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSeal">
+            <soap12:operation soapAction="urn:pdfSeal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="downloadDoc">
+            <soap12:operation soapAction="urn:downloadDoc" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="Exception">
+                <soap12:fault use="literal" name="Exception"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SealServiceHttpBinding" type="ns:SealServicePortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="sealStatus">
+            <http:operation location="SealService/sealStatus"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sealStatus"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sealStatus"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN2">
+            <http:operation location="SealService/pdfSealN2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="pdfSealN2"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="pdfSealN2"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="docSeal">
+            <http:operation location="SealService/docSeal"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="docSeal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="docSeal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="signHtml">
+            <http:operation location="SealService/signHtml"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="signHtml"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="signHtml"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="baodanVarify">
+            <http:operation location="SealService/baodanVarify"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="baodanVarify"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="baodanVarify"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sealDoc">
+            <http:operation location="SealService/sealDoc"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sealDoc"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sealDoc"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sealList">
+            <http:operation location="SealService/sealList"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sealList"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sealList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc2">
+            <http:operation location="SealService/makeDoc2"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="makeDoc2"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="makeDoc2"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp1">
+            <http:operation location="SealService/getClientIp1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="getClientIp1"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="getClientIp1"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeDoc">
+            <http:operation location="SealService/makeDoc"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="makeDoc"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="makeDoc"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sealNotice">
+            <http:operation location="SealService/sealNotice"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="sealNotice"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="sealNotice"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getClientIp">
+            <http:operation location="SealService/getClientIp"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="getClientIp"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="getClientIp"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfValue">
+            <http:operation location="SealService/pdfValue"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="pdfValue"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="pdfValue"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="varifyHtml">
+            <http:operation location="SealService/varifyHtml"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="varifyHtml"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="varifyHtml"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="certList">
+            <http:operation location="SealService/certList"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="certList"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="certList"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSealN1">
+            <http:operation location="SealService/pdfSealN1"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="pdfSealN1"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="pdfSealN1"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="pdfSeal">
+            <http:operation location="SealService/pdfSeal"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="pdfSeal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="pdfSeal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="downloadDoc">
+            <http:operation location="SealService/downloadDoc"/>
+            <wsdl:input>
+                <mime:content type="text/xml" part="downloadDoc"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" part="downloadDoc"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SealService">
+        <wsdl:port name="SealServiceHttpSoap11Endpoint" binding="ns:SealServiceSoap11Binding">
+            <soap:address location="http://seal.creditease.cn/Seal/services/SealService.SealServiceHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SealServiceHttpSoap12Endpoint" binding="ns:SealServiceSoap12Binding">
+            <soap12:address location="http://seal.creditease.cn/Seal/services/SealService.SealServiceHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="SealServiceHttpEndpoint" binding="ns:SealServiceHttpBinding">
+            <http:address location="http://seal.creditease.cn/Seal/services/SealService.SealServiceHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

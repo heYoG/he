@@ -1,0 +1,22 @@
+<serviceGroup>
+	<service name="SealService">
+		<parameter name="ServiceClass">serv.AutoPdfSeal</parameter>
+		<parameter name="useOriginalwsdl">true</parameter>
+		<parameter name="modifyUserWSDLPortAddress">false</parameter> 
+		<messageReceivers>
+			<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+			<messageReceiver
+				mep="http://www.w3.org/2004/08/wsdl/in-only"
+				class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+		</messageReceivers>
+	</service>
+	<!-- websign服务器签章的接口 -->
+	<service name="WebSignService">
+		<parameter name="ServiceClass">com.dj.websignServer.WebSignSerivce</parameter>
+		<messageReceivers>
+			<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+		</messageReceivers>
+	</service>
+</serviceGroup>

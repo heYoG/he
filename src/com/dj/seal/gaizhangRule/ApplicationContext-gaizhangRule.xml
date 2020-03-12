@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<!-- form开始 -->
+	<bean id="gaiZhangRuleForm"
+		class="com.dj.seal.gaizhangRule.form.GaiZhangRuleForm">
+	</bean>
+	<!-- form结束 -->
+	
+	<!-- DAO开始 -->
+	<bean id="gaiZhangRuleDao"
+		class="com.dj.seal.gaizhangRule.dao.impl.GaiZhangRuleDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- DAO结束 -->
+	
+	<!-- Service开始 -->
+	<bean id="gaiZhangRuleService"
+		class="com.dj.seal.gaizhangRule.service.impl.GaiZhangRuleSrvImpl">
+		<property name="sealbody_srv">
+			<ref bean="ISealBodyService" />
+		</property>
+		<property name="rule_dao">
+			<ref bean="gaiZhangRuleDao" />
+		</property>
+		<property name="cert_srv">
+			<ref bean="CertService"/>
+		</property>
+	</bean>
+	<!-- Service结束 -->
+	
+	<!-- Action开始 -->
+	<bean name="/newRule"
+		class="com.dj.seal.gaizhangRule.web.NewGaiZhangRuleAction">
+		<property name="rule_srv">
+			<ref bean="gaiZhangRuleService" />
+		</property>
+	</bean>
+	<!-- Action结束 -->
+
+</beans>

@@ -1,0 +1,211 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333333;
+    background-color: #ffffff;
+}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-button:vertical{display:none;}
+::-webkit-scrollbar-track:vertical{background-color:black;}
+::-webkit-scrollbar-track-piece{background-color:#F5F5F5;}
+::-webkit-scrollbar-thumb:vertical{margin-right:10px; background-color:#A6A6A6;}
+::-webkit-scrollbar-thumb:vertical:hover{background-color:#aaa;}
+::-webkit-scrollbar-corner:vertical{background-color:#535353;}
+::-webkit-scrollbar-thumb {border-radius: 5px;}
+li {
+    list-style: none;
+}
+a:focus {
+    text-decoration: none;
+}
+.margin-left, .margin-left-1 {
+    margin-left: 8px !important;
+}
+.margin-left-2 {
+    margin-left: 16px;
+}
+.margin-left-3 {
+    margin-left: 24px;
+}
+.margin-left-4 {
+    margin-left: 32px;
+}
+.margin-left-5 {
+    margin-left: 40px;
+}
+.margin-right, .margin-right-1 {
+    margin-right: 8px !important;
+}
+.margin-right-2 {
+    margin-right: 16px;
+}
+.margin-right-3 {
+    margin-right: 24px;
+}
+.margin-right-4 {
+    margin-right: 32px;
+}
+.margin-right-5 {
+    margin-right: 40px;
+}
+.margin-top, .margin-top-1 {
+    margin-top: 8px !important;
+}
+.margin-top-2 {
+    margin-top: 16px;
+}
+.margin-top-3 {
+    margin-top: 24px;
+}
+.margin-top-4 {
+    margin-top: 32px;
+}
+.margin-top-5 {
+    margin-top: 40px;
+}
+.margin-bottom, .margin-bottom-1 {
+    margin-bottom: 8px !important;
+}
+.margin-bottom-2 {
+    margin-bottom: 16px;
+}
+.margin-bottom-3 {
+    margin-bottom: 24px;
+}
+.margin-bottom-4 {
+    margin-bottom: 32px;
+}
+.margin-bottom-5 {
+    margin-bottom: 40px;
+}
+.row-margin, .row-margin-1 {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+}
+.row-margin-2 {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.row-margin-3 {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+.row-margin-4 {
+    margin-left: 32px;
+    margin-right: 32px;
+}
+.row-margin-5 {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.col-margin, .col-margin-1 {
+     margin-top: 8px !important;
+     margin-bottom: 8px !important;
+ }
+.col-margin-2 {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.col-margin-3 {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.col-margin-4 {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+.col-margin-5 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.btn {
+    border-radius: 0;
+}
+button:focus,
+button:active:focus,
+button:active.focus,
+.btn:focus,
+.btn:active:focus,
+.btn:active.focus {
+    outline: none;
+}
+.text-muted{
+    color:#999 !important
+}
+.text-muted:hover{
+    color:#999 !important
+}
+.text-info{
+    color:#69C !important
+}
+.text-info:hover{
+    color:#69C !important
+}
+.text-primary{
+    color:#09C !important
+}
+.text-primary:hover{
+    color:#09C !important
+}
+.text-success{
+    color:#090 !important
+}
+.text-success:hover{
+    color:#090 !important
+}
+.text-warning{
+    color:#F90 !important
+}
+.text-warning:hover{
+    color:#F90 !important
+}
+.text-danger{
+    color:#F00 !important
+}
+.text-danger:hover{
+    color:#F00 !important
+}
+.content-title {
+    width: auto;
+}
+.content-title .console-instance-head {
+    padding: 3px 15px;
+    border-bottom: 1px solid #DDDDDD;
+}
+.content-title .console-instance-head h2.instance-id {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.content-title .console-instance-head .pull-right {
+    padding: 16px 0 10px;
+}
+.module-header {
+    margin: 10px 0 -1px;
+    height: 40px;
+    background: #F5F6FA;
+    line-height: 38px;
+    border: 1px solid #E1E6EB;
+    position: relative;
+    border-left: 4px solid #2c97e8;
+}
+.module-header .module-header-title {
+    font-size: 16px;
+    color: #333333;
+    display: inline-block;
+    margin-left: 16px;
+    font-weight: bold;
+}
+.table-default-viewer {
+    width: 100%;
+    table-layout: fixed;
+    background: #ffffff;
+}
+.table-default-viewer td {
+    padding: 11px 20px;
+    border: 1px solid #eeeeee;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

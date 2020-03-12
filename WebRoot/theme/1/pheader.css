@@ -1,0 +1,178 @@
+*{padding:0px;margin:0px;}
+body{
+   margin:0px;
+   font-size:9pt;
+   font-family:ËÎÌו;
+   background: #E2E5E6;
+}
+#on_status{
+   font-weight:bold;
+   height:28px;
+   padding-top:4px;
+   padding-left:4px;
+   padding-right:4px;
+   cursor:pointer;
+   color:#FFFFFF;
+   background:url("shortcut_bg.png") repeat-x;
+}
+
+#on_status a{
+}
+
+#on_status a.general{
+   color:#FFFFFF;
+   text-decoration: underline;
+}
+
+#on_status_ul{display:none;width:auto;font-weight:normal;border-top:0;border-left: #036 1px solid;border-right: #036 1px solid;border-bottom:#036 1px solid;position:absolute;padding:0px;background:#E2E5E6;}
+#on_status_ul li {
+   margin: 0 0 0 5px;
+   padding: 0;
+   display: block;
+   list-style-type: none;
+}
+
+#on_status_1, .on_status_1{padding-left:20px;background:url("/images/user_list/U01.gif") no-repeat;line-height:18px;}
+#on_status_2, .on_status_2{padding-left:20px;background:url("/images/user_list/U02.gif") no-repeat;line-height:18px;}
+#on_status_3, .on_status_3{padding-left:20px;background:url("/images/user_list/U03.gif") no-repeat;line-height:18px;}
+
+#my_status{
+   width:163px;
+   color:#8896A0;
+   border:1px #FFFFFF solid;
+}
+#my_status:hover{
+   color:#000000;
+}
+#tabs{
+   width:173px;
+   padding-left:5px;
+   padding-right:5px;
+}
+#nav_menu {
+   width:100%;
+   height:21px;
+   margin-top:4px;
+   background:url("nav_menu_bg.png") no-repeat;
+}
+#nav_menu li {
+   display: inline;
+   list-style-type: none;
+}
+
+#nav_menu a:link, #nav_menu a:visited {
+   color:#000000;
+   text-decoration: none;
+   display:block;
+   float:left;
+   text-align:center;
+   line-height:21px;
+}
+#nav_menu a:hover, #nav_menu a.active {
+   color:#FFFFFF;
+}
+#menu_1{
+   width:65px;
+}
+#menu_2{
+   width:41px;
+}
+#menu_3{
+   width:35px;
+}
+#menu_4{
+   width:32px;
+}
+
+#menu_1:hover, #menu_1:link.active, #menu_1:visited.active{
+   color: #FFFFFF;
+   background: url('button.png') top left no-repeat;
+}
+#menu_2:hover, #menu_2:link.active, #menu_2:visited.active{
+   color: #FFFFFF;
+   background: url('button.png') top center no-repeat;
+}
+#menu_3:hover, #menu_3:link.active, #menu_3:visited.active{
+   color: #FFFFFF;
+   background: url('button.png') top center no-repeat;
+}
+#menu_4:hover, #menu_4:link.active, #menu_4:visited.active{
+   color: #FFFFFF;
+   background: url('button.png') top right no-repeat;
+}
+
+#search{
+   width:100%;
+   border:1px solid #154B76;
+   background: white url('bg_input_text.png') top left repeat-x;
+}
+#search:hover{
+   border:1px solid #99CC00;
+   background: white url('bg_input_text_hover.png') top left repeat-x;
+}
+
+#search input.SmallInput {font-size: 9pt; border:0px; color:#8896A0;width:143px;}
+#search input.SmallInput:hover {border:0px; color:#000000;}
+
+#expand_link{
+   float:left;
+   margin:7px 3px 0px 6px;
+   cursor:pointer;
+}
+.expand_link{
+   position:absolute;
+   top:-2px;
+   right:25px;
+}
+
+.sub_tabs{
+   width:100%;
+   background: url('sub_tabs_bg.png') repeat-x;
+}
+.hide{
+   height:0px;
+}
+.sub_tabs ul {
+   float:left;
+   height:27px;
+   width:163px;
+   background: url('sub_nav_bg.png') no-repeat;
+   margin-left:5px;
+   padding-left:4px;
+}
+
+.sub_tabs li {
+   display: inline;
+   list-style-type: none;
+}
+
+.sub_tabs a:link, .sub_tabs a:visited{
+   float:left;
+	color:#FFFFFF;
+	text-decoration: none;
+   padding-left:4px;
+   margin-top:5px;
+}
+.sub_tabs a:link span, .sub_tabs a:visited span{
+   float:left;
+   cursor:pointer;
+	padding: 5px 6px 3px 2px;
+}
+.sub_tabs a.active, .sub_tabs a:hover,
+.sub_tabs a:link.active, .sub_tabs a:hover.active, .sub_tabs a:active.active, .sub_tabs a:visited.active
+{
+	text-decoration: none;
+	color:#003366;
+   background: url('sub_nav_hover_l.png') top left no-repeat;
+}
+.sub_tabs a.active span, .sub_tabs a:hover span,
+.sub_tabs a:link.active span, .sub_tabs a:hover span, .sub_tabs a:active.active span, .sub_tabs a:visited.active span
+{
+   background: url('sub_nav_hover_r.png') top right no-repeat;
+}
+#body{
+   overflow-x:hidden;
+   overflow-y:auto;
+   clear:left;
+   width:100%;
+}

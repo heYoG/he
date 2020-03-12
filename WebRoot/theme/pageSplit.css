@@ -1,0 +1,30 @@
+a:link,a:visited,a:hover,.current,#info{ 
+    border:1px solid #DDD; 
+    background:#F3F3F3; 
+    display:inline-block; 
+    margin:1px; 
+    text-decoration:none; 
+    font-size:12px; 
+    width:15px; 
+    height:15px; 
+    text-align:center; 
+    line-height:15px; 
+    color:#000000; 
+    padding:1px 2px; 
+} 
+a:hover{ 
+    border:1px solid #E5E5E5; 
+    background:#F9F9F9; 
+} 
+.current{ 
+    border:1px solid #83E7E4; 
+    background:#DFF9F8; 
+    margin:1px; 
+    color:#27CBC7; 
+} 
+#info{ 
+    width:auto; 
+} 
+#gethelp{
+	width:auto;
+}

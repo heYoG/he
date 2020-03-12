@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>	
+	<!-- DAO开始 -->
+	<bean id="recordMergeDao" class="com.neusoft.dao.impl.RecordMergeDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="recordRoomMergeDao" class="com.neusoft.dao.impl.RecordRoomMergeDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="tableMonthConfigDao" class="com.neusoft.dao.impl.TableMonthConfigDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- DAO结束 -->
+	
+	<!-- Service开始 -->
+	<bean id="recordMergeService" class="com.neusoft.service.impl.RecordMergeServiceImpl">
+		<property name="recordMergeDao" ref="recordMergeDao"></property>
+	</bean>
+	<bean id="recordRoomMergeService" class="com.neusoft.service.impl.RecordRoomMergeServiceImpl">
+		<property name="recordRoomMergeDao" ref="recordRoomMergeDao"></property>
+		<property name="recordDao" ref="recordDao"></property>
+		<property name="tableMonthConfigService" ref="tableMonthConfigService"></property>
+	</bean>
+	<bean id="tableMonthConfigService" class="com.neusoft.service.impl.TableMonthConfigServiceImpl">
+		<property name="tableMonthConfigDao" ref="tableMonthConfigDao"></property>
+	</bean>
+	<!-- Service结束 -->
+		
+
+</beans>

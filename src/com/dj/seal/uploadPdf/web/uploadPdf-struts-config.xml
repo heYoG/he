@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="PdfForm"
+			type="com.dj.seal.uploadPdf.web.form.PdfForm">
+		</form-bean>
+	</form-beans>
+	<action-mappings>
+		<action path="/uploadPdf"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="PdfForm">
+			<forward name="success"
+				path="/downLoad.jsp">
+			</forward>
+		</action>
+		<action path="/vartifyPdf"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="PdfForm">
+			<forward name="success"
+				path="/result.jsp">
+			</forward>
+		</action>
+	</action-mappings>
+
+</struts-config>
+

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<filter>
+		<filter-name>Spring character encoding filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Spring character encoding filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>DisplayChart</servlet-name>
+		<servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DisplayChart</servlet-name>
+		<url-pattern>/servlet/DisplayChart</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>crossDomainSessionSecurity</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowScriptTagRemoting</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<session-config>
+		<session-timeout>40</session-timeout>
+	</session-config>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class><!-- struts控制器 -->
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/sysmgr/web/sysManage-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/personInfo/web/personInfo-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/organise/web/userManage-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/sealTemplate/web/sealTemplate-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/sealBody/web/sealBody-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/cert/web/cert-struts-config.xml,
+				/WEB-INF/classes/com/dj/seal/doc/web/doc-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/docPrint/web/docprint-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/cert/web/cert-struts-config.xml, 
+                /WEB-INF/classes/com/dj/seal/log/web/log-struts-config.xml, 
+                /WEB-INF/classes/com/dj/seal/appSystem/web/appSystem-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/modelFile/modelFile-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/gaizhangRule/gaizhangRule-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/uploadPdf/web/uploadPdf-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/hotel/action/hotel-struts-config.xml,
+                /WEB-INF/classes/com/dj/seal/modelFileRule/modelFileRule-struts-config.xml 
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup><!-- 启动即加载servlet应用类(0及以上正数)，越小优先级越高 -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/classes/ApplicationContext-config.xml,
+			/WEB-INF/classes/ApplicationContext-dao.xml,
+			/WEB-INF/classes/ApplicationContext-service.xml,
+			/WEB-INF/classes/ApplicationContext-web.xml,
+			/WEB-INF/classes/com/dj/seal/personInfo/web/ApplicationContext-web.xml,
+			/WEB-INF/classes/com/dj/seal/appSystem/web/ApplicationContext-appSystem-web.xml,
+			/WEB-INF/classes/com/dj/seal/modelFile/ApplicationContext-modelFile.xml,
+			/WEB-INF/classes/com/dj/seal/gaizhangRule/ApplicationContext-gaizhangRule.xml,
+			/WEB-INF/classes/com/dj/seal/hotel/ApplicationContext-hotel.xml,
+			/WEB-INF/classes/com/dj/seal/modelFileRule/ApplicationContext-modelFileRule.xml,
+			/WEB-INF/classes/com/neusoft/ApplicationContext-neusoft.xml,
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>AxisServlet</servlet-name>
+		<servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/servlet/AxisServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>*.jws</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AxisServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- 定时任务监听器 -->
+	<listener>
+		<listener-class>com.dj.seal.util.listener.CheckTaskListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>BakupFile</servlet-name>
+		<servlet-class>com.dj.seal.bakupFile.BakupFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BakupFile</servlet-name>
+		<url-pattern>/bakupFile</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ShowImgServlet</servlet-name>
+		<servlet-class>com.dj.seal.sealBody.web.ShowImgServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowAdvertsServlet</servlet-name>
+		<servlet-class>com.dj.seal.hotel.web.ShowAdvertsServlet</servlet-class>
+	</servlet>
+ 
+	<servlet-mapping>
+		<servlet-name>ShowImgServlet</servlet-name>
+		<url-pattern>/servlet/ShowImgServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowAdvertsServlet</servlet-name>
+		<url-pattern>/servlet/ShowAdvertsServlet</url-pattern>
+	</servlet-mapping>
+  
+	<!-- 文件备份加载监听器 -->
+	<listener>
+		<listener-class>com.dj.seal.util.timer.TimerMain</listener-class>
+	</listener>
+
+	<!-- 最高法院模板合成电子签章socket服务 -->
+	<context-param>
+		<param-name>socketPort</param-name>
+		<param-value>3089</param-value>
+	</context-param>
+	<context-param>
+		<param-name>threadpoolSize</param-name>
+		<param-value>5</param-value><!-- 由10改为5 -->
+	</context-param>
+	<listener>
+		<description>Socket服务启动</description>
+		<listener-class>com.dj.seal.util.socket.serverPool</listener-class>
+	</listener>
+	
+	<!--打印、查询接口,采用综合接口模式-打印&查询统一入口，根据传入渠道号区分访问 -->
+	<context-param>
+		<param-name>socketPort_composition</param-name>
+		<param-value>20008</param-value>
+	</context-param>
+	<context-param>
+		<param-name>threadpoolSize_composition</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<listener>
+		<description>Socket服务启动_composition</description>
+		<listener-class>com.dj.seal.util.socket.ServerPool_composition</listener-class>
+	</listener>
+	<!-- 打印、查询接口配置结束 -->
+	
+	<!-- ctm/stm/电子对账/国际结算/移动银行/微信银行/现金管理平台系统socket配置 -->
+	<context-param>
+	<param-name>socketPort_com</param-name>
+	<param-value>20010</param-value>
+	</context-param>
+	<context-param>
+	<param-name>threadPool_com</param-name>
+	<param-value>10</param-value>
+	</context-param>
+	<listener>
+	<description>多系统监听器</description>
+	<listener-class>com.dj.seal.util.socket.sealPicture.CompositeServerPool</listener-class>
+	</listener>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

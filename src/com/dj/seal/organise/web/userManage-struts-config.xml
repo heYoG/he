@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+	<form-beans>
+		<!-- 注册formbean（oyxy） -->
+		<form-bean name="registForm" type="com.dj.seal.organise.web.form.RegistForm">
+		</form-bean>
+		<!-- 登录formbean（oyxy） -->
+		<form-bean name="loginForm" type="com.dj.seal.organise.web.form.LoginForm">
+		</form-bean>
+		<!-- 部门formbean（oyxy） -->
+		<form-bean name="deptForm" type="com.dj.seal.organise.web.form.DeptForm">
+		</form-bean>
+		<!-- 角色formbean（oyxy） -->
+		<form-bean name="roleForm" type="com.dj.seal.organise.web.form.RoleForm">
+		</form-bean>
+		<!-- 单位formbean（oyxy） -->
+		<form-bean name="unitForm" type="com.dj.seal.organise.web.form.UnitForm">
+		</form-bean>
+		<!-- 新建用户formBean（yc） -->
+		<form-bean name="userForm" type="com.dj.seal.organise.web.form.UserForm">
+		</form-bean>
+		<!-- 批量导入部门和用户formBean（zyl） -->
+		<form-bean name="UploadDeptAndUserForm"
+			type="com.dj.seal.organise.web.form.UploadDeptAndUserForm">
+		</form-bean>
+	</form-beans>
+	<action-mappings>
+		<!-- 批量导入部门和用户(zyl) -->
+		<action path="/uploadDeptAndUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="UploadDeptAndUserForm">
+			<forward name="deptresult" path="/general/organise/dept/importResult.jsp"></forward>
+			<forward name="userresult" path="/general/organise/dept/importResult.jsp"></forward>
+		</action>
+		<!-- 登录action(oyxy) -->
+		<action path="/login"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="session"
+			name="loginForm">
+			<forward name="success" path="/inc/main.jsp"></forward>
+			<forward name="fail" path="/inc/fail.jsp"></forward>
+			<forward name="tologin" path="/login.jsp"></forward>
+			<forward name="updatePassword" path="/inc/updatePassword.jsp"></forward>
+			<forward name="toUpdatePassword" path="/toUpdatePassword.jsp"></forward>
+		</action>
+		<!-- 部门管理action(oyxy) -->
+		<action path="/manageDept"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request">
+			<forward name="success" path="/general/organise/dept/index.jsp">
+			</forward>
+		</action>
+		<!-- 部门信息显示action(oyxy) -->
+		<action path="/showDept"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request">
+			<forward name="success" path="/general/organise/dept/dept_edit.jsp">
+			</forward>
+			<forward name="newDept" path="/general/organise/dept/dept_new.jsp">
+			</forward>
+		</action>
+		<!-- 新增部门action(oyxy) -->
+		<action path="/addDept"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="deptForm">
+			<forward name="success" path="/manageDept.do"></forward>
+		</action>
+
+		<!-- 更新部门action(oyxy) -->
+		<action path="/updateDept"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="deptForm">
+			<forward name="success" path="/manageDept.do"></forward>
+		</action>
+
+		<!-- 删除部门action(oyxy) -->
+		<action path="/deleteDept"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request">
+			<forward name="success" path="/manageDept.do"></forward>
+		</action>
+		<action path="/roleAdd"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="roleForm">
+			<forward name="success" path="/general/organise/role_mng/role_list.jsp">
+			</forward>
+		</action>
+		<!--用户注销的action（yc） -->
+		<action path="/logout"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="loginForm">
+			<forward name="success" path="/login.jsp"></forward>
+		</action>
+		<!--用户新增菜单的向导action(yc) -->
+		<action path="/frameuser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request">
+			<forward name="success" path="/general/organise/user/frame_user.jsp"></forward>
+		</action>
+		<!--跳转创建用户列表的向导action(yc) -->
+		<action path="/userList"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="list" path="/general/organise/user/user_list.jsp"></forward>
+		</action>
+		<!--跳转新建用户的向导action(yc) -->
+		<action path="/addUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/userList.do"></forward>
+			<forward name="new" path="/general/organise/user/add_user.jsp"></forward>
+		</action>
+		<!--跳转注册用户的向导action(yc) -->
+		<action path="/regUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/inc/regSuccess.jsp"></forward>
+		</action>
+		<!-- 通过编辑进入角色列表模式窗口action(oyxy) -->
+		<action path="/roleModeList"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request">
+			<forward name="success"
+				path="/general/organise/user/user_role/role_list.jsp">
+			</forward>
+		</action>
+		<!--用户查询列表的action(yc) -->
+		<action path="/serUserlist"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="successSer"
+				path="/general/organise/user/user_search/listSer.jsp"></forward>
+			<forward name="successJIn"
+				path="/general/organise/user/user_search/listJIn.jsp"></forward>
+			<forward name="error" path="/general/organise/user/user_search/error.jsp"></forward>
+		</action>
+		<!--用户列表的action(yc) -->
+		<action path="/serUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/general/organise/user/user_search/index.jsp"></forward>
+		</action>
+		<!--用户管理列表的action(yc) -->
+		<action path="/serUserManager"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/general/organise/user/user_manage/index.jsp"></forward>
+			<forward name="successAll"
+				path="/general/organise/user/user_manage/listAll.jsp"></forward>
+			<forward name="successSer"
+				path="/general/organise/user/user_manage/listSer.jsp"></forward>
+			<forward name="successJIn"
+				path="/general/organise/user/user_manage/listJIn.jsp"></forward>
+			<forward name="error" path="/general/organise/user/user_search/error.jsp"></forward>
+		</action>
+		<!--用户审批列表的action(yc) -->
+		<action path="/serUserApprove"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/general/organise/user/user_approve/index.jsp"></forward>
+			<!-- <forward name="successAll" path="/general/organise/user/user_approve/listAll.jsp"></forward> -->
+			<forward name="successSer"
+				path="/general/organise/user/user_approve/approve_listSer.jsp"></forward>
+			<!-- <forward name="successJIn" path="/general/organise/user/user_approve/listJIn.jsp"></forward> -->
+			<forward name="error" path="/general/organise/user/user_search/error.jsp"></forward>
+		</action>
+		<!-- 编辑用户的action（yc） -->
+		<action path="/editUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success"
+				path="/general/organise/user/user_manage/editUser.jsp"></forward>
+		</action>
+		<!-- 激活用户的action（yc） -->
+		<action path="/JihuoUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success"
+				path="/general/organise/user/user_manage/jihuoUser.jsp"></forward>
+		</action>
+		<!-- 删除用户的action（yc） -->
+		<action path="/deleteUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/serUserManager.do?type=all"></forward>
+		</action>
+		<!-- 更新用户的action（yc） -->
+		<action path="/updateSysUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success" path="/general/organise/user/user_manage/query.jsp"></forward>
+			<forward name="success_app" path="/general/organise/user/user_approve/query.jsp"></forward>
+			<forward name="tologin" path="/login.jsp"></forward>
+		</action>
+		<!--跳转创建用户列表的向导action(yc) -->
+		<action path="/ListRole"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="list" path="/general/organise/user/user_role/rolelist.jsp"></forward>
+		</action>
+		<!--根据盖章用户查询所拥有的历史证书action -->
+		<action path="/serUserCert"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success"
+				path="/general/organise/user/user_manage/userCertList.jsp"></forward>
+		</action>
+		<!-- 用户审批:同意/拒绝 -->
+		<action path="/userApprove"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success"
+				path="/general/organise/user/user_approve/approve_listSer.jsp"></forward>
+		</action>
+		<!-- 用户管理显示审批信息 -->
+		<action path="/showUser"
+			type="org.springframework.web.struts.DelegatingActionProxy" scope="request"
+			name="userForm">
+			<forward name="success"
+				path="/general/organise/user/user_manage/showUser.jsp"></forward>
+		</action>
+	</action-mappings>
+</struts-config>
+

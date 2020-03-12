@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<!-- form开始 -->
+	
+	<bean id="hotelTDicForm" class="com.dj.seal.hotel.form.HotelTDicForm"></bean>
+	<bean id="recordForm" class="com.dj.seal.hotel.form.HotelTRecordForm"></bean>
+	<bean id="reocrdAffiliateForm" class="com.dj.seal.hotel.form.HotelTRecordAffileateForm"></bean>
+	<bean id="masterplatejudgeForm" class="com.dj.seal.hotel.form.MasterplatejudgeForm"></bean>
+	<bean id="clientOperLogForm" class="com.dj.seal.hotel.form.HotelTClientOperLogsForm"></bean>
+	<bean id="hotelAdvertForm" class="com.dj.seal.hotel.form.HotelAdvertForm"></bean>
+	
+	<!-- form结束 -->
+	
+	
+	<!-- DAO开始 -->
+	<bean id="hotelTDicDao" class="com.dj.seal.hotel.dao.impl.HotelTDicHotelUtilImpl">
+		<property name="dataSource" >
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	<bean id="recordDao" class="com.dj.seal.hotel.dao.impl.RecordDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="nshRecordDao" class="com.dj.seal.hotel.dao.impl.NSHRecordDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="scannerRecordDao" class="com.dj.seal.hotel.dao.impl.ScannerRecordDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="masterplatejudgeDao" class="com.dj.seal.hotel.dao.impl.MasterplatejudgeDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="versionDao" class="com.dj.seal.hotel.dao.impl.VersionDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="clientOperLogDao" class="com.dj.seal.hotel.dao.impl.HotelTClientOperLogDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="hotelAdvertDao" class="com.dj.seal.hotel.dao.impl.HotelAdvertDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- DAO结束 -->
+	
+	<!-- Service开始 -->
+		<bean id="hotelTDicService" class="com.dj.seal.hotel.service.impl.HotelTDicHotelUtilServiceImpl">
+			<property name="hotelTDicDao">
+				<ref bean="hotelTDicDao"/>
+			</property>
+		</bean>
+		<bean id="recordService" class="com.dj.seal.hotel.service.impl.RecordServiceImpl">
+			<property name="recordDao" ref="recordDao"></property>
+			<property name="usersDao" ref="ISysUserDao"></property>
+			<property name="modelFileSrv" ref="modelFileService"></property>
+			<property name="dept_srv" ref="ISysDeptService"></property>
+			<property name="hotelTDicSrv">
+				<ref bean="hotelTDicService"/>
+			</property>
+			
+		</bean>
+		
+		<bean id="nshRecordService" class="com.dj.seal.hotel.service.impl.NSHRecordServiceImpl">
+			<property name="recordDao" ref="nshRecordDao"></property>
+			<property name="usersDao" ref="ISysUserDao"></property>
+			<property name="dept_srv" ref="ISysDeptService"></property>
+		</bean>
+		
+		<bean id="scannerRecordService" class="com.dj.seal.hotel.service.impl.ScannerRecordServiceImpl">
+			<property name="scannerRecordDao" ref="scannerRecordDao"></property>
+			<property name="usersDao" ref="ISysUserDao"></property>
+			<property name="modelFileSrv" ref="modelFileService"></property>
+			<property name="dept_srv" ref="ISysDeptService"></property>
+			<property name="hotelTDicSrv">
+				<ref bean="hotelTDicService"/>
+			</property>
+			
+		</bean>
+		
+		<bean id="masterplatejudgeService" class="com.dj.seal.hotel.service.impl.MasterplatejudgeServiceImpl">
+			<property name="masterplatejudgeDao">
+				<ref bean="masterplatejudgeDao"/>
+			</property>
+			<property name="version_srv">
+				<ref bean="versionService"/>
+			</property>
+		</bean>
+		<bean id="versionService" class="com.dj.seal.hotel.service.impl.VersionServiceImpl">
+			<property name="versionDao" ref="versionDao"></property>
+		</bean>
+		
+		<bean id="clientOperLogService" class="com.dj.seal.hotel.service.impl.HotelClientoperLogServiceImpl">
+			<property name="clientOperLogDao" ref="clientOperLogDao"></property>
+		</bean>
+
+		
+		<bean id="hotelAdverService" class="com.dj.seal.hotel.service.impl.HotelAdvertServiceImpl">
+			<property name="hotelAdvertDao" ref="hotelAdvertDao"></property>
+			<property name="sysDepartmentDao" ref="ISysDepartmentDao" ></property>
+		</bean>
+
+		
+		<bean id="hotelMakeFileService" class="com.dj.hotelApi.HotelMakeFile">
+		</bean>
+		
+		<bean id="chartService" class="com.dj.seal.hotel.service.impl.ChartServiceImpl">
+		</bean>
+
+	<!-- Service结束 -->
+	
+	<!-- Action开始 -->
+		<bean name="/newDic" class="com.dj.seal.hotel.action.NewHotelTDicAction">
+			<property name="hotelTDidService">
+				<ref bean="hotelTDicService"/>
+			</property>
+		</bean>
+		<bean name="/newjud" class="com.dj.seal.hotel.action.NewMasterplatejudgeAction">
+			<property name="masterplatejudgeService">
+				<ref bean="masterplatejudgeService"/>
+			</property>
+		</bean>
+		
+		<bean name="/recordDownload" class="com.dj.seal.hotel.action.RecordDownloadAction">
+			<property name="recordServ">
+				<ref bean="recordService"/>
+			</property>
+		 </bean>
+		 
+		 <bean name="/newsAdvert" class="com.dj.seal.hotel.action.NewHotelAdvertAction">
+		 	<property name="advertService" ref="hotelAdverService"></property>
+		 	<property name="user_dao">
+			<ref bean="IUserService" />
+		</property>
+		 </bean>
+		 <bean name="/updAdvert" class="com.dj.seal.hotel.action.UpdHotelAdvertAction">
+		 	<property name="advertService" ref="hotelAdverService"></property>
+		 
+		 </bean>
+		 <bean name="/adApps" class="com.dj.seal.hotel.action.AdApproveAction">
+		 	<property name="advertService" ref="hotelAdverService"></property>
+		 	<property name="advertForm">
+		 		<ref bean ="hotelAdvertForm"/>
+		 	</property>
+		 </bean>
+		 <bean name="/appAdvert" class="com.dj.seal.hotel.action.appAdvertAction">
+		 </bean>
+	<!-- Action结束 -->
+
+</beans>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<!-- form开始 -->
+	
+	<bean id="modelFileRuleForm" class="com.dj.seal.modelFileRule.form.ModelFileRuleForm"></bean>
+	
+	<!-- form结束 -->
+	
+	
+	<!-- DAO开始 -->
+	<bean id="modelFileRuleDao" class="com.dj.seal.modelFileRule.dao.impl.ModelFileRuleDaoImpl">
+		<property name="dataSource" >
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!-- DAO结束 -->
+	
+	<!-- Service开始 -->
+		<bean id="modelFileRuleService" class="com.dj.seal.modelFileRule.service.impl.ModelFileRuleServiceImpl">
+			<property name="modelFileRuleDao">
+				<ref bean="modelFileRuleDao"/>
+			</property>
+			
+			<property name="modelFileDao">
+				<ref bean="modelFileDao"/>
+			</property>
+			
+			<property name="gaiZhangRuleDao">
+				<ref bean="gaiZhangRuleDao"/>
+			</property>
+		</bean>
+	
+	<!-- Service结束 -->
+	
+	<!-- Action开始 -->
+		<bean name="/newMFR" class="com.dj.seal.modelFileRule.web.ModelFileRuleAction">
+			<property name="modelFilleRuleService">
+				<ref bean="modelFileRuleService"/>
+			</property>
+		</bean>
+		
+	<!-- Action结束 -->
+
+</beans>

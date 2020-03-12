@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<!-- 文档查询form-->
+		<form-bean name="docSearchForm"
+			type="com.dj.seal.doc.web.form.SearchDocForm">
+		</form-bean>
+	</form-beans>
+	<action-mappings>
+	<!-- 文档查询action-->
+	<action path="/docQuery"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			scope="request" name="docSearchForm">
+			<forward name="success"
+				path="/general/docPrint/manage/docList.jsp">
+			</forward>
+	</action>
+	</action-mappings>
+</struts-config>
+

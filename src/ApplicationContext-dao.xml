@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--********************** dao( 开始),spring的数据库连接操作**************** -->
+	<bean id="IBaseDao" class="com.dj.seal.util.dao.BaseDAOJDBC">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--********************** dao( 结束)**************** -->
+	<!-- 组织结构模块_用户（） -->
+	<bean id="ISysUserDao" class="com.dj.seal.organise.dao.impl.SysUserDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 获取已使用的用户印章，及授权信息（） -->
+	<bean id="licenseDao" class="com.dj.seal.license.dao.impl.LicenseDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_部门（） -->
+	<bean id="ISysDepartmentDao" class="com.dj.seal.organise.dao.impl.SysDepartmentDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_角色（） -->
+	<bean id="ISysRoleDao" class="com.dj.seal.organise.dao.impl.SysRoleDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_单位（） -->
+	<bean id="ISysUnitDao" class="com.dj.seal.organise.dao.impl.SysUnitDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 系统管理模块DAO层注入 -->
+	<bean id="ISystemDao" class="com.dj.seal.system.dao.impl.SystemDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="ITableModuleDao" class="com.dj.seal.system.dao.impl.TableModuleDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_权限（） -->
+	<bean id="ISysFuncDao" class="com.dj.seal.organise.dao.impl.SysFuncDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_用户部门（） -->
+	<bean id="ISysUserDeptDao" class="com.dj.seal.organise.dao.impl.SysUserDeptDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="dept_dao">
+			<ref bean="ISysDepartmentDao" />
+		</property>
+	</bean>
+	<!-- 组织结构模块_用户角色（） -->
+	<bean id="ISysUserRoleDao" class="com.dj.seal.organise.dao.impl.SysUserRoleDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!--系统设置_数据备份（author：lzl） -->
+	<bean id="IBackupDao" class="com.dj.seal.sysmgr.dao.impl.BackupDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- 印模申请列表模块的dao层的注入 -->
+	<bean id="ISealTemplateDao" class="com.dj.seal.sealTemplate.dao.impl.SealTemplateDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 印模申请列表模块的dao层的注入 -->
+	<bean id="ISealBodyDao" class="com.dj.seal.sealBody.dao.impl.SealBodyDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="role_dao">
+			<ref bean="ISysRoleDao" />
+		</property>
+		<property name="user_dao">
+			<ref bean="ISysUserDao" />
+		</property>
+	</bean>
+	<!-- 日志管理模块的dao层的注入 -->
+	<bean id="logSysDao" class="com.dj.seal.log.dao.impl.LogSysDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 评价日志管理模块的dao层的注入 -->
+	<bean id="feedLogSysDao" class="com.dj.seal.log.dao.impl.FeedLogSysDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 文档管理模块的dao层注入 -->
+	<bean id="docDao" class="com.dj.seal.doc.dao.impl.DocDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 文档打印模块的dao层注入 -->
+	<bean id="docPrintDao" class="com.dj.seal.docPrint.dao.impl.DocPrintDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- Sealog盖章打印日志的dao层注入 -->
+	<bean id="sealLogDao" class="com.dj.seal.sealLog.dao.impl.SealLogDao">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- Huizhilog盖章打印日志的dao层注入 -->
+	<bean id="huizhiLogDao" class="com.dj.seal.huizhilog.dao.impl.HuizhiLogDao">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 应用系统模块的dao层注入 -->
+	<bean id="appSysDao" class="com.dj.seal.appSystem.dao.impl.IAppSystemDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 电子对账系统Dao层注入 -->
+	<bean id="EleAccountCheckDao" class="com.dj.seal.accountCheckSys.dao.impl.EleInternationalAccountDaoImpl">
+	<property name="dataSource">
+	<ref bean="dataSource"/>
+	</property>
+	</bean>
+	<!-- 公积金回单盖章 -->
+	<bean id="accumulationImpl" class="com.dj.seal.accumulationFund.service.impl.AccumulationDealImpl">
+	<property name="dataSource">
+	<ref bean="dataSource"/>
+	</property>
+	</bean>
+	
+	<!-- 机构号和级别号dao层 -->
+	<bean id="UnitAndLevelDaoImpl" class="com.dj.seal.unitAndLevel.impl.UnitAndLevelDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+</beans>

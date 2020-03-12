@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN" "http://getahead.org/dwr/dwr30.dtd">
+
+<dwr>
+	<allow>
+		<!-- 用户管理子模块的dwr注入 -->
+		<create creator="spring" javascript="SysUser">
+			<param name="beanName" value="IUserService" />
+		</create>
+		<!-- 对用户表定义转换器 -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SysUser">
+			<param name="include"
+				value="useing_key,unique_id,user_id,create_user,create_data,create_name,user_name,dept_no,dept_name,mytable_left,mytable_right,last_visit_time,initial_password,operate_user,operate_time,status,state" />
+		</convert>
+		
+		<!-- 授权信息的dwr注入 -->
+		<create creator="spring" javascript="LicenseInfo">
+			<param name="beanName" value="licenseService" />
+		</create>
+		<!-- 对授权信息定义转换器 -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.LicenseInfo">
+			<param name="include"
+				value="able_data,sealnum,usernum,dept,usernumeuse,sealnumuse" />
+		</convert>
+		
+		<!-- 单位的dwr注入(oyxy) -->
+		<create creator="spring" javascript="SysUnit">
+			<param name="beanName" value="ISysUnitService" />
+		</create>
+		<!-- 对单位表定义转换器 -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SysUnit">
+			<param name="include" value="unit_name,dept_no" />
+		</convert>
+		<!-- 部门管理子模块的dwr注入(oyxy) -->
+		<create creator="spring" javascript="SysDept">
+			<param name="beanName" value="ISysDeptService" />
+		</create>
+		<!-- 对部门表定义转换器 -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SysDepartment">
+			<param name="include"
+				value="dept_name,dept_no,dept_parent,inManage,priv_no,tree_id,p_tree_id,has_children,bank_dept" />
+		</convert>
+		<create creator="spring" javascript="SysFunc">
+			<param name="beanName" value="ISysFuncService" />
+		</create>
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SysFunc">
+			<param name="include"
+				value="func_id,
+					menu_no,
+					func_value,
+					func_name,
+					func_group,
+					func_image,
+					func_url,
+					checked" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.organise.web.SysFuncVo">
+			<param name="include"
+				value="func_id,
+					menu_no,
+					func_value,
+					func_name,
+					func_group,
+					func_image,
+					func_url,
+					checked = 0,
+					menu_name,
+					user_num,
+					role_num,
+					sel_users,
+					sel_roles" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.organise.web.form.UserForm">
+			<param name="include"
+				value="func_id,unique_id,user_id,user_name,user_psd,key_id,
+					key_sn,key_dn,	key_cert,cert_user,cert_issue,begin_time,
+					end_time,user_sex,user_birth,mobil_no,
+					user_remark,user_email,	dept_no,tel_no_dept,				
+					useing_key,  mobile_no_hidden,	    
+					print_able, user_theme,                  
+				    dept_name,    role_no,                   
+				    role_nos, role_names,					
+				    manage_range,                
+				    rang_type,					
+				    is_active,					
+				    is_exits,                   
+				    is_flow,
+				    is_approve,						
+				    user_type,                    
+				    user_ip,                   
+				    create_name,                   
+				    create_user,                  
+				    create_data,                  
+				    is_junior,                     
+				    xt_user,                       
+				    xt_pwd,                      
+				    qstart_time,
+				    qend_time" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.ViewMenu">
+			<param name="include"
+				value="menu_no,
+					menu_name,
+					menu_image,
+					func_group" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.util.struts.SysMenu">
+			<param name="include" value="view_menu,list_func" />
+		</convert>
+		<!--  角色管理子模块的dwr注入(oyxy)   -->
+		<create creator="spring" javascript="SysRole">
+			<param name="beanName" value="ISysRoleService" />
+		</create>
+		<!--  对角色表定义转换器   -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SysRole">
+			<param name="include"
+				value="role_id,
+				dept_no,
+				role_status,
+				role_name,
+				role_fun1,
+				role_fun2,
+				role_fun3,
+				role_fun4,
+				role_fun5,
+				role_tab" />
+		</convert>
+
+		<convert converter="bean"
+			match="com.dj.seal.organise.web.SysRoleVo">
+			<param name="include"
+				value="role_id,
+				dept_no,
+				role_status,
+				role_name,
+				role_fun1,
+				role_fun2,
+				role_fun3,
+				role_fun4,
+				role_fun5,
+				role_tab,
+				rule_num,
+				user_num,
+				func_v,
+				func_v2,
+				sel_users,
+				sel_rules" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.util.web.SearchForm">
+			<param name="include"
+				value="etpr_name,etpr_owner,etpr_addr,etpr_phone,
+					etpr_email,etpr_website,etpr_fax,area_no,
+					seal_name,status_seal,type_seal,cert_band,
+					cert_num,seal_user,begin_time,end_time,
+					cert_dn,app_type,begin_time_2,end_time_2,
+					user_no,user_name,dept_no,fbd_login,busi_discript,
+					type_busi,busi_name,status_busi,
+					banli_ret,banli_user,desc,flow_no,
+					menu_name,func_name,user_num,role_num,
+					user_ip,obj_type,obj_name,obj_no,
+					oper_time,module_no,reg_time,cert_name,
+					status_cert,sign_cert,role_tab,rule_name,rule_state,
+					start_time,flow_doc,flow_status,pre_user,next_user,banli_ret_2,begin_user,
+					flow_doc_2,create_user,role_name,req_type,sys_id,create_name,app_no,app_name,
+					cname,cshowname,cdatatype,ccreatetime,cuploadtime,mtplid,createuserid,uploaduserid,
+					cfilefilename,cdata,cstatus,date_type,phoneNo,createName,cvalue,roomId,cusName1,insTime,ineTime,
+					outsTime,outeTime,monery,cardNo,deptId,operuserid,coperstime,cmac,opertype,objid,
+					objname,result,cip,coperetime,model_id,model_name,rule_no,c_status,c_sort,
+					ad_id,ad_ctime,ad_filename,ad_state,ad_title,ad_dept,ad_deptname,
+					dyrq,gdh,cph,fwzy,shouliNo,approve_user,selectType,selectTime,checkstatus,
+					scannerContext,keyword,ceid,serialNo,tellerNo,feed_id,orgunit
+					" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.util.dao.PageSplit">
+			<param name="include"
+				value="datas,totalPage,nowPage,pageSize,totalCount" />
+		</convert>
+
+		<!-- 数据备份dwr注入（author:lzl）-->
+		<create creator="spring" javascript="Backup">
+		<param name="beanName" value="IBackupService" />
+		</create>  
+
+		<!--  印模管理(oyxy)   -->
+		<create creator="spring" javascript="SealTemp">
+			<param name="beanName" value="ISealTempService" />
+		</create>
+		<!--  对印模表定义转换器   -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SealTemplate">
+			<param name="include"
+				value="temp_id,temp_name,temp_data,seal_type,dept_no,image_width,image_height,seal_width,seal_height,seal_bit,temp_status,is_maked" />
+		</convert>
+		<!--  印章管理(yc)   -->
+		<create creator="spring" javascript="SealBody">
+			<param name="beanName" value="ISealBodyService" />
+		</create>
+		<!--  对印章表定义转换器   -->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.SealBody">
+			<param name="include"
+				value="seal_id,seal_data,seal_name,dept_no,dept_name,type_name,create_name,seal_creator,seal_type,create_time,seal_status,key_words" />
+		</convert>
+		<!--对系统日志管理-->
+		<create creator="spring" javascript="LogSys">
+			<param name="beanName" value="logSysService" />
+		</create>
+		<!--对系统日志定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.LogSys">
+			<param name="include"
+				value="log_id,selectType,selectTime,user_id,user_name,opr_time,opr_ip,opr_type,log_remark" />
+		</convert>
+		<!--对评价日志管理-->
+		<create creator="spring" javascript="FeedLogSys">
+			<param name="beanName" value="feedLogSysService" />
+		</create>
+		<!-- 对评价日志定义转换器 -->
+		<convert converter="bean" match="com.dj.seal.structure.dao.po.FeedLogSys">
+			<param name="include" value="log_id,user_id,opr_time,feed_id,feed_ret,reason,log_remark"></param>
+		</convert>
+		<!--对印章写入key日志定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.log.web.LogSealWriteVO">
+			<param name="include"
+				value="log_id,user_id,user_name,opr_time,opr_ip,opr_num,opr_sn,seal_id,seal_name,key_desc" />
+		</convert>
+		<!--对服务端盖章定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.ServerSealLog">
+			<param name="include"
+				value="user_id,caseseqid,server_id,opr_time,opr_ip,seal_status,file_name,opr_msg,seal_name,seal_type,dept_name" />
+		</convert>
+		<!--对最高院盖章定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.HuiZhiLog">
+			<param name="include"
+				value="user_id,caseseqid,file_name,opr_time,seal_name,seal_type,dept_no,dept_name,status" />
+		</convert>
+		<!--对证书管理-->
+		<create creator="spring" javascript="CertSrv">
+			<param name="beanName" value="CertService" />
+		</create>
+		<!--对证书管理定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.cert.web.form.CertForm">
+			<param name="include"
+				value="cert_no,cert_name,cert_src,cert_status,
+				cert_detail,dept_name,reg_user,is_Sealbody,
+				reg_time_str,reg_user_name,seal_num,seal_sel" />
+		</convert>
+
+
+		<!-- 模板管理模块开始 -->
+		<create creator="spring" javascript="modelFileSrv">
+			<param name="beanName" value="modelFileService" />
+		</create>
+		<convert converter="bean"
+			match="com.dj.seal.modelFile.po.ModelFile">
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.modelFile.vo.ModelFileVo">
+		</convert>
+		<!-- 模板管理模块结束 -->
+
+		<!-- 盖章规则模块开始 -->
+		<create creator="spring" javascript="GaiZhangRuleSrv">
+			<param name="beanName" value="gaiZhangRuleService" />
+		</create>
+		<convert converter="bean"
+			match="com.dj.seal.gaizhangRule.po.GaiZhangRule">
+			<param name="include"
+				value="rule_no,rule_name,seal_id,use_cert,cert_no,rule_type,arg_desc,rule_state" />
+		</convert>
+		<convert converter="bean"
+			match="com.dj.seal.gaizhangRule.vo.GaiZhangRuleVo">
+			<param name="include"
+				value="rule_no,rule_name,seal_id,use_cert,cert_no,rule_type,arg_desc,rule_state,seal_name" />
+		</convert>
+		<!-- 盖章规则模块结束 -->
+
+		<!--打印设置管理-->
+		<create creator="spring" javascript="DocPrintService">
+			<param name="beanName" value="docPrint_service" />
+		</create>
+		<convert converter="bean" match="com.dj.seal.docPrint.vo.DocPrintSetVo"></convert>
+		<!-- 章操作日志模块的对象转换 -->
+		<convert converter="bean" match="com.dj.seal.structure.dao.po.SealLog"></convert>
+		<convert converter="bean"
+			match="com.dj.seal.docPrint.vo.DocPrintSetVo">
+		</convert>
+		<!--应用系统-->
+		<create creator="spring" javascript="AppSystem">
+			<param name="beanName" value="appSysService" />
+		</create>
+		<!--应用系统定义转换器-->
+		<convert converter="bean"
+			match="com.dj.seal.appSystem.web.form.AppSystemForm">
+			<param name="include"
+				value="app_id,app_no,app_name,app_ip,app_pwd,create_date,createdate1,create_username" />
+		</convert>
+		<!-- 文档管理（实际不存在,只为了显示文档列表） -->
+		<create creator="spring" javascript="DocSrv">
+			<param name="beanName" value="docService" />
+		</create>
+		<convert converter="bean"
+			match="com.dj.seal.structure.dao.po.DocmentBody">
+			<param name="include"
+				value="doc_no,doc_name,doc_type,doc_title,doc_creator,create_time,create_ip,doc_keys,doc_content,dept_no,dept_name" />
+		</convert>
+		
+		<!-- 通用字典管理 -->
+		<create creator="spring" javascript="HotelDic">
+			<param name="beanName" value="hotelTDicService"></param>
+		</create>
+			
+		<convert converter="bean" match="com.dj.seal.hotel.po.HotelTDic">
+			<param name="include" value="cid,cname,cshowname,cdatatype,sys,c_status,c_sort"/>
+		</convert>
+		<convert converter="bean" match="com.dj.seal.hotel.vo.RecordVO">
+			<param name="include" value="roomId,cfilefilename,cdata"/>
+		</convert>
+		<!-- hotel扫描件单据管理 -->
+		<create creator="spring" javascript="ScannerHotelRecord">
+			<param name="beanName" value="scannerRecordService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.ScannerRecordPO">
+			<param name="include" value="id,filename,createuserid,deptno,createtime,ip,context,filepath"></param>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.vo.ScannerRecordVO">
+			<param name="include" value="id,filename,createuserid,deptno,createtime,ip,context,filepath"></param>
+		</convert>
+		
+		<!-- 农商行单据管理 -->
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.NSHRecordPo">
+			<param name="include" value="cid,cip,cuploadtime,caseseqid,trancode,tellerid,orgunit,ceid,remarks,d_cuacno,d_trandt,d_jioyje,voucherno,d_tranname"></param>
+		</convert>
+		<create creator="spring" javascript="NSHHotelRecord">
+			<param name="beanName" value="nshRecordService"></param>
+		</create>
+		
+		<!-- hotel单据管理 -->
+		
+		<create creator="spring" javascript="HotelRecord">
+			<param name="beanName" value="recordService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.RecordPO">
+			<param name="include" value="cid,cip,ccreatetime,cuploadtime,mtplid,createuserid,uploaduserid,cfilefilename,cdata,
+			cstatus,hasdone,cname,cvalue,agreementid,haveidcard,haveattach,checkstatus,deptno,deptname,jiheuser,jihetime,jihereason,remarks"></param>
+		</convert>
+		
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.RecordAffiliatePO">
+			<param name="include" value="id,cname,cvalue,recordid"></param>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.vo.RecordVO">
+			<param name="include" value="cid,cip,ccreatetime,cuploadtime,mtplid,createuserid,uploaduserid,cfilefilename,cdata,
+			cstatus,createUserName,roomId,guestname1,indate,outdate,totalmoney,cardNo,deptId,affiliateList,
+			mtplname,hasdone,cname,cvalue,agreementid,haveidcard,haveattach,checkstatus,deptno,deptname,jiheuser,jihetime,jihereason,remarks"></param>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.vo.ShowAffiliateValue">
+			<param name="include" value="name,value"/>
+		</convert>
+		
+		<!-- 模版判定条件 -->
+		<create creator="spring" javascript="Masterplatejudge">
+			<param name="beanName" value="masterplatejudgeService"></param>
+		</create>
+		<convert converter="bean" match="com.dj.seal.hotel.po.Masterplatejudgep">
+			<param name="include" value="c_id,c_name,c_value,master_platecid,c_valuetype"/>
+		</convert>
+		<convert converter="bean" match="com.dj.seal.hotel.vo.Masterplatejudgev">
+			<param name="include" value="c_id,c_name,c_value,master_platecid,c_valuetype,masterplate_name"/>
+		</convert>
+		
+		<!-- 客户端日志操作 -->
+		<create creator="spring" javascript="ClientOperLog">
+			<param name="beanName" value="clientOperLogService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.HotelTClientOperLogPO">
+			<param name="include" value="cid,operuserid,selectTime,selectType,copertime,cip,cmac,opertype,objid,objname,result"/>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.vo.HotelTClientOperLogVO">
+			<param name="include" value="cid,operUserId,selectTime,selectType,coperTime,cip,cmac,operType,objId,objName,result"/>
+		</convert>
+		
+		<!-- 模板规则管理 -->
+		<create creator="spring" javascript="MFRSrv">
+			<param name="beanName" value="modelFileRuleService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.dj.seal.modelFileRule.po.ModelFileRulePO">
+			<param name="include" value="mid,model_id,rule_no"/>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.modelFileRule.vo.ModelFileRuleVO">
+			<param name="include" value="mid,model_id,rule_no,model_name,rule_name"/>
+		</convert>
+		
+		<!-- 广告管理 -->
+		<create creator="spring" javascript="AdSystem">
+			<param name="beanName" value="hotelAdverService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.po.HotelAdvertPO">
+			<param name="include" value="ad_id,ad_ctime,ad_filename,ad_state,ad_title,ad_dept,approve_user,ad_updatetime,ad_version,ad_opinion,ad_approvetime,ad_starttime,ad_endtime,ad_scorlltime,ad_advertdata"/>
+		</convert>
+		
+		<convert converter="bean" match="com.dj.seal.hotel.vo.HotelAdvertVO">
+			<param name="include" value="ad_id,ad_ctime,ad_filename,ad_state,ad_title,ad_dept,ad_deptname,approve_user,ad_updatetime,ad_opinion,ad_approvetime,ad_starttime,ad_endtime,ad_scorlltime,ad_advertdata"/>
+		</convert>
+		
+		<!-- 图表生成 -->
+		<convert converter="bean" match="com.dj.seal.hotel.vo.ChartVO">
+		</convert>
+		<!-- 单据统计 -->
+		<convert converter="bean" match="com.dj.seal.hotel.vo.RecordTongJi">
+		</convert>
+		<create creator="spring" javascript="chartSrv">
+			<param name="beanName" value="chartService"></param>
+		</create>
+		
+		<!-- 无纸化系统jsp生成文件 -->
+		<create creator="spring" javascript="HMFSrv">
+			<param name="beanName" value="hotelMakeFileService"></param>
+		</create>
+		
+		<create creator="new" javascript="VSeal" class="serv.VarifyAddSeal">
+			<include method="varifyAddSeal"/>
+		</create>
+		
+		<convert converter="bean" match="com.dj.hotelApi.HotelFilePo">
+		</convert>
+		
+		<convert converter="bean" match="com.dj.hotelApi.BusiInfo">
+		</convert>
+		
+		<convert converter="bean" match="com.neusoft.vo.RecordMergeVO">
+			<param name="include" value="cid,mergedate,filename,savefilename,createtime"></param>
+		</convert>
+		<create creator="spring" javascript="HotelRecordMerge">
+			<param name="beanName" value="recordMergeService"></param>
+		</create>
+		
+		<convert converter="bean" match="com.neusoft.vo.RecordRoomMergeVO">
+			<param name="include" value="cid,guestname,roomno,mergedate,filename,savefilename,createtime"></param>
+		</convert>
+		<create creator="spring" javascript="HotelRecordRoomMerge">
+			<param name="beanName" value="recordRoomMergeService"></param>
+		</create>
+		<!-- MD5的dwr注入 -->
+		<create creator="new" javascript="MD5Util" class="com.dj.seal.util.encrypt.MD5Util">
+		<include method="MD5"/>
+		</create>
+	</allow>
+</dwr>
