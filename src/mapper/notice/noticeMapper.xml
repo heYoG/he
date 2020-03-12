@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.notice.INoticeDao">
+	<resultMap type="vo.notice.NoticeVo" id="noticeID">
+		<id column="id" property="id"></id>
+		<result column="theme" property="theme"></result>
+		<result column="sender" property="sender"></result>
+		<result column="createTime" property="createTime"></result>
+		<result column="text" property="text"></result>
+		<result column="sendStatus" property="sendStatus"></result>
+		<result column="noticeStatus" property="noticeStatus"></result>
+		<association property="user" javaType="vo.userVo.UserVo">
+			<id column="id" property="id"/>
+			<result column="userNo" property="userNo"/>
+			<result column="pwd" property="pwd"/>
+			<result column="age" property="age"/>
+			<result column="userName" property="userName"/>
+			<result column="status" property="status"/>
+		</association>
+	</resultMap>
+	<insert id="sendNotice" parameterType="vo.notice.NoticeVo">
+		insert into notice_table values(null,#{sender},#{createTime},#{text},${sendStatus},${noticeStatus},${user.id},#{theme});
+	</insert>
+	<select id="getNoticeCount" resultType="int">
+		select count(id) from notice_table;
+	</select>
+	<select id="noticePageList" parameterType="util.CommenClass" resultMap="noticeID">
+		select*from notice_table limit ${pageIndex},${pageSize};
+	</select>
+	<update id="updateNoticeStatus">
+		update notice_table
+		<if test="type==0">
+			set noticeStatus=0 
+		</if>
+		<if test="type==1">
+			set noticeStatus=1
+		</if>
+		  where id=${id};
+	</update>
+	<!-- 传单个参数时,id在DAO层没有@Param：#{id}使用占位符形式，不能使用${};或使用${_parameter} -->
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice_table where id=#{id};
+	</delete>
+</mapper>

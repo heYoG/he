@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文件名默认 -->
+<configuration status="INFO" monitorInterval="30">
+	<properties>
+		<!-- 自定义常量,${变量名}引用 -->
+		<property name="testPath">D:/eclipsePros/ssh_mvc/test</property>
+		<property name="rollingPath">D:\eclipsePros\ssh_mvc\log</property>
+	</properties>
+	<appenders>
+		<!-- 控制台日志输出,默认DEBUG,target默认SYSTEM_OUT,name任定 -->
+		<console name="Console" target="SYSTEM_OUT">
+			<!-- 过滤控制台输出日志,高于或等于level级别的输出,否则过滤掉 -->
+			<ThresholdFilter level="debug" onMatch="accept" onMismatch="deny"/>
+			<!-- 日志输出格式:%d:日期格式SSS必须大写,%c:日志信息所属类目,通常是类全名,%p:日志级别,%m:具体日志信息,%n:换行符(换行),win中为rn;Unix中为n -->
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
+		</console>
+		<!-- 输出日志到指定目录,默认DEBUG ,name任定,fileName:日志保存目录(项目根目录)，append:是否追加生成日志,适用于测试-->
+		<File name="test" fileName="${testPath}\test.log" append="true">
+			<ThresholdFilter level="all" onMatch="accept" onMismatch="deny"/>
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
+		</File>
+		<!-- 日志超出指定大小时自动按要求格式创建新日志文件,旧文件按要求规档 -->
+		<!-- fileName:初始生成日志名(项目根目录,没有自动创建),filePattern:新生成日志目录和文件名(项目根目录,没有自动创建),创建日期文件夹要用$${date:...},%i:整数计数器-从1开始 -->
+		<RollingFile name="rollingFile" fileName="${rollingPath}/ssh.log" filePattern="${rollingPath}/$${date:yyyy-MM}/%d{yyyy-MM-dd}_%i.log">
+			<ThresholdFilter level="info" onMatch="accept" onMismatch="deny"/>
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%c.%M] [%p] %m%n"/>
+			<Policies>
+				<!-- 日志文件生成策略,interval:步长,默认从0点开始;modulate:是否从0点偏移,true则会将当前时间从0点开始按步长偏移,
+				如当前时间小于步长，则当时间到达第一个步长后开始按步长计算下一个滚动时间,如当前为2点，则下一个滚动时间：10个小时后(2+10=12)、然后是24(0点)、12点,依次类推;
+				如已大于步长，如13点，则下一个滚动时间：24(12点相当于已滚动一次，24点(0点)为服务启动的第一次滚动)
+				 -->
+				<TimeBasedTriggeringPolicy interval="12" modulate="true"/>
+				<!-- 设置fileName日志目录下的文件多大新建文件，旧文件移入指定文件夹,单位不区分大小写 -->
+				<SizeBasedTriggeringPolicy size="50Mb"/>
+				<!-- 设置相同目录(log下)下允许的最大文件个数，默认7个
+				max配合计数器%i使用:①无-max无效,按filePattern生成的第二个文件会覆盖第一个;
+				②有%i-达到max时删除最旧的,新的名称覆盖最新的，旧的名称往前移一位(ssh-1被删除,ssh-2——>ssh-1,ssh-3——>ssh-2,新建文件名ssh-3)
+				  -->
+				<DefaultRolloverStrategy max="20"/>
+			</Policies>
+		</RollingFile>
+	</appenders>
+	<loggers><!-- 日志输出,必有，否则无法输出前面配置好的日志 -->
+		<!--指定输出目录下的日志,及级别，可用于屏蔽某些没必要的输出日志，
+		name:指定类或类所在包;level:可输出日志的级别 -->
+		<!-- <logger name="org.springframework" level="WARN"></logger> -->
+		<!-- 指定项目根日志,level:可输出日志级别;appender-ref:输出到哪个appender(前面已配置节点),各节点级别以各自设置为准 -->
+		<root level="all">
+			<appender-ref ref="Console"/>
+			<appender-ref ref="test"/>
+			<appender-ref ref="rollingFile"/>
+		</root>
+	</loggers>
+</configuration>

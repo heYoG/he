@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 扫描包 -->
+	<context:component-scan base-package="aop"/>
+	<context:component-scan base-package="controller"/>
+	<context:component-scan base-package="mapper"/><!-- 必须扫描Dao层，否则使用时创建Dao层的bean失败 -->
+	<context:component-scan base-package="service"/>
+	<context:component-scan base-package="util"/>
+	<context:component-scan base-package="vo"/>
+	<!-- 加载属性文件获取连接数据库数据,当前配置文件下的所有${}值将从属性文件取 -->
+	<context:property-placeholder location="classpath:mybatisJDBC.properties"/>
+	<!-- 连接池配置 -->
+	<!-- 使用dbcp数据源,数据库连接不再使用时放到连接池中 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName"><!-- 驱动名称-->
+			<value>${jdbc.driver}</value>
+		</property>
+		<property name="url"><!-- 连接地址 -->
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username"><!-- 数据库连接用户名 -->
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password"><!-- 数据库连接用户密码 -->
+			<value>${jdbc.password}</value>
+		</property>
+		<!-- 连接池启动时的初始值 -->
+		<property name="initialSize" value="5"></property>
+		<!-- 连接池最大活跃连接数 -->
+		<property name="maxActive" value="12"></property>
+		<!-- 连接数最大空闲连接数 -->
+		<property name="maxIdle" value="5"></property>
+		<!-- 连接池最小空闲连接数 -->
+		<property name="minIdle" value="2"></property>
+		<!-- 连接最大等待时间ms -->
+		<property name="maxWait" value="60000"></property>
+		<!-- 定时验证连接有效性,即刷新连接,避免长时间不连接mysql的连接失效而client不知道导致连接异常 -->
+		<!-- 定时对线程池中的链接进行validateObject校验，对无效的链接进行关闭后,会调用ensureMinIdle，
+		适当建立链接保证最小的minIdle连接数,默认false -->
+		<property name="testWhileIdle" value="true"></property>
+		<!--  true时每次借出链接都要检查，影响性能 ,默认true-->
+		<property name="testOnBorrow" value="false"></property>
+		<!-- 链接归还时验证,当很久才归还连接已失效,所以设为false,不验证,默认false -->
+		<property name="testOnReturn" value="false"></property>
+		<!-- 验证连接的sql -->
+		<property name="validationQuery" value="select 1"></property>
+		<!-- 多久验证/刷新一次(10分钟),单位ms,应小于mysql默认的8小时(28800s) -->
+		<property name="timeBetweenEvictionRunsMillis" value="600000"></property>
+		<!-- 每次验证的连接数,最好与maxActive一致,检查当前所有有效连接 -->
+		<property name="numTestsPerEvictionRun" value="12"></property>
+		<!-- 连接池中连接可空闲时间,超时则被逐出连接池,单位ms,默认30m -->
+		<property name="minEvictableIdleTimeMillis" value="1800000"></property>
+	</bean>
+
+	<!-- 集成mybatis的配置 -->
+	<!--SqlSessionFactoryBean配置  -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- mybatis对数据库的持久化操作配置 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- Mapper接口,**表示任意多层目录,classpath后必须有*,否则后面的通配符无效 -->
+		<property name="mapperLocations" value="classpath*:mapper/**/*.xml"></property><!-- Mapper接口 -->
+		<!-- 加载mybaits配置文件,其中设置mybatis属性-如输出mybatis的sql -->
+		<property name="configLocation" value="classpath:mybaits-config.xml"></property>
+	</bean>
+	<!-- Mapper接口(Dao层)所在包指定 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="mapper"></property>
+	</bean>
+	<!-- spring事务配置 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+</beans>

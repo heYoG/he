@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.user.IUserDao"><!-- 一个namespace对应一个dao接口 -->
+	<resultMap type="vo.userVo.UserVo" id="userID"><!-- 一对多级联关系的一方 -->
+		<id column="id" property="id"/><!-- 主键 -->
+		<result column="userNo" property="userNo"/>
+		<result column="pwd" property="pwd"/>
+		<result column="age" property="age"/>
+		<result column="userName" property="userName"/>
+		<result column="status" property="status"/>
+		<collection property="noticeVo" ofType="vo.notice.NoticeVo"><!-- 一对多级联关系的多方 -->
+			<id column="id" property="id"/><!-- 主键 -->
+			<result column="sender" property="sender"/>
+			<result column="createTime" property="createTime"/>
+			<result column="text" property="text"/>
+			<result column="sendStatus" property="sendStatus"/>
+			<result column="noticeStatus" property="noticeStatus"/>
+		</collection>
+		<collection property="log" ofType="vo.logVo.LogVo">
+			<id column="id" property="id"/>
+			<result column="theme" property="theme"/>
+			<result column="operateTime" property="operateTime"/>
+			<result column="status" property="status"/>
+		</collection>
+	</resultMap>
+	<select id="login" parameterType="string" resultMap="userID">
+		select*from user_table where userNo=#{userNo} and pwd=#{password};
+	</select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.log.ILogDao">
+	<resultMap type="vo.logVo.LogVo" id="logID">
+		<id column="id" property="id"/>
+		<result column="theme" property="theme"/>
+		<result column="operateTime" property="operateTime"/>
+		<result column="status" property="status"/>
+		<association property="user" javaType="vo.userVo.UserVo">
+			<id column="id" property="id"/>
+			<result column="userNo" property="userNo"/>
+			<result column="pwd" property="pwd"/>
+			<result column="age" property="age"/>
+			<result column="userName" property="userName"/>
+			<result column="status" property="status"/>
+		</association>
+	</resultMap>
+	<!-- useGeneratedKeys="true" keyProperty="user.id" 每执行上次会导致user.id自增1,后期获取到的外键结果不正确
+	如果是插入用户表user_table则id会自增,插入的是日志表，数据库中用户表id不会自增，但是程序中的id会不断加大，导致从session中获取的外键值不对。
+	 -->
+	<insert id="saveLog" parameterType="vo.logVo.LogVo">
+		insert into log_table values(null,#{theme},#{operateTime},${status},${user.id},#{comment});
+	</insert>
+	
+</mapper>
