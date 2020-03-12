@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	<!-- 注解驱动,自动提供springmvc必要的注解bean注入,如@Controller,@requestMapping -->
+	<mvc:annotation-driven/>
+	<!-- 启动控制层扫描，同包只要扫描一次，在spring容器中不需要再扫描 -->
+	<context:component-scan base-package="controllers"></context:component-scan>
+	<!-- 视图解析器bean配置 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 要拦截视图前缀(目录) -->
+		<property name="prefix" value="/jsp/"></property>
+		<!-- 要拦截视图后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 文件上传解析器bean的注入 -->
+	<bean id="uploadResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的编码(UTF-8) -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 一次性上传文件的最大值，单位byte -->
+		<property name="maxUploadSize" value="10240000"></property>
+		<!-- 上传文件阈值，大于则生成临时文件在硬盘，小于等于则保存在内存中 -->
+		<property name="maxInMemorySize" value="1024000"></property>
+	</bean>
+</beans>

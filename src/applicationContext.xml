@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation=
+"http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 开启注解扫描,所有用到注解的文件包都要扫描 -->
+	<!-- spring注解开发要扫描包 -->
+	<context:component-scan base-package="util"></context:component-scan>
+	<context:component-scan base-package="vo"></context:component-scan>
+	<context:component-scan base-package="dao"></context:component-scan>
+	<context:component-scan base-package="service"></context:component-scan>
+	<!-- AOP注解要扫描包 -->
+	<context:component-scan base-package="aop"></context:component-scan>
+	<!-- 引入外部配置,注解实现获取上下文接口时取配置文件bean需导入bean所在容器 -->
+	<!-- <import resource="classpath:applicationContext_Vo.xml"/> -->
+	<!-- <import resource="classpath:applicationContext_service.xml"/> -->
+	<!-- 使用dbcp数据源及数据库连接配置连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- 驱动 -->
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<!-- 连接地址 -->
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1:3306/ssh?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>
+		<!-- 用户名,未加密 -->
+		<property name="username">
+			<value>root</value>
+		</property>
+		<!-- 密码,未加密 -->
+		<property name="password">
+			<value>root</value>
+		</property>
+		<!-- 连接池启动时的初始值 -->
+		<property name="initialSize" value="5"></property>
+		<!-- 连接池最大活跃连接数 -->
+		<property name="maxActive" value="12"></property>
+		<!-- 连接数最大空闲连接数 -->
+		<property name="maxIdle" value="5"></property>
+		<!-- 连接池最小空闲连接数 -->
+		<property name="minIdle" value="2"></property>
+		<!-- 连接最大等待时间ms -->
+		<property name="maxWait" value="60000"></property>
+		
+		<!-- 定时验证连接有效性,即刷新连接,避免长时间不连接mysql的连接失效而client不知道导致连接异常 -->
+		<!-- 定时对线程池中的链接进行validateObject校验，对无效的链接进行关闭后,会调用ensureMinIdle，
+		适当建立链接保证最小的minIdle连接数,默认false -->
+		<property name="testWhileIdle" value="true"></property>
+		<!--  true时每次借出链接都要检查，影响性能 ,默认true-->
+		<property name="testOnBorrow" value="false"></property>
+		<!-- 链接归还时验证,当很久才归还连接已失效,所以设为false,不验证,默认false -->
+		<property name="testOnReturn" value="false"></property>
+		<!-- 验证连接的sql -->
+		<property name="validationQuery" value="select 1"></property>
+		<!-- 多久验证/刷新一次(10分钟),单位ms,应小于mysql默认的8小时(28800s) -->
+		<property name="timeBetweenEvictionRunsMillis" value="600000"></property>
+		<!-- 每次验证的连接数,最好与maxActive一致,检查当前所有有效连接 -->
+		<property name="numTestsPerEvictionRun" value="12"></property>
+		<!-- 连接池中连接可空闲时间,超时则被逐出连接池,单位ms,默认30m -->
+		<property name="minEvictableIdleTimeMillis" value="1800000"></property>
+	</bean>
+	
+	<!-- 集成hibernate框架配置，将SessionFactory交给了Spring来管理，property中的name必须与底层一致 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- hibernate使用前面已配置dbcp数据源，名称要一致 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- hibernate基本属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- mysql方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- hibernate自动生成数据表 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 显示 hibernate sql -->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 格式化hibernate输出sql -->
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<!-- hibernate映射文件配置,name不能是其它名称 -->
+		<property name="mappingResources">
+			<list>
+				<value>vo/userVo/UserVo.hbm.xml</value>
+				<value>vo/userVo/AuthorityVo.hbm.xml</value>
+				<value>vo/deptVo/DeptVo.hbm.xml</value>
+				<value>vo/fileVo/FileManageVo.hbm.xml</value>
+				<value>vo/adVo/AdVo.hbm.xml</value>
+				<value>vo/sealImageVo/SealImageVo.hbm.xml</value>
+				<value>vo/emailVo/EmailVo.hbm.xml</value>
+				<value>vo/logVo/LogVo.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- hibernate的crud bean配置,是hibernate Session的轻量级封装 -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- hibernate事务管理配置 -->
+	<bean id="defaultTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- tx标签采用声明式事务(defaultTransactionManager),使用annotation定义事务，设置true表示使用spring中的代理(cglib动态代理)——默认使用jdk动态代理 -->
+	<!-- <tx:annotation-driven transaction-manager="defaultTransactionManager" proxy-target-class="true"/> -->
+	
+	<!-- 配置文件的AOP配置,此处会再次加载切点页面一次 -->
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* dao.sealImageDao.impl.SealImageDaoImpl.* (..))" id="treatPointcut"/>切入点
+		<aop:pointcut expression="execution( * test.aop.PointcutClass.*(..))" id="treatPointcut"/>测试切入点
+		<aop:aspect ref="commenAop">切面
+		<aop:around method="writeLog" pointcut-ref="treatPointcut"/>通知类型-环绕通知 
+		<aop:before method="writeLog" pointcut-ref="treatPointcut"/>前置通知
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- 开启自动代理,AOP注解方式必须配置,默认false,jdk动态代理;为true时启用cglib动态代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="vo.emailVo.EmailVo" table="email_table">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <property name="sender" type="java.lang.String">
+      <column name="sender"/>
+    </property>
+    <property name="sendTime" type="java.sql.Timestamp">
+      <column name="sendTime"/>
+    </property>
+    <property name="addressee" type="java.lang.String">
+      <column name="addressee"/>
+    </property>
+    <property name="theme" type="java.lang.String">
+      <column name="theme"/>
+    </property>
+    <property name="text" type="java.lang.String">
+      <column name="text"/>
+    </property>
+    <property name="accessory" type="java.lang.String">
+      <column name="accessory"/>
+    </property>
+    <property name="status" type="int">
+      <column name="status"/>
+    </property>
+    <property name="type" type="int">
+    	<column name="type"/>
+    </property>
+    <many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"/>
+  </class>
+</hibernate-mapping>

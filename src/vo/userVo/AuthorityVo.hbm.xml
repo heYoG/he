@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="vo.userVo.AuthorityVo" table="authority_table">
+		<id name="id" type="java.lang.Integer">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<property name="authVal" type="java.lang.Integer">
+			<column name="authVal"></column>
+		</property>
+		<property name="authName" type="java.lang.String">
+			<column name="authName"></column>
+		</property>
+		<set name="user" lazy="false" inverse="false">
+			<key column="AuthorityID"></key>
+			<one-to-many class="vo.userVo.UserVo"/>
+		</set>
+	</class>
+</hibernate-mapping>

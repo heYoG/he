@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="vo.logVo.LogVo" table="log_table">
+    <id name="id" type="int">
+      <column name="id"/>
+      <generator class="native"/>
+    </id>
+    <property name="theme" type="java.lang.String">
+      <column name="theme"/>
+    </property>
+    <property name="operateTime" type="java.sql.Timestamp">
+      <column name="operateTime"/>
+    </property>
+    <property name="status" type="int">
+      <column name="status"/>
+    </property>
+    <many-to-one name="user" lazy="false" column="user_id" class="vo.userVo.UserVo"></many-to-one>
+  </class>
+</hibernate-mapping>
