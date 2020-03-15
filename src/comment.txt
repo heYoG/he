@@ -13,3 +13,5 @@ way2=hibernate.cfg.xml
 way3=applicationContext.xml
 
 4.使用log4j2管理日志
+
+5.发布web service服务

@@ -5,10 +5,16 @@
 	padding: 3px;
 }
 
-ul, li {
+ul {
 	list-style-type: none;
 	cursor:pointer;/*手状光标*/
 }
+
+li{
+ 	list-style-type: none;
+	cursor:pointer;/*手状光标*/
+	white-space:nowrap;
+ }
 
 #dvTaskBar{
 	border:0px solid;

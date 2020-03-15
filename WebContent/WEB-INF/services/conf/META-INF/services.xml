@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 服务名称，wsdl路径部分,一个<service>元素只能发布一个WebService类，
+要发布多个webservice，可以在文件两端加上<serviceGroup>...</serviceGroup>,必须  -->
+<service name="SshWebService">
+	<!-- 服务描述，任意,可选 -->
+ 	<description>axis2WebService测试</description>
+ 	<!-- 要发布web service服务的类,必须 -->
+ 	<parameter name="WebServiceClass">webservice.WebServiceInterface</parameter>
+ 	<!-- 要发布web service服务的方法 ,有多少个方法写多少个operation标签 -->
+ 	<!-- <operation name="testWebService">
+ 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"></messageReceiver>
+ 	</operation> -->
+	<!-- 配置消息接收器，Axis2会自动选择 ,不需要显示的写出要发布Web Service的方法-->  
+ 	<messageReceivers>
+			<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
+				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" /><!-- 可处理输入输出 -->
+			<messageReceiver
+				mep="http://www.w3.org/2004/08/wsdl/in-only"
+				class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" /><!-- 只处理输入 -->
+		</messageReceivers>
+</service>
