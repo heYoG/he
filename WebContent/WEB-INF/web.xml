@@ -53,10 +53,11 @@
   	<servlet-name>AxisServlet</servlet-name>
   	<!-- 使用axis2发布web service服务 -->
   	<servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>  
   </servlet>
   <servlet-mapping>
   	<servlet-name>AxisServlet</servlet-name>
   	<!-- webService名称要和自定义过滤器中排除过滤url含所指定的字符一致，否则会被struts2过滤器拦截 -->
-  	<url-pattern>/webService/*</url-pattern>
+  	<url-pattern>/services/*</url-pattern>
   </servlet-mapping>
 </web-app>

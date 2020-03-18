@@ -25,7 +25,7 @@ public class StrutsFilter extends StrutsPrepareAndExecuteFilter {
 			throws IOException, ServletException {
 		HttpServletRequest request=(HttpServletRequest)req;
 		/*不过滤含webService字符的求Web Service请求*/
-		if(request.getRequestURI().contains("webService"))
+		if(request.getRequestURI().contains("services"))
 			/*过滤含webService的请求路径,从此继续执行,将请求转发给过滤器链上下一个对象。
 			 * 这里的下一个指的是下一个filter，如果没有filter那就是你请求的资源*/
 			chain.doFilter(req, res);
