@@ -157,4 +157,10 @@
 			<ref bean="dataSource"/>
 		</property>
 	</bean>
+	<!-- 企业网银和对账系统dao层 -->
+	<bean id="onlineBAndEleSImpl" class="com.dj.seal.util.socket.onlineBank.dao.impl.OnlineBankAndEleSysDaoImpl">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
 </beans>

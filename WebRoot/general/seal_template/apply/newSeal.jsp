@@ -319,19 +319,24 @@ function GetDate(nText) {
 						<br>
 						<br>
 					</td>
-					<td nowrap class="TableContent">
+					<td nowrap class="TableContent" colspan="1">
 						<div style="display: none;">
 							申请时间：
 						</div>
 						<br>
 						<br>
 					</td>
-					<td class="TableData">
-
+					<td text-align="center" class="TableData" width="350" rowspan="11"
+						colspan="3">
+						<%@include file="../../../inc/makeSealObject.jsp"%>
 						<br>
+						<div align="center">
+							<input name="SelBMPFile" type="button" class="BigButton"
+								id="SelBMPFile" value="选择BMP文件"
+								onclick="return SelBMPFile_onclick()">
+						</div>
 						<br>
 					</td>
-
 				</tr>
 				<tr>
 					<td nowrap class="TableContent" width="100">
@@ -344,17 +349,6 @@ function GetDate(nText) {
 							onblur="check_name(this.value);">
 						&nbsp;
 						<span id="temp_name_msg"></span>
-						<br>
-					</td>
-					<td align="center" class="TableData" width="250" rowspan="10"
-						colspan=2>
-						<%@include file="../../../inc/makeSealObject.jsp"%>
-						<br>
-						<div align="right">
-							<input name="SelBMPFile" type="button" class="BigButton"
-								id="SelBMPFile" value="选择BMP文件"
-								onclick="return SelBMPFile_onclick()">
-						</div>
 						<br>
 					</td>
 				</tr>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- 在src下默认自动加载,以下所有功能都基于有日志改变后才起作用 -->
+<configuration status="error"><!-- 本身输出日志级别error,大于等于此级别的都将输出 -->
+	<!--先定义所有的appender -->
+	<appenders>
+		<!--应用log4j输出控制台日志的配置(不控制java的其它输出-启动tomcat或调用print方法等) -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--应用输出日志的格式 -->
+			<PatternLayout
+				pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+		</Console>
+		<!--文件会打印出所有信息，这个log每次运行程序会自动清空(append='false')，由append属性决定，这个也挺有用的，适合临时测试用 -->
+		<!-- 启动应用服务加载log4j2.xml生成test.log文件，但是要在loggers引用log且append属性为true才会追加写入日志信息,否则每次删除旧信息重新写入 -->
+		<File name="log" fileName="log/test.log" append="false">
+			<PatternLayout
+				pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+		</File>
+
+		<!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<!-- fileName新文件名称,文件夹能自动创建,filePattern定期更新后文件名称 -->
+		<!-- 仅为应用中配置了log4j的日志 -->
+		<RollingFile name="RollingFile" fileName="logs/sealapp.log" filePattern="logs/sealapp_%d{yyyyMMdd}.log">
+			<!-- 日志打印格式 -->
+			<PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy interval="1" modulate="true" /><!-- 以filePattern精度为单位(此处day),每隔2天滚动一次,modulate为true,偏移(偏移量1)计算 -->
+			<!-- 当前版本此设置无效  modify on 20190301 -->
+			<!-- <DefaultRolloverStrategy >清理,未设置最大日志数,默认7个,此节点因log4j2 jar版本太低未生效
+				<Delete basePath="logs" maxDepth="1">logs起递归检查(此处仅检查当前目录)
+					<IfFileName glob="sealapp*.log" />以sealapp开头 的所有日志文件
+					<IfLastModified age="1d" />删除1天前的日志 ,要与filePattern中的文件时间格式精度匹配
+				</Delete>
+			</DefaultRolloverStrategy> -->
+		</RollingFile>
+	</appenders>
+	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+	<loggers>
+		<!--建立一个默认的root的logger -->
+		<root level="trace"><!-- appender-ref打印日志以此处设置级别为准 -->
+			<appender-ref ref="RollingFile" />
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration> 

@@ -8,6 +8,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import com.dj.seal.util.socket.getValcode.GetData_mobileAndwechatBank;
+import com.dj.seal.util.socket.onlineBank.serverResponse.OnlineBankAndEleSysResponseOut;
 
 public class Compostion_res {
 	static Logger logger = LogManager.getLogger(Compostion_res.class.getName());
@@ -27,7 +28,10 @@ public class Compostion_res {
 			} else if (sc.equals("12003000034") && ss.equals("01")) {// 查询接口
 				logger.info("进入的是查询接口....");
 				if(flag!=null&&!flag.equals(""))//查询标识存在且不为空查询对账系统表
-					return GetData_mobileAndwechatBank.getData(xmlData);//微信/移动银行查询																					
+					if(flag.equals("00000001"))
+						return OnlineBankAndEleSysResponseOut.onlineBankAndEleSysQuery(xmlData);//优化企业网银和电子对账系统查询
+					else
+						return GetData_mobileAndwechatBank.getData(xmlData);//微信/移动银行查询																					
 				else//查询标识不存在或为空值查询单据表
 					return GetTradeData_res.tradeData_response(xmlData);//微信/柜面查询
 			}

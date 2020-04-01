@@ -87,10 +87,10 @@ public class AccumulationDealImpl extends BaseDAOJDBC implements IAccumulationDe
 		String nowTime= sdf.format(dt);//系统当前日期
 		String pathNoSeal = DJPropertyUtil.getPropertyValue("accumulationFilePath_NoSeal");
 		String pathAddSeal=DJPropertyUtil.getPropertyValue("accumulationFilePath_AddSeal");
-		String filePathNoSeal=pathNoSeal+nowTime;//未盖章回单目录(由ftp系统创建日期文件夹,前面部分无纸化创建)
+		String filePathNoSeal=pathNoSeal+File.separatorChar+nowTime;//未盖章回单目录(由ftp系统创建日期文件夹,前面部分无纸化创建)
 		File file1=new File(filePathNoSeal+File.separatorChar+"HDFileInfo.txt");//清单目录
 		String saveConvertPdf=null;//txt转pdf保存绝对路径
-		File file3=new File(pathAddSeal+nowTime);//盖章后pdf文件保存目录
+		File file3=new File(pathAddSeal+File.separatorChar+nowTime);//盖章后pdf文件保存目录
 		String savePdf=null;//盖章后pdf文件绝对路径
 		boolean flag=false;//返回标志
 		FileReader fr=null;//读
@@ -127,10 +127,8 @@ public class AccumulationDealImpl extends BaseDAOJDBC implements IAccumulationDe
 				flag2=txtToPdf(filePathNoSeal,filePathNoSeal);//txt转pdf
 			else
 				return -2;
-//			if(!flag2)
-//				return -3;
-			if(flag2)
-				return 0;
+			if(!flag2)
+				return -3;
 			fr=new FileReader(file1);
 			br=new BufferedReader(fr);
 			out=new FileWriter(filePathNoSeal+File.separatorChar+"addSealFailedFile.txt");
@@ -579,7 +577,6 @@ public class AccumulationDealImpl extends BaseDAOJDBC implements IAccumulationDe
 		Font fontChinese=null;
 		try {
 			base=BaseFont.createFont(font+"simfang.ttf",BaseFont.IDENTITY_H,BaseFont.EMBEDDED);
-//			base=BaseFont.createFont(font+"simsun.ttc,0",BaseFont.IDENTITY_H,BaseFont.EMBEDDED);
 			fontChinese=new Font(base,10.5f,Font.NORMAL);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -613,8 +610,7 @@ public class AccumulationDealImpl extends BaseDAOJDBC implements IAccumulationDe
 										.substring(0, list[i].lastIndexOf("."))
 								+ ".pdf";// 保存文件路径
 						fis = new FileInputStream(openPath);
-						isr = new InputStreamReader(fis, "gb2312");// 指定编码(最好在读时指定,读后乱码,写时指定编码也会乱码)
-//						isr=new InputStreamReader(fis,"GBK");
+						isr = new InputStreamReader(fis, "GBK");// 指定编码(最好在读时指定,读后乱码,写时指定编码也会乱码)
 						br2 = new BufferedReader(isr);
 						fos = new FileOutputStream(savePath);
 						Rectangle rect = new Rectangle(PageSize.A4);

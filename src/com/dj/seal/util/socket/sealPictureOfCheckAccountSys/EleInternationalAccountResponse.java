@@ -1,6 +1,8 @@
 package com.dj.seal.util.socket.sealPictureOfCheckAccountSys;
 
-
+/**
+ * 	获取印章图片
+ */
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;

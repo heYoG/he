@@ -1,14 +1,14 @@
-<serviceGroup>
-	<service name="SealService">
+<serviceGroup><!-- 发布多个Web Service时使用serviceGroup -->
+	<service name="SealService"><!-- 网络盖章接口 -->
 		<parameter name="ServiceClass">serv.AutoPdfSeal</parameter>
 		<parameter name="useOriginalwsdl">true</parameter>
 		<parameter name="modifyUserWSDLPortAddress">false</parameter> 
 		<messageReceivers>
 			<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
-				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" /><!-- 可处理输入输出 -->
 			<messageReceiver
 				mep="http://www.w3.org/2004/08/wsdl/in-only"
-				class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+				class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" /><!-- 只处理输入 -->
 		</messageReceivers>
 	</service>
 	<!-- websign服务器签章的接口 -->

@@ -57,7 +57,7 @@ public class SysUserDaoImpl extends BaseDAOJDBC implements ISysUserDao {
 				+ SysUserUtil.USER_ID + "='" + user_id + "'";
 		// sql +="' and "+ SysUserUtil.USER_TYPE + "='" + Constants.USER_STATUS
 		// + "'";
-		//logger.info("getSql:"+sql);
+//		logger.info("getSql:"+sql);
 		return sysUser(sql);
 	}
 

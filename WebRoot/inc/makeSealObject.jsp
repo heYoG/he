@@ -1,3 +1,4 @@
+<center>
 <OBJECT id=DMakeSealV61
 	classid="clsid:3F1A0364-AD32-4E2F-B550-14B878E2ECB1" VIEWASTEXT
 	width=250 height=200
@@ -7,3 +8,4 @@
 	<PARAM NAME="_ExtentY" VALUE="1323">
 	<PARAM NAME="_StockProps" VALUE="0">
 </OBJECT>
+</center>

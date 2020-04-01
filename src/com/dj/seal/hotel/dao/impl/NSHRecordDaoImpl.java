@@ -222,8 +222,7 @@ public class NSHRecordDaoImpl extends BaseDAOJDBC implements NSHRecordDao {
 			if (valcode == null || "".equals(valcode)) {// 柜面查询(按流水号、日期)
 				sql = "select*from " + NSHRecordUtil.TABLE_NAME
 						+ " where caseseqid='" + consumerSq
-						+ "' and d_trandt=to_date('" + insert2.toString()
-						+ "','yyyy-mm-dd')";
+						+ "' and d_trandt=to_date('" + insert2.toString()+ "','yyyy-mm-dd')";
 			} else {// 微信查询(按验证码、日期)
 				sql = "select*from " + NSHRecordUtil.TABLE_NAME
 						+ " where valcode='" + valcode

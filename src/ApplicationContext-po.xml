@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans -PUBLIC "-//SPRING/DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="onlineBankAndEleSysPo" class="com.dj.seal.util.socket.onlineBank.po.OnlineBankAndEleSysPo"/>
+	<bean id="onlineBankAndEleSysTable" class="com.dj.seal.util.socket.onlineBank.table.OnlineBankAndEleSysTable"></bean>
+</beans>

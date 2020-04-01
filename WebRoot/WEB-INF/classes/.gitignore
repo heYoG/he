@@ -9,15 +9,9 @@
 /autoUtil/
 /ceconfig.properties
 /com/
-/config.properties
-/database.properties
 /decSeal/
-/license.properties
-/log4j2.xml
 /org/
-/quartzDynamic.xml
 /serv/
 /snippet/
 /srvSeal/
-/weblogic.xml
 /xmlUtil/

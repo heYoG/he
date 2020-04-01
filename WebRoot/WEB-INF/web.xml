@@ -112,7 +112,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AxisServlet</servlet-name>
-		<url-pattern>/services/*</url-pattern>
+		<url-pattern>/services/*</url-pattern><!-- web service wsdl路径的一部分：http://ip:port/Seal/services/服务名(由webservice配置文件指定) ?wsdl-->
 	</servlet-mapping>
 
 	<!-- 定时任务监听器 -->
@@ -179,7 +179,7 @@
 	</listener>
 	<!-- 打印、查询接口配置结束 -->
 	
-	<!-- ctm/stm/电子对账/国际结算/移动银行/微信银行/现金管理平台系统socket配置 -->
+	<!-- ctm/stm/电子对账/国际结算/移动银行/微信银行/现金管理平台/企业网银系统socket配置 -->
 	<context-param>
 	<param-name>socketPort_com</param-name>
 	<param-value>20010</param-value>
