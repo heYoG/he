@@ -2,9 +2,13 @@ package action.userAction;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.plaf.basic.BasicSliderUI.ActionScroller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,7 +38,7 @@ import vo.userVo.UserVo;
 
 @SuppressWarnings(value={"all"})
 public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
-	
+	private static Logger log=LogManager.getLogger(LoginAction.class.getName());
 	HttpServletRequest request=ServletActionContext.getRequest();
 	UserDaoImplHib<UserVo> userDaoImpl = new UserDaoImplHib<UserVo>();
 	UserVo userVo=new UserVo();//为了登录时通过模型驱动取值,不能设置为null
@@ -40,6 +46,8 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	AuthorityVo av=new AuthorityVo();
 	DeptDaoImpl<DeptVo> dt=new DeptDaoImpl();
 	CommenClass cc=new CommenClass();//实例化工具类
+	Map map=new HashMap<String,String>();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/*登录*/
 	public String execute() throws InterruptedException{
@@ -50,26 +58,41 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		List<UserVo> list = userDaoImpl.selectUser(userVo,1);
 //		Thread.sleep(2000);//延时2s模拟网络延时测试令牌
 		if(list.isEmpty()){
-			System.out.println("用户名不存在");
+			log.info("用户名不存在");
 			request.setAttribute("errorUser", userNo);
 			request.setAttribute("user", "user");
 			return ERROR;		
 		}else{
 			userVo = list.get(0);//重新设置userVo
-			if(!userPWD.equals("")&&userPWD.equals(userVo.getPwd())){
-				if(session.getAttribute(CommenClass.CURRENTUSERSESSION)!=null) {//重新设置session(可能有数据更新)
+			if (!userPWD.equals("") && userPWD.equals(userVo.getPwd())) {
+				if (session.getAttribute(CommenClass.LOGINEDMAP) != null) {
+					map = (Map) session.getAttribute(CommenClass.LOGINEDMAP);
+					String islogined = (String) map.get(userNo);
+					if (islogined != null) {// 为空表示当前用户第一次登录
+						log.info("该用户已登录，请稍后再试！");
+						request.setAttribute("islogined", "logined");
+						return ERROR;
+					}
+				}
+				if (session.getAttribute(CommenClass.CURRENTUSERSESSION) != null) {// 重新设置session(可能有数据更新)
 					session.removeAttribute(CommenClass.CURRENTUSERSESSION);
 					session.setAttribute(CommenClass.CURRENTUSERSESSION, userVo);
-				}else {//服务已停或session已过期
+					map.put(userNo, "logined");// 设置当前用户已登录
+					session.setAttribute(CommenClass.LOGINEDMAP, map);// 将用户登录状态改为已登录
+				} else {// 服务已停或session已过期
 					session.setAttribute(CommenClass.CURRENTUSERSESSION, userVo);
+					map.put(userNo, "logined");// 设置当前用户已登录
+					session.setAttribute(CommenClass.LOGINEDMAP, map);// 将用户登录状态改为已登录
 				}
 //				session.setMaxInactiveInterval(30);//设置session有效性,单位s
-				return SUCCESS;	
-			}else{
-				System.out.println(userNo+"用户密码错误");
+				String date = sdf.format(System.currentTimeMillis());
+				log.info(userNo + " 登录成功,登录时间:" + date);
+				return SUCCESS;
+			} else {
+				log.info(userNo + "用户密码错误");
 				request.setAttribute("pwd", "password");
 				return ERROR;
-			}			
+			}
 		}			
 	}
 	
@@ -149,7 +172,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 				request.setAttribute("updateInfo", "update_fail");
 				return approveUser();
 			}
-			System.out.println("修改密码失败!");
+			log.info("修改密码失败!");
 			request.setAttribute("updateInfo", "update_fail");
 			long count = userDaoImpl.getCount(type);
 			cc.setTotalCount((int)count);
@@ -178,9 +201,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		type=type==null?"1":type;
 		cc.setType(type);
 		if(delUserRet>0)
-			System.out.println("删除用户成功,id:"+userID);
+			log.info("删除用户成功,id:"+userID);
 		else
-			System.out.println("删除用户失败,id:"+userID);
+			log.info("删除用户失败,id:"+userID);
 		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
@@ -207,9 +230,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		type=type==null?"1":type;
 		cc.setType(type);
 		if(delUserRet>0)
-			System.out.println("彻底删除用户成功,id:"+userID);
+			log.info("彻底删除用户成功,id:"+userID);
 		else
-			System.out.println("彻底删除用户失败,id:"+userID);
+			log.info("彻底删除用户失败,id:"+userID);
 		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
@@ -272,7 +295,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		try {
 			/*中文乱码时设置响应或请求的编码*/
-			response.setContentType("text/html;charset=utf-8");
+			response.setContentType("text/json;charset=utf-8");
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
@@ -310,9 +333,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		type=type==null?"1":type;
 		cc.setType(type);
 		if(delUserRet>0)
-			System.out.println("激活用户成功,id:"+userID);
+			log.info("激活用户成功,id:"+userID);
 		else
-			System.out.println("激活用户失败,id:"+userID);
+			log.info("激活用户失败,id:"+userID);
 		long count = userDaoImpl.getCount(type);
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
@@ -358,9 +381,9 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		userVo.setId(userID);
 		int delUserRet = userDaoImpl.updateApproveUserStatus(userVo);
 		if(delUserRet>0)
-			System.out.println("审批通过,id:"+userID);
+			log.info("审批通过,id:"+userID);
 		else
-			System.out.println("审批不通过,id:"+userID);
+			log.info("审批不通过,id:"+userID);
 		long count = userDaoImpl.getApproveCount();
 		cc.setTotalCount((int)count);
 		cc = PageUtil.pageMethod(cc, request);
@@ -369,6 +392,16 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 		request.setAttribute("pageData", cc);//分页列表
 		return "approveUser";
 	}
+
+	/*退出修改登录状态*/
+	public void destroySession() {
+		HttpSession session = request.getSession();
+		String userNo = request.getParameter("userNo");
+		map.remove(userNo);//移除登录状态
+		session.setAttribute(CommenClass.LOGINEDMAP, map);//改变同一用户的登录状态
+		String date = sdf.format(System.currentTimeMillis());
+		log.info(userNo+"退出成功,退出时间："+date);
+	}
 	
 	/*国际化*/
 	public String i18n(){
@@ -376,7 +409,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 	}
 	
 	public String tokenTest() throws InterruptedException{
-		System.out.println("token test");
+		log.info("token test");
 		Thread.sleep(2000);//休眠2s
 		return SUCCESS;
 	}

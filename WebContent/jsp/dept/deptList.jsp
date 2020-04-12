@@ -51,7 +51,7 @@ td, th {
 #delID{
 	background-color:#FFFFFF;/*去除背景颜色*/
 	border: 0px;
-	text-decoration:underline;/*添加下划线*/
+	text-decoration:underline;/*是否添加下划线*/
 	color:#4f6b72;/*字体颜色*/
 	cursor:pointer;/*添加手状属性*/
 }

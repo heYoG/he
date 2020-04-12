@@ -80,7 +80,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<!-- hibernate自动生成数据表 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<!-- 显示 hibernate sql -->
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<!-- 格式化hibernate输出sql -->
 				<prop key="hibernate.format_sql">true</prop>
 			</props>

@@ -14,6 +14,8 @@
 		alert("登录已失效,请重新登录!");
 	if("${downloadError}"!="")
 		alert("下载文件出错,错误码:${downloadError}");
+	if("${islogined}"=="logined")
+		alert("该用户已登录，请稍后再试！");
 	window.open("<%=request.getContextPath()%>/index.jsp","_parent","");
 </script>
 </head>

@@ -3,7 +3,7 @@
 	<!-- 服务名称，wsdl路径部分,一个<service>元素只能发布一个WebService类， 要发布多个webservice，可以在文件两端加上<serviceGroup>...</serviceGroup>,必须 -->
 	<service name="SshWebService">
 		<!-- 服务描述，任意,可选 -->
-		<description>axis2WebService测试1</description>
+		<description>axis2WebService测试1,无aar</description>
 		<!-- 直接指定要发布服务的类 -->
 		<!-- <parameter name="ServiceClass">webservice.WebServiceInterface</parameter> -->
 		<!-- 是用spring管理指定要发布的类 -->
@@ -37,7 +37,7 @@
 	</service>
 	<!-- 第二个service -->
 	<service name="SshWebService2">
-		<description>axis2WebService测试2</description>
+		<description>axis2WebService测试2,无aar</description>
 		<!-- 多个service时普通web项目name值相同;集成spring时一样,对应name值相同 -->
 		<parameter name="ServiceClass">webservice.WebServiceInterface2</parameter>
 		<messageReceivers>

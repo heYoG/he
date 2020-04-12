@@ -24,6 +24,7 @@ public class CommenClass{
 	private int end;//结束位置
 	private String type;//查询类型，0：注销/收件箱，1：正常/发送箱, 2：草稿箱 3：已删除邮件
 	public static final String CURRENTUSERSESSION ="USERSESSION";//登录用户session
+	public static final String LOGINEDMAP="USERMAP";//用户登录状态，默认未登录
 	public static final String NORMAL_RETURN="0000";//程序正常
 	public static final String FILENOTFOUNDEXCEPTION="0001";//要下载文件不存在
 	public static final String DELETESEALIMAGEEXCEPTION="0002";//删除印模失败
