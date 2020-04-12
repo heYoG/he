@@ -21,8 +21,8 @@
 					success:function(successData){//设置登录状态成功跳转到登录页面
 						location.href=open("<%=request.getContextPath()%>/index.jsp","_parent");
 					},
-					error:function(errorData,status,e){
-						alert("退出异常，请稍后再试！errorData:"+JSON.stringify(errorData)+",status:"+status+",e:"+e);
+					error:function(errorData){
+						alert("退出异常，请稍后再试！errorData:"+JSON.stringify(errorData));
 					}	
 				});
 						

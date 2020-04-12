@@ -16,10 +16,6 @@ public class LogVo {
 	private UserVo user;//操作者
 	
 	static Logger log=LogManager.getLogger(LogVo.class.getName());
-	public LogVo() {
-		super();
-		log.info("日志实例已初始化...");
-	}
 	
 	public int getId() {
 		return id;

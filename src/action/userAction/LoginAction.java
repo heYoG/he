@@ -87,6 +87,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 //				session.setMaxInactiveInterval(30);//设置session有效性,单位s
 				String date = sdf.format(System.currentTimeMillis());
 				log.info(userNo + " 登录成功,登录时间:" + date);
+				session.setAttribute("name", "he");
 				return SUCCESS;
 			} else {
 				log.info(userNo + "用户密码错误");
