@@ -2,6 +2,8 @@ package action.userAction;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,7 +88,8 @@ public class LoginAction extends ActionSupport implements ModelDriven<UserVo>{
 				}
 //				session.setMaxInactiveInterval(30);//设置session有效性,单位s
 				String date = sdf.format(System.currentTimeMillis());
-				log.info(userNo + " 登录成功,登录时间:" + date);
+				String remoteAddr = request.getRemoteAddr();//远程请求ip
+				log.info(userNo + " 登录成功,登录ip:"+remoteAddr+",时间:" + date);
 				session.setAttribute("name", "he");
 				return SUCCESS;
 			} else {

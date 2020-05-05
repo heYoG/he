@@ -26,7 +26,7 @@
 		<!-- 用户-权限,多对一，不懒加载，不级联更新(级联更新当前对象，关联对象同时会更新)，默认none -->
 		<many-to-one name="av" lazy="false" column="AuthorityID" cascade="none" class="vo.userVo.AuthorityVo"/>
 		<!-- 用户-文件,一对多，级联删除文件 -->
-		<set name="fileVo" lazy="false" inverse="true" cascade="delete"><!--控制反转，交由文件表管理外键-->
+		<set name="fileVo" lazy="false" inverse="true" cascade="delete"><!--控制反转，交由IOC容器管理级联关系-->
 			<key column="user_id"></key>
 			<one-to-many class="vo.fileVo.FileManageVo"/>
 		</set>
